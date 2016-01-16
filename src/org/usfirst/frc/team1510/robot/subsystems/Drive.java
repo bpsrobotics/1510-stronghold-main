@@ -21,6 +21,9 @@ public class Drive extends Subsystem {
     // The encoders that are hooked up to the gearboxes
     private static Encoder leftEncoder = new Encoder(1,2);
     private static Encoder rightEncoder = new Encoder(3,4);
+    
+    // Enabled
+    private boolean enabled = false;
 
     /**
      * Move based on left and right motor values
@@ -29,6 +32,7 @@ public class Drive extends Subsystem {
      * @param right The right motor value
      */
     public void move(double left, double right) {
+    	if (!enabled) return;
     	drive.tankDrive(left,right,true);
     }
 
@@ -39,14 +43,34 @@ public class Drive extends Subsystem {
      * @param right The right joystick
      */
     public void move(GenericHID left, GenericHID right) {
-	drive.tankDrive(left,right,true);
+    	if (!enabled) return;
+    	drive.tankDrive(left,right,true);
     }
 
 
     public double[] getEncoderValues() {
-	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
+    	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
 	
-	return result;
+    	return result;
+    }
+    
+    public void stop() {
+    	drive.stopMotor();
+    }
+    
+    public void enable() {
+    	enabled = true;
+    }
+    
+    public void disable() {
+    	enabled = false;
+    	stop();
+    	resetEncoders();
+    }
+    
+    public void resetEncoders() {
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     }
 
     public void initDefaultCommand() {
