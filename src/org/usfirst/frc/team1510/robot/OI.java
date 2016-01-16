@@ -1,7 +1,8 @@
 package org.usfirst.frc.team1510.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team1510.robot.commands.ExampleCommand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,5 +35,29 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	
+	public Joystick leftStick = new Joystick(1);
+	public Joystick rightStick = new Joystick(2);
+	
+	public Button[] leftStickButtons = {null,
+		new JoystickButton(leftStick,1),
+		new JoystickButton(leftStick,2),
+		new JoystickButton(leftStick,3),
+		new JoystickButton(leftStick,4),
+		new JoystickButton(leftStick,5),
+		new JoystickButton(leftStick,6)
+	};
+	
+	public Button[] rightStickButtons = {null,
+		new JoystickButton(rightStick,1),
+		new JoystickButton(rightStick,2),
+		new JoystickButton(rightStick,3),
+		new JoystickButton(rightStick,4),
+		new JoystickButton(rightStick,5),
+		new JoystickButton(rightStick,6)
+	};
+	
+	public OI () {
+		
+	}
 }
-
