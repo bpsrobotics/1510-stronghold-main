@@ -11,7 +11,7 @@ public class EncoderSubsystem {
 	 * @param b Encoder PWM channel B
 	 */
 	public EncoderSubsystem (int a, int b){
-		enc = new Encoder (a,b, false);
+		enc = new Encoder (a,b);
 	}
 	
 	/**
@@ -27,5 +27,20 @@ public class EncoderSubsystem {
 	 */
 	public void reset(){
 		enc.reset();
+	}
+	
+	/**
+	 * Reverses the encoder
+	 */
+	public void reverse() {
+		enc.setReverseDirection(!enc.getDirection());
+	}
+	
+	/**
+	 * Get current direction
+	 * @return current direction
+	 */
+	public boolean direction() {
+		return enc.getDirection();
 	}
 }
