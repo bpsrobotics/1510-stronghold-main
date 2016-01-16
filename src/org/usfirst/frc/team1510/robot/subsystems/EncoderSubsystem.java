@@ -8,4 +8,10 @@ public class EncoderSubsystem {
 	public EncoderSubsystem (){
 		enc = new Encoder (1,2, false);
 	}
+	public double getDistance(){
+		return enc.getDistance();
+	}
+	public void reset(){
+		enc.reset();
+	}
 }
