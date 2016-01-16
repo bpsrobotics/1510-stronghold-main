@@ -12,15 +12,25 @@ import edu.wpi.first.wpilibj.GenericHID;
 public class Drive extends Subsystem {
 
     // Arrays that contain the motor controllers
-    private static CANTalon[] leftMotors = {new CANTalon(1), new CANTalon(2)};
-    private static CANTalon[] rightMotors = {new CANTalon(3), new CANTalon(4)};
+    private CANTalon[] leftMotors = {new CANTalon(1), new CANTalon(2)};
+    private CANTalon[] rightMotors = {new CANTalon(3), new CANTalon(4)};
+    /*
+     * "private" -- Access modifier, can be package-protected (no keyword, default), protected (only subclasses), public (anybody), or private (only this class)
+     * "CANTalon" -- Data type; primitives are int, double, float, boolean; classes are valid data types as well
+     * "[]" -- Defines the data type as an array type
+     * "leftMotors", "rightMotors" -- The identifier of the variable (the name)
+     * "{...}" -- Array syntax, defines array. List contents inside {}, elements separated by ","; no "," after last element
+     * "new" -- Declares that the following method call is actually a constructor call and will return a new object
+     * "CANTalon(...)" -- Constructor call; name is class name (must be subclass or same class as data type)
+     * "1", "2", "3", "4" -- Arguments to constructor, similar to array elements just () instead of {}
+     */
 
     // Robot drive class
-    private static RobotDrive drive = new RobotDrive(leftMotors[1], leftMotors[2], rightMotors[1], rightMotors[2]);
+    private RobotDrive drive = new RobotDrive(leftMotors[1], leftMotors[2], rightMotors[1], rightMotors[2]);
     
     // The encoders that are hooked up to the gearboxes
-    private static Encoder leftEncoder = new Encoder(1,2);
-    private static Encoder rightEncoder = new Encoder(3,4);
+    private Encoder leftEncoder = new Encoder(1,2);
+    private Encoder rightEncoder = new Encoder(3,4);
     
     // Enabled
     private boolean enabled = false;
