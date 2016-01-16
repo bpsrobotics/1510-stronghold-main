@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.Encoder;
 public class EncoderSubsystem {
 	private Encoder enc;
 
-	public EncoderSubsystem (){
-		enc = new Encoder (1,2, false);
+	public EncoderSubsystem (int a, int b){
+		enc = new Encoder (a,b, false);
 	}
 	public double getDistance(){
 		return enc.getDistance();
