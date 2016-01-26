@@ -36,28 +36,8 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
-	public Joystick leftStick = new Joystick(1);
-	public Joystick rightStick = new Joystick(2);
+	public static Joystick leftStick = new Joystick(1);
+	public static Joystick rightStick = new Joystick(2);
 	
-	public Button[] leftStickButtons = {null,
-		new JoystickButton(leftStick,1),
-		new JoystickButton(leftStick,2),
-		new JoystickButton(leftStick,3),
-		new JoystickButton(leftStick,4),
-		new JoystickButton(leftStick,5),
-		new JoystickButton(leftStick,6)
-	};
 	
-	public Button[] rightStickButtons = {null,
-		new JoystickButton(rightStick,1),
-		new JoystickButton(rightStick,2),
-		new JoystickButton(rightStick,3),
-		new JoystickButton(rightStick,4),
-		new JoystickButton(rightStick,5),
-		new JoystickButton(rightStick,6)
-	};
-	
-	public OI () {
-		
-	}
 }

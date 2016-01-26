@@ -26,7 +26,7 @@ public class Drive extends Subsystem {
      */
 
     // Robot drive class
-    private RobotDrive drive = new RobotDrive(leftMotors[1], leftMotors[2], rightMotors[1], rightMotors[2]);
+    private RobotDrive drive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
     
     // The encoders that are hooked up to the gearboxes
     private Encoder leftEncoder = new Encoder(1,2);

@@ -19,7 +19,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final Drive drive = new Drive();
+	///////////////////////////////////////////
+	//////////////// IMPORTANT ////////////////
+	//// DO NOT INITIALIZE SUBSYSTEMS FROM ////
+	/////////// OUTSIDE CONSTRUCTOR ///////////
+	///////////////////////////////////////////
+	
+	public static Drive drive;
 	public static OI oi;
 
     Command autonomousCommand;
@@ -31,12 +37,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
-        chooser = new SendableChooser();
+    	oi = new OI();
+    	drive = new Drive();
+		/*
+		chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        teleopCommand = new TeleopDrive();
+        */
     }
 	
 	/**
@@ -62,7 +70,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	teleopCommand.cancel();
+    	if (teleopCommand != null) teleopCommand.cancel();
         autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -93,6 +101,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        teleopCommand = new TeleopDrive();
         teleopCommand.start();
     }
 
