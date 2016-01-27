@@ -36,8 +36,14 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	
-	public static Joystick leftStick = new Joystick(1);
-	public static Joystick rightStick = new Joystick(2);
+	public Joystick leftStick = new Joystick(0);
+	public Joystick rightStick = new Joystick(1);
 	
+	public static final double deadzoneThreshold = 0.35;
+	
+	public static double deadzone(double value) {
+		if (Math.abs(value) < deadzoneThreshold) return 0;
+		return deadzoneThreshold;
+	}
 	
 }

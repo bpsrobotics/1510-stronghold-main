@@ -25,7 +25,7 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.move(Robot.oi.leftStick, Robot.oi.rightStick);
+    	drive.move(-Robot.oi.leftStick.getY(), -Robot.oi.leftStick.getRawAxis(5));
     	double[] encoderValues = drive.getEncoderValues();
     	
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
