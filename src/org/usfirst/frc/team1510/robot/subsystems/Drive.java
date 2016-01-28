@@ -38,7 +38,7 @@ public class Drive extends Subsystem {
     // Speed ramping variables
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
-    private double speedAdjustPerCycle = 0.03;
+    private double speedAdjustPerCycle = 0.04;
 
     /**
      * Move based on left and right motor values
