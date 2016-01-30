@@ -4,6 +4,7 @@ package org.usfirst.frc.team1510.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.subsystems.*;
 
 /**
  *
@@ -12,7 +13,7 @@ public class ExampleCommand extends Command {
 
     public ExampleCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+        requires(Robot.drive);
     }
 
     // Called just before this Command runs the first time
