@@ -52,8 +52,6 @@ public class AutoAim extends Command{
 		    	}
 
 	    	}
-	    	
-	    	
 	    
 	    }
 

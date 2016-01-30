@@ -37,11 +37,14 @@
       </grip:Input>
       <grip:Output step="1" socket="0" previewed="false"/>
     </grip:Step>
-    <grip:Step name="Find Lines">
+    <grip:Step name="Find Contours">
       <grip:Input step="2" socket="0"/>
-      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="1">
+        <value>false</value>
+      </grip:Input>
+      <grip:Output step="2" socket="0" previewed="false"/>
     </grip:Step>
-    <grip:Step name="Publish LinesReport">
+    <grip:Step name="Publish ContoursReport">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
         <value>Target</value>
@@ -68,16 +71,16 @@
   </steps>
   <connections>
     <grip:Connection>
-      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="2" socket="0" previewed="false"/>
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
       <grip:Input step="1" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output source="0" socket="0" previewed="true"/>
