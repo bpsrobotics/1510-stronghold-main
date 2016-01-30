@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team1510.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1510.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team1510.robot.commands.*;
+import org.usfirst.frc.team1510.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,10 +19,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	///////////////////////////////////////////
+	//////////////// IMPORTANT ////////////////
+	//// DO NOT INITIALIZE SUBSYSTEMS FROM ////
+	/////////// OUTSIDE CONSTRUCTOR ///////////
+	///////////////////////////////////////////
+	
+	public static Drive drive;
 	public static OI oi;
 
     Command autonomousCommand;
+    Command teleopCommand;
     SendableChooser chooser;
 
     /**
@@ -30,11 +37,14 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
-        chooser = new SendableChooser();
+    	oi = new OI();
+    	drive = new Drive();
+		/*
+		chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        */
     }
 	
 	/**
@@ -60,6 +70,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	if (teleopCommand != null) teleopCommand.cancel();
         autonomousCommand = (Command) chooser.getSelected();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
@@ -90,6 +101,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        teleopCommand = new TeleopDrive();
+        teleopCommand.start();
     }
 
     /**
