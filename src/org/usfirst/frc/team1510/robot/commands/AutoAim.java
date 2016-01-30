@@ -11,13 +11,11 @@ public class AutoAim extends Command{
 	 public AutoAim() {
 	        // Use requires() here to declare subsystem dependencies
 	        requires(Robot.drive);
-	        requires(Robot.shooter);
 	    }
 
 	    // Called just before this Command runs the first time
 	    protected void initialize() {
-	    	shooter.reset();
-	    	table = NetworkTable.getTable("GRIP/Target");
+	    	NetworkTable table = NetworkTable.getTable("GRIP/Target");
 	    	double[] defaultValue = new double[0];
 	    	double[] y1 = table.getNumberArray("y1", defaultValue);
 	    	double[] y2 = table.getNumberArray("y2", defaultValue);
