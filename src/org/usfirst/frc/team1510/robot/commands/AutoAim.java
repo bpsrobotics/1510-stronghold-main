@@ -8,6 +8,10 @@ import org.usfirst.frc.team1510.robot.subsystems.*;
 
 
 public class AutoAim extends Command{
+	
+	private NetworkTable table = NetworkTable.getTable("GRIP/Target");
+	
+	private boolean complete = false;
 
 	 public AutoAim() {
 	        // Use requires() here to declare subsystem dependencies
@@ -20,14 +24,18 @@ public class AutoAim extends Command{
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run
-	    protected void execute(){
-	    	NetworkTable table = NetworkTable.getTable("GRIP/Target");
-	    	while(true){
-	    		//Get values printed in network tables
-		    	double height = table.getNumber("height", 0);
-		    	double width = table.getNumber("width", 0);
-		    	double xval = table.getNumber("centerX", 0);
-		    	double yval = table.getNumber("centerY", 0);
+	    
+	    @SuppressWarnings("deprecation")
+		protected void execute(){
+	    	
+    		//Get values printed in network tables
+    		double[] defaultValue = {10};
+    		
+    		try {
+		    	double height = table.getNumberArray("height")[0];
+		    	double width = table.getNumberArray("width")[0];
+		    	double xval = table.getNumberArray("centerX")[0];
+		    	double yval = table.getNumberArray("centerY")[0];
 		    	//Find the ratio of height to width
 		    	double ratio = height/width;
 		    	//Find vertical offset
@@ -38,26 +46,34 @@ public class AutoAim extends Command{
 		    	if(vertdiff > 10){
 		    		System.out.println("Move shooter up");
 		    	}
-		    	else if(vertdiff < 10){
+		    	else if(vertdiff < -10){
 		    		System.out.println("Move shooter down");
 		    	}
 		    	if(hzdiff > 10){
 		    		System.out.println("Move robot right");
 		    	}
-		    	else if(hzdiff < 10){
+		    	else if(hzdiff < -10){
 		    		System.out.println("Move robot left");
 		    	}
 		    	if(ratio > .7){
 		    		System.out.println("The target is angled too much, cannot shoot");
 		    	}
+		    	
+		    	if (Math.abs(vertdiff) < 10 && Math.abs(hzdiff) < 10) {
+		    		System.out.println("You are clear to shoot");
+		    		complete = true;
+		    	}
+    		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+    			System.out.println("no target");
+    		}
+	    	
 
-	    	}
-	    
-	    }
+    	}
+    
 
 	    // Make this return true when this Command no longer needs to run execute()
 	    protected boolean isFinished() {
-	        return false;
+	        return complete;
 	    }
 
 	    // Called once after isFinished returns true

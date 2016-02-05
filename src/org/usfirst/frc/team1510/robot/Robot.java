@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	if (teleopCommand != null) teleopCommand.cancel();
-        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = new AutoAim();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
