@@ -27,7 +27,8 @@ public class Robot extends IterativeRobot {
 	
 	public static Drive drive;
 	public static OI oi;
-
+	public static TargetLight targetLight;
+	
     Command autonomousCommand;
     Command teleopCommand;
     SendableChooser chooser;
@@ -39,6 +40,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	oi = new OI();
     	drive = new Drive();
+    	targetLight = new TargetLight(1);
 		/*
 		chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new ExampleCommand());
@@ -103,6 +105,7 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         teleopCommand = new TeleopDrive();
         teleopCommand.start();
+        
     }
 
     /**

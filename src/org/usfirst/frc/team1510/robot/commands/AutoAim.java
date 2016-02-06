@@ -10,12 +10,13 @@ import org.usfirst.frc.team1510.robot.subsystems.*;
 public class AutoAim extends Command{
 	
 	private NetworkTable table = NetworkTable.getTable("GRIP/Target");
-	
+	private TargetLight targetLight = Robot.targetLight;
 	private boolean complete = false;
 
 	 public AutoAim() {
 	        // Use requires() here to declare subsystem dependencies
 	        requires(Robot.drive);
+	        requires(Robot.targetLight);
 	    }
 
 	    // Called just before this Command runs the first time
@@ -27,15 +28,16 @@ public class AutoAim extends Command{
 	    
 	    @SuppressWarnings("deprecation")
 		protected void execute(){
-	    	
+	    	//turn light on
+	    	targetLight.on();
     		//Get values printed in network tables
-    		double[] defaultValue = {10};
+    		double[] defaultValue = {};
     		
     		try {
-		    	double height = table.getNumberArray("height")[0];
-		    	double width = table.getNumberArray("width")[0];
-		    	double xval = table.getNumberArray("centerX")[0];
-		    	double yval = table.getNumberArray("centerY")[0];
+		    	double height = table.getNumberArray("height",defaultValue)[0];
+		    	double width = table.getNumberArray("width",defaultValue)[0];
+		    	double xval = table.getNumberArray("centerX",defaultValue)[0];
+		    	double yval = table.getNumberArray("centerY",defaultValue)[0];
 		    	//Find the ratio of height to width
 		    	double ratio = height/width;
 		    	//Find vertical offset
@@ -73,11 +75,14 @@ public class AutoAim extends Command{
 
 	    // Make this return true when this Command no longer needs to run execute()
 	    protected boolean isFinished() {
+	    	targetLight.off();
 	        return complete;
+	        
 	    }
 
 	    // Called once after isFinished returns true
 	    protected void end() {
+	    	
 	    }
 
 	    // Called when another command which requires one or more of the same
