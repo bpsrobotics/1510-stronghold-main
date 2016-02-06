@@ -22,8 +22,8 @@ public class TargetLight extends Subsystem {
 	}
 	
 	public void on(){
-		relay.set(Relay.Value.kOn);
 		relay.set(Relay.Value.kForward);
+		relay.set(Relay.Value.kOn);
 	}
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
