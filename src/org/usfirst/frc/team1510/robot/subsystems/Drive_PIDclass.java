@@ -35,51 +35,49 @@ public class Drive extends Subsystem {
     // Enabled
     private boolean enabled = false;
     
-    // Speed ramping variables. Left and right wheels, respectively.
-    private double[] currentSpeed = {0.0, 0.0},
-                     goalSpeed = {0.0, 0.0};
-
-    private double[] prevError = {0.0, 0.0};
-    
-    private final double Kp = 0.0 // K values
-                         Ki = 0.0,
-                         Kd = 0.0;
-
-    private double[] integrator = {0.0, 0.0}, // for left and right motors, respectively
-                     derivator = {0.0, 0.0};
-    
-    private double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
-                   integratorMin = 0.0;
-
-    private double CalcError(double speed, goalspeed) { // Calculates error from input values
-        return goalspeed - speed;
-    }
-
-    private double CalcKp(double error) {
-        return error * Kp
-    }
-
-    private double CalcKi() { // Calculates Ki value
-        return integrator * Ki
-    }
-
-    private double CalcKd(double error) { // Calculates Kd value -- TODO
-        return Kd * (error - derivator)
-    }
-
-    private double UpdateIntegrator(double error) {
-        integrator += error;
-    }
-
     private class PIDcontroller(double Kp, double Ki, double Kd) {
-        
-    }
+        private double prevError = {0.0}; // Used for calculating Ki
 
-    public double PIDRun(double currentSpeed, double goalSpeed, double Kp, double Ki, double Kd) { // returns double newSpeed TODO: MAKE THIS A TODO-ING CLASS. IMPORTANT
-        double error = CalcError(currentSpeed, goalSpeed);
-        UpdateIntegrator(error);
-        double pValue = CalcKp(error);
-        double iValue = CalcKi();
+        private double goalSpeed = {0.0}, // For left and right motors, respectively
+                       currentSpeed = {0.0};
+
+        private double returnSpeed = {0.0}; // speed to pass to motor controlling class (the direct one, not through PID)
+
+        private double integrator = {0.0}, // for left and right motors, respectively
+                         derivator = {0.0};
+        
+        private double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
+                       integratorMin = 0.0;
+
+        private double CalcError(double speed, goalspeed) { // Calculates error from input values
+            return goalspeed - speed;
+        }
+
+        private double CalcKp(double error) {
+            return error * Kp
+        }
+
+        private double CalcKi() { // Calculates Ki value
+            return integrator * Ki
+        }
+
+        private double CalcKd(double error) { // Calculates Kd value -- TODO
+            return Kd * (error - derivator)
+        }
+
+        private double UpdateIntegrator(double error) {
+            integrator += error;
+        }
+
+        private double
+        
+        private double PIDRun() {
+            double error = CalcError(currentSpeed, goalSpeed);
+            UpdateIntegrator(error);
+            double pValue = CalcKp(error);
+            double iValue = CalcKi();
+        }
+        
     }
 
     /**
