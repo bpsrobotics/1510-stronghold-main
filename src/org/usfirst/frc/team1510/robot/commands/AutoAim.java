@@ -26,11 +26,12 @@ public class AutoAim extends Command{
 
 	    // Called repeatedly when this Command is scheduled to run
 	    
-	    @SuppressWarnings("deprecation")
+	    //@SuppressWarnings("deprecation")
 		protected void execute(){
 	    	//turn light on
 	    	targetLight.on();
     		//Get values printed in network tables
+	    	/*
     		double[] defaultValue = {};
     		
     		try {
@@ -68,21 +69,21 @@ public class AutoAim extends Command{
     		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
     			System.out.println("no target");
     		}
-	    	
+	    	*/
 
     	}
     
 
 	    // Make this return true when this Command no longer needs to run execute()
 	    protected boolean isFinished() {
-	    	targetLight.off();
+	    	
 	        return complete;
 	        
 	    }
 
 	    // Called once after isFinished returns true
 	    protected void end() {
-	    	
+	    	targetLight.off();
 	    }
 
 	    // Called when another command which requires one or more of the same
