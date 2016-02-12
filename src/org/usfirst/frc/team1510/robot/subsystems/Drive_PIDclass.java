@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 /**
  *
  */
-public class Drive extends Subsystem {
+public class Drive_PIDclass extends Subsystem {
 
-    // Arrays that contain the motor controllers
+        // Arrays that contain the motor controllers
     private CANTalon[] leftMotors = {new CANTalon(1), new CANTalon(2)};
     private CANTalon[] rightMotors = {new CANTalon(3), new CANTalon(4)};
     /*
@@ -34,41 +34,42 @@ public class Drive extends Subsystem {
     
     // Enabled
     private boolean enabled = false;
-    
-    private class PIDcontroller(double Kp, double Ki, double Kd) {
+   
+    // FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK NONE OF THIS WILL WORKKKKK
+    private class PIDcontroller {
 
-        private double prevError = 0.0; // Used for calculating Ki
+        private static double prevError = 0.0; // Used for calculating Ki
 
-        private double goalSpeed = 0.0, // For left and right motors, respectively
-                       currentSpeed = 0.0;
+        private static double goalSpeed = 0.0, // For left and right motors, respectively
+                              currentSpeed = 0.0;
 
-        private double returnSpeed = 0.0; // speed to pass to motor controlling class (the direct one, not through PID)
+        private static double returnSpeed = 0.0; // speed to pass to motor controlling class (the direct one, not through PID)
 
-        private double integrator = 0.0, // for left and right motors, respectively
-                       derivator = 0.0;
+        private static double integrator = 0.0, // for left and right motors, respectively
+                              derivator = 0.0;
         
-        private double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
-                       integratorMin = 0.0;
+        private static double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
+                              integratorMin = 0.0;
 
-        private double CalcError(double speed, goalspeed) { // Calculates error from input values
+        private double CalcError(double speed, double goalspeed) { // Calculates error from input values
             return goalspeed - speed;
         }
 
         private double CalcKp(double error) {
-            return error * Kp
+            return error * Kp;
         }
 
         private double CalcKi() { // Calculates Ki value
-            return integrator * Ki
+            return integrator * Ki;
         }
 
         private double CalcKd(double error) { // Calculates Kd value -- TODO
-            return Kd * (error - derivator)
+            return Kd * (error - derivator);
         }
 
-        private void UpdateIntegrator(double error) {
+        private double UpdateIntegrator(double error) {
             integrator += error;
-            CheckIntegratorMaxMin()
+            CheckIntegratorMaxMin();
         }
 
         private void SetGoal(double goal) {
@@ -78,8 +79,10 @@ public class Drive extends Subsystem {
         private void CheckIntegratorMaxMin() {
             //EXPERIMENTAL - thanks to https://www.reddit.com/r/FRC/comments/44zy05/pi_loops/czuc2g1
             //Essentially makes it so I term can be max of what can command 1.0 (hence 1.0/Ki)
-            if (integrator > (1.0/Ki)) {integrator = (1.0/Ki);} // sorry i'm a python programmer
-            else if (integrator < (-1*(1.0/Ki))) {integrator = (-1 * (1.0/Ki));} // yes this code sucks get over it
+            if (integrator > (1.0/Ki))
+                integrator = (1.0/Ki); // sorry i'm a python programmer
+            else if (integrator < (-1*(1.0/Ki)))
+                integrator = (-1 * (1.0/Ki)); // AT LEAST I REMEMBERED THE SEMICOLON
         }
         
         private double PIDRun() {
@@ -87,6 +90,8 @@ public class Drive extends Subsystem {
             UpdateIntegrator(error);
             double pValue = CalcKp(error);
             double iValue = CalcKi();
+            double power = pValue + iValue;
+            return power;
         }
         
     }
@@ -100,7 +105,7 @@ public class Drive extends Subsystem {
 
     public void move(double left, double right) { //TODO: Integrate with PID controller
         if (!enabled) return;
-        drive.tankDrive(left, right, false)
+        drive.tankDrive(left, right, false);
         
     }
 
