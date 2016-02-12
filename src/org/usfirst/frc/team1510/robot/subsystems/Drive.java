@@ -35,52 +35,10 @@ public class Drive extends Subsystem {
     // Enabled
     private boolean enabled = false;
     
-    // Speed ramping variables. Left and right wheels, respectively.
-    private double[] currentSpeed = {0.0, 0.0},
-                     goalSpeed = {0.0, 0.0};
-
-    private double[] prevError = {0.0, 0.0};
-    
-    private final double Kp = 0.0 // K values
-                         Ki = 0.0,
-                         Kd = 0.0;
-
-    private double[] integrator = {0.0, 0.0}, // for left and right motors, respectively
-                     derivator = {0.0, 0.0};
-    
-    private double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
-                   integratorMin = 0.0;
-
-    private double CalcError(double speed, goalspeed) { // Calculates error from input values
-        return goalspeed - speed;
-    }
-
-    private double CalcKp(double error) {
-        return error * Kp
-    }
-
-    private double CalcKi() { // Calculates Ki value
-        return integrator * Ki
-    }
-
-    private double CalcKd(double error) { // Calculates Kd value -- TODO
-        return Kd * (error - derivator)
-    }
-
-    private double UpdateIntegrator(double error) {
-        integrator += error;
-    }
-
-    private class PIDcontroller(double Kp, double Ki, double Kd) {
-        
-    }
-
-    public double PIDRun(double currentSpeed, double goalSpeed, double Kp, double Ki, double Kd) { // returns double newSpeed TODO: MAKE THIS A TODO-ING CLASS. IMPORTANT
-        double error = CalcError(currentSpeed, goalSpeed);
-        UpdateIntegrator(error);
-        double pValue = CalcKp(error);
-        double iValue = CalcKi();
-    }
+    // Speed ramping variables
+    private double[] currentSpeed = {0.0, 0.0};
+    private double[] goalSpeed = {0.0, 0.0};
+    private double speedAdjustPerCycle = 0.04;
 
     /**
      * Move based on left and right motor values
@@ -88,11 +46,38 @@ public class Drive extends Subsystem {
      * @param left The left motor value
      * @param right The right motor value
      */
-
-    public void move(double left, double right) { //TODO: Integrate with PID controller
-        if (!enabled) return;
-        drive.tankDrive(left, right, false)
-        
+    public void move(double left, double right) {
+    	if (!enabled) return;
+    	//drive.tankDrive(left,right,true);
+    	
+    	// Set goal speed
+    	goalSpeed[0] = left;
+    	goalSpeed[1] = right;
+    	
+    	// Logic for left motors
+    	if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
+    		// If within one-cycle range of goal
+    		currentSpeed[0] = goalSpeed[0];
+    	else if (currentSpeed[0] > goalSpeed[0])
+    		// If more than goal
+    		currentSpeed[0] -= speedAdjustPerCycle;
+    	else if (currentSpeed[0] < goalSpeed[0])
+    		// If less than goal
+    		currentSpeed[0] += speedAdjustPerCycle;
+    	
+    	// Logic for right motors
+    	if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
+    		// If within one-cycle range of goal
+    		currentSpeed[1] = goalSpeed[1];
+    	else if (currentSpeed[1] > goalSpeed[1])
+    		// If more than goal
+    		currentSpeed[1] -= speedAdjustPerCycle;
+    	else if (currentSpeed[1] < goalSpeed[1])
+    		// If less than goal
+    		currentSpeed[1] += speedAdjustPerCycle;
+    	
+    	// Update motor throttle
+    	drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
     }
 
     /**
@@ -101,7 +86,7 @@ public class Drive extends Subsystem {
      * @param left The left joystick
      * @param right The right joystick
      */
-    public void move(GenericHID left, GenericHID right) { //TODO: Integrate with PID controller
+    public void move(GenericHID left, GenericHID right) {
     	if (!enabled) return;
     	drive.tankDrive(left,right,true);
     }

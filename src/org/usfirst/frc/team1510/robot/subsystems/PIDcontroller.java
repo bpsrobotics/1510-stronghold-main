@@ -11,6 +11,8 @@ class PIDcontroller {
     private static final double Kp = 0.5, // K constants, gotta tune them
                                 Ki = 0.1,
                                 Kd = 0.0;
+    public static Encoder encoder;
+    private static double lastEncoderValue;
 
     // private static double prevError = 0.0; // Used for calculating Ki or something
 
@@ -43,12 +45,14 @@ class PIDcontroller {
 
     private void UpdateIntegrator(double error) {
         integrator += error;
-        this.integrator = CheckIntegratorMaxMin(integrator);
+        CheckIntegratorMaxMin(integrator);
     }
 
     public void SetGoal(double goal) { // USE FOR SETTING GOAL SPEED
         this.goalSpeed = goal;
     }
+
+    private void GetSpeed() {}
 
     private void CheckIntegratorMaxMin(double integrator) {
         //EXPERIMENTAL - thanks to https://www.reddit.com/r/FRC/comments/44zy05/pi_loops/czuc2g1
@@ -59,14 +63,21 @@ class PIDcontroller {
             integrator = (-1.0/Ki); // AT LEAST I REMEMBERED THE SEMICOLON
         this.integrator = integrator;
     }
-    
+
     public double PIDRun() {
-        double error = CalcError(currentSpeed, goalSpeed);
-        UpdateIntegrator(error);
-        double pValue = CalcKp(error);
-        double iValue = CalcKi();
-        this.returnSpeed = pValue + iValue;
-        return this.returnSpeed;
+        if (encoder != null) {
+            double error = CalcError(currentSpeed, goalSpeed);
+            UpdateIntegrator(error);
+            double pValue = CalcKp(error);
+            double iValue = CalcKi();
+            this.returnSpeed = pValue + iValue;
+            return this.returnSpeed;
+        }
+
+        else {
+            return 0;
+        }
+
     }
     
 }
