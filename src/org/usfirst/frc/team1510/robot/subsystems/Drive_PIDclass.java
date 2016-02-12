@@ -49,7 +49,7 @@ public class Drive_PIDclass extends Subsystem {
                               derivator = 0.0;
         
         private static double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid
-                              integratorMin = 0.0;
+                              integratorMin = 0.0; 
 
         private double CalcError(double speed, double goalspeed) { // Calculates error from input values
             return goalspeed - speed;
