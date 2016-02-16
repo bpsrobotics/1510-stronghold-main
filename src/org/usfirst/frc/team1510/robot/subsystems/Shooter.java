@@ -12,17 +12,12 @@ public class Shooter extends Subsystem {
     private Talon shooterMotor = new Talon(1);
     private boolean justShot = false;
     private Encoder encoder = new Encoder(5,6);
-    private double radius;
-    
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters
     public final double SHOOTER_HEIGHT = 0.3048; // in meters
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
+    public final double GEAR_RATIO = 1.0/1.0;
 
-    public Shooter (double radius) {
-	this.radius = radius;
-    }
-    
 
     /**
      * Fires the shooter with the given distance
@@ -46,7 +41,7 @@ public class Shooter extends Subsystem {
     }
 
     private double getMotorPower(double velocity) {
-	return velocity / (2 * Math.PI * radius * (MAXSPEED * FLYWHEEL_RADIUS));
+	return velocity / (2 * Math.PI * FLYWHEEL_RADIUS * (MAXSPEED * GEAR_RATIO));
     }
     
     public void initDefaultCommand() {
