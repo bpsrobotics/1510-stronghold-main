@@ -13,11 +13,14 @@ public class Shooter extends Subsystem {
     private boolean justShot = false;
     private Encoder encoder = new Encoder(5,6);
     private double radius;
-    private double gearRatio;
+    
+    public final double MAXSPEED = 88.5; // in revolutions per second
+    public final double GOAL_HEIGHT = 4.5748; // in meters
+    public final double SHOOTER_HEIGHT = 0.3048; // in meters
+    public final double FLYWHEEL_RADIUS = 0.1016; // in meters
 
-    public Shooter (double radius, double gearRatio) {
+    public Shooter (double radius) {
 	this.radius = radius;
-	this.gearRatio = gearRatio;
     }
     
 
@@ -39,11 +42,11 @@ public class Shooter extends Subsystem {
     }
 
     private double getVelocity(double distance) {
-	return distance / Math.sqrt(4.27/9.807);
+	return distance / Math.sqrt(GOAL_HEIGHT - SHOOTER_HEIGHT/9.807);
     }
 
     private double getMotorPower(double velocity) {
-	return velocity / (2 * Math.PI * radius * (88.5 * gearRatio));
+	return velocity / (2 * Math.PI * radius * (MAXSPEED * FLYWHEEL_RADIUS));
     }
     
     public void initDefaultCommand() {
