@@ -22,14 +22,14 @@ public class BallCollector extends Subsystem {
     	armEncoder.reverse();
     	while(armEncoder.getDistance() < distance)
     	{
-    		armMotor.set(.5);
+    		armMotor.set(0.25);
     	}
     }
     public void armRaise(int distance) { 
     	armEncoder.reset();
     	while(armEncoder.getDistance() < distance)
     	{
-    		armMotor.set(.5);
+    		armMotor.set(-0.25);
     	}
     }
     public void on(){
