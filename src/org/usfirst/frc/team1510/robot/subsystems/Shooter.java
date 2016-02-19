@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
 
     public void stop() {
 
-	shooterMotor.stop();
+	shooterMotor.set(0);
 	
     }
 
