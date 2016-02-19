@@ -3,7 +3,7 @@ package org.usfirst.frc.team1510.robot.subsystems;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.Relay;
-
+import edu.wpi.first.wpilibj.Encoder;
 
 
 /**
@@ -14,12 +14,12 @@ public class BallCollector extends Subsystem {
 	// Arm systems
     private Talon armMotor = new Talon(1);
     private Relay rollerMotor = new Relay(2 , Relay.Direction.kForward);
-    private EncoderSubsystem armEncoder  = new EncoderSubsystem(1,2);
+    private Encoder armEncoder  = new Encoder(7,8);
     
     
     public void armLower(int distance) { 
     	armEncoder.reset();
-    	armEncoder.reverse();
+    	armEncoder.setReverseDirection(true);
     	while(armEncoder.getDistance() < distance)
     	{
     		armMotor.set(0.25);
@@ -27,13 +27,14 @@ public class BallCollector extends Subsystem {
     }
     public void armRaise(int distance) { 
     	armEncoder.reset();
+	armEncoder.setReverseDirection(false);
     	while(armEncoder.getDistance() < distance)
     	{
     		armMotor.set(-0.25);
     	}
     }
     public void on(){
-		rollerMotor.set(Relay.Value.kForward);
+	rollerMotor.set(Relay.Value.kForward);
     	rollerMotor.set(Relay.Value.kOn);
     }
     public void off() {

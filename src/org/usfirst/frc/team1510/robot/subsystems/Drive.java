@@ -88,7 +88,7 @@ public class Drive extends Subsystem {
      */
     public void move(GenericHID left, GenericHID right) {
     	if (!enabled) return;
-    	drive.tankDrive(left,right,true);
+    	move(left,right);
     }
 
 
@@ -96,6 +96,36 @@ public class Drive extends Subsystem {
     	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
 	
     	return result;
+    }
+
+    public double getAverageDistance() {
+	return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+    }
+    
+    public boolean driveDistance(double distance, double motorThrottle) {
+	if (getAverageDistance() >= distance) {
+	    resetEncoders();
+	    goalSpeed[0] = 0;
+	    goalSpeed[1] = 0;
+	    currentSpeed[0] = 0;
+	    currentSpeed[1] = 0;
+	    move(0,0);
+	    return true;
+	}
+
+	move(motorThrottle,motorThrottle);
+
+	if (getAverageDistance() >= distance) {
+	    resetEncoders();
+	    goalSpeed[0] = 0;
+	    goalSpeed[1] = 0;
+	    currentSpeed[0] = 0;
+	    currentSpeed[1] = 0;
+	    move(0,0);
+	    return true;
+	}
+
+	return false;
     }
     
     public void stop() {
@@ -124,6 +154,14 @@ public class Drive extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+
+    public void setDefault() {
+	setDefaultCommand(new TeleopDrive());
+    }
+
+    public void resetDefault() {
+	setDefaultCommand(null);
     }
 }
 
