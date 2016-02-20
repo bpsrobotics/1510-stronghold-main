@@ -16,7 +16,7 @@ public class WheelArms extends Subsystem {
 	// Arm systems
     private Talon armMotor = new Talon(0);
     // Wheel motors
-    private CANTalon wheelMotor = new CANTalon(6);
+    private CANTalon wheelMotor = new CANTalon(4);
     
     // Controls enabled status
     private boolean enabled = false;

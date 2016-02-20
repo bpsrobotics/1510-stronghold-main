@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.CANTalon;
 
 /**
  *
  */
 public class Shooter extends Subsystem {
-    private Talon shooterMotor = new Talon(1);
+    private CANTalon shooterMotor = new CANTalon(1);
     private boolean justShot = false;
     private Encoder encoder = new Encoder(5,6);
     public final double MAXSPEED = 88.5; // in revolutions per second
