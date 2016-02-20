@@ -100,33 +100,33 @@ public class Drive extends Subsystem {
     }
 
     public double getAverageDistance() {
-	return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+    	return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
     }
     
     public boolean driveDistance(double distance, double motorThrottle) {
-	if (getAverageDistance() >= distance) {
-	    resetEncoders();
-	    goalSpeed[0] = 0;
-	    goalSpeed[1] = 0;
-	    currentSpeed[0] = 0;
-	    currentSpeed[1] = 0;
-	    move(0,0);
-	    return true;
-	}
+    	if (getAverageDistance() >= distance) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
 
-	move(motorThrottle,motorThrottle);
+    	move(motorThrottle,motorThrottle);
 
-	if (getAverageDistance() >= distance) {
-	    resetEncoders();
-	    goalSpeed[0] = 0;
-	    goalSpeed[1] = 0;
-	    currentSpeed[0] = 0;
-	    currentSpeed[1] = 0;
-	    move(0,0);
-	    return true;
-	}
+    	if (getAverageDistance() >= distance) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
 
-	return false;
+    	return false;
     }
     
     public void stop() {
