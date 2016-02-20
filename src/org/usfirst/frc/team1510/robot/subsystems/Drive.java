@@ -31,7 +31,7 @@ public class Drive extends Subsystem {
     // The encoders that are hooked up to the gearboxes
     private Encoder leftEncoder = new Encoder(1,2);
     private Encoder rightEncoder = new Encoder(3,4);
-    
+    private Gyro gyro = new Gyro();
     // Enabled
     private boolean enabled = false;
     
@@ -90,7 +90,118 @@ public class Drive extends Subsystem {
     	if (!enabled) return;
     	drive.tankDrive(left,right,true);
     }
-
+    
+    //Pivot turn based on gyro reading
+    public void turnRight(double power, double angle) {
+    	gyro.reset();
+    	if (!enabled) return;
+    	//drive.tankDrive(left,right,true);
+    	while (gyro.getAngle() != angle){
+        	// Set goal speed
+        	goalSpeed[0] = power;
+        	goalSpeed[1] = -power;
+        	
+    		// Logic for left motors
+    		if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[0] = goalSpeed[0];
+    		else if (currentSpeed[0] > goalSpeed[0])
+    			// If more than goal
+    			currentSpeed[0] -= speedAdjustPerCycle;
+    		else if (currentSpeed[0] < goalSpeed[0])
+    			// If less than goal
+    			currentSpeed[0] += speedAdjustPerCycle;
+    	
+    		// Logic for right motors
+    		if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[1] = goalSpeed[1];
+    		else if (currentSpeed[1] > goalSpeed[1])
+    			// If more than goal
+    			currentSpeed[1] -= speedAdjustPerCycle;
+    		else if (currentSpeed[1] < goalSpeed[1])
+    			// If less than goal
+    			currentSpeed[1] += speedAdjustPerCycle;
+    	
+    		// Update motor throttle
+    		drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
+    	}
+    	return;
+    }
+    
+  //Pivot turn based on gyro reading
+    public void turnLeft(double power, double angle) {
+    	gyro.reset();
+    	if (!enabled) return;
+    	//drive.tankDrive(left,right,true);
+    	while (gyro.getAngle() != angle){
+        	// Set goal speed
+        	goalSpeed[0] = -power;
+        	goalSpeed[1] = power;
+        	
+    		// Logic for left motors
+    		if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[0] = goalSpeed[0];
+    		else if (currentSpeed[0] > goalSpeed[0])
+    			// If more than goal
+    			currentSpeed[0] -= speedAdjustPerCycle;
+    		else if (currentSpeed[0] < goalSpeed[0])
+    			// If less than goal
+    			currentSpeed[0] += speedAdjustPerCycle;
+    	
+    		// Logic for right motors
+    		if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[1] = goalSpeed[1];
+    		else if (currentSpeed[1] > goalSpeed[1])
+    			// If more than goal
+    			currentSpeed[1] -= speedAdjustPerCycle;
+    		else if (currentSpeed[1] < goalSpeed[1])
+    			// If less than goal
+    			currentSpeed[1] += speedAdjustPerCycle;
+    	
+    		// Update motor throttle
+    		drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
+    	}
+    	return;
+    }
+    //Move straight to desired encoder count
+    public void move(double power, double encoder, double error) {
+    	if (!enabled) return;
+    	//drive.tankDrive(left,right,true);
+    	while(Math.abs((leftEncoder.getDistance()+ rightEncoder.getDistance())/2) < (encoder + error)){
+    		// Set goal speed
+    		goalSpeed[0] = power;
+    		goalSpeed[1] = power;
+    	
+    		// Logic for left motors
+    		if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[0] = goalSpeed[0];
+    		else if (currentSpeed[0] > goalSpeed[0])
+    			// If more than goal
+    			currentSpeed[0] -= speedAdjustPerCycle;
+    		else if (currentSpeed[0] < goalSpeed[0])
+    			// If less than goal
+    			currentSpeed[0] += speedAdjustPerCycle;
+    	
+    		// Logic for right motors
+    		if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
+    			// If within one-cycle range of goal
+    			currentSpeed[1] = goalSpeed[1];
+    		else if (currentSpeed[1] > goalSpeed[1])
+    			// If more than goal
+    			currentSpeed[1] -= speedAdjustPerCycle;
+    		else if (currentSpeed[1] < goalSpeed[1])
+    			// If less than goal
+    			currentSpeed[1] += speedAdjustPerCycle;
+    		
+    		// Update motor throttle
+    		drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
+    	}
+    	return;
+    }
 
     public double[] getEncoderValues() {
     	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
