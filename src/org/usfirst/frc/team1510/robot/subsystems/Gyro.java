@@ -11,8 +11,8 @@ public class Gyro extends Subsystem {
     // here. Call these from Commands
 	AnalogGyro gyro = new AnalogGyro(1);
 
-	public void getAngle(){
-		gyro.getAngle();
+	public double getAngle(){
+		return gyro.getAngle();
 	}
 	
 	public void reset() {

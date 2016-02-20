@@ -32,7 +32,7 @@ public class Drive extends Subsystem {
     // The encoders that are hooked up to the gearboxes
     private Encoder leftEncoder = new Encoder(1,2);
     private Encoder rightEncoder = new Encoder(3,4);
-    
+    private Gyro gyro = new Gyro();
     // Enabled
     private boolean enabled = false;
     
@@ -129,6 +129,57 @@ public class Drive extends Subsystem {
     	return false;
     }
     
+    public boolean turnRight(double angle, double motorThrottle) {
+    	if (gyro.getAngle() >= angle) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
+
+    	move(motorThrottle,-motorThrottle);
+    	
+    	if (gyro.getAngle() >= angle) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
+
+    	return false;
+    }
+    
+    public boolean turnLeft(double angle, double motorThrottle) {
+    	if (gyro.getAngle() >= angle) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
+
+    	move(-motorThrottle,motorThrottle);
+    	
+    	if (gyro.getAngle() >= angle) {
+    		resetEncoders();
+    		goalSpeed[0] = 0;
+    		goalSpeed[1] = 0;
+    		currentSpeed[0] = 0;
+    		currentSpeed[1] = 0;
+    		move(0,0);
+    		return true;
+    	}
+
+    	return false;
+    }
     public void stop() {
     	drive.stopMotor();
     	goalSpeed[0] = 0;
