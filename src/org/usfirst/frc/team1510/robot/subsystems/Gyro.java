@@ -11,8 +11,8 @@ public class Gyro extends Subsystem {
     // here. Call these from Commands
 	ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
-	public void getAngle(){
-		gyro.getAngle();
+	public double getAngle(){
+		return gyro.getAngle();
 	}
 	
 	public void reset() {
