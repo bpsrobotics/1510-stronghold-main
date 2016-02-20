@@ -59,11 +59,11 @@ public class AutoAim extends Command{
 		    	}*/
 		    	if(hzdiff > 10){
 		    		System.out.println("Move robot right");
-		    		drive.turnRight(10,.5);
+		    		drive.turn(10,.5);
 		    	}
 		    	else if(hzdiff < -10){
 		    		System.out.println("Move robot left");
-		    		drive.move(10,.5);
+		    		drive.turn(10,-.5);
 		    	}
 		    	if(ratio > .7){
 		    		System.out.println("The target is angled too much, cannot shoot");

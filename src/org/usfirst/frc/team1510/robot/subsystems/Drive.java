@@ -31,7 +31,7 @@ public class Drive extends Subsystem {
     private RobotDrive drive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
 
     // Sensors
-    private AnalogGyro gyro = new AnalogGyro();
+    private AnalogGyro gyro = new AnalogGyro(1);
 
     // Enabled
     private boolean enabled = false;
@@ -103,6 +103,11 @@ public class Drive extends Subsystem {
     	return (leftMotors[0].getEncPosition() + rightMotors[0].getEncPosition()) / 2;
     }
     
+    public void resetEncoders(){
+    	leftMotors[0].setEncPosition(0);
+    	rightMotors[0].setEncPosition(0);
+    }
+    
     public boolean driveDistance(double distance, double motorThrottle) {
     	if (getAverageDistance() >= distance) {
     		resetEncoders();
@@ -129,9 +134,13 @@ public class Drive extends Subsystem {
     	return false;
     }
     
-    public boolean turnRight(double angle, double motorThrottle) {
+    //Specify angle and then specify throttle
+    //Positive throttle turns Right
+    //Negative throttle turns Left
+    public boolean turn(double angle, double motorThrottle) {
+    	gyro.reset();
     	if (gyro.getAngle() >= angle) {
-    		resetEncoders();
+    		gyro.reset();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
     		currentSpeed[0] = 0;
@@ -143,7 +152,7 @@ public class Drive extends Subsystem {
     	move(motorThrottle,-motorThrottle);
     	
     	if (gyro.getAngle() >= angle) {
-    		resetEncoders();
+    		gyro.reset();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
     		currentSpeed[0] = 0;
@@ -155,31 +164,7 @@ public class Drive extends Subsystem {
     	return false;
     }
     
-    public boolean turnLeft(double angle, double motorThrottle) {
-    	if (gyro.getAngle() >= angle) {
-    		resetEncoders();
-    		goalSpeed[0] = 0;
-    		goalSpeed[1] = 0;
-    		currentSpeed[0] = 0;
-    		currentSpeed[1] = 0;
-    		move(0,0);
-    		return true;
-    	}
 
-    	move(-motorThrottle,motorThrottle);
-    	
-    	if (gyro.getAngle() >= angle) {
-    		resetEncoders();
-    		goalSpeed[0] = 0;
-    		goalSpeed[1] = 0;
-    		currentSpeed[0] = 0;
-    		currentSpeed[1] = 0;
-    		move(0,0);
-    		return true;
-    	}
-
-    	return false;
-    }
     public void stop() {
     	drive.stopMotor();
     	goalSpeed[0] = 0;
@@ -198,11 +183,6 @@ public class Drive extends Subsystem {
     	resetEncoders();
     }
     
-    public void resetEncoders() {
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    }
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
