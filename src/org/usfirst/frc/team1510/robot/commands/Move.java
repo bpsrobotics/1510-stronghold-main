@@ -17,7 +17,7 @@ public class Move extends Command {
     private double distance;
 
     // Records if complete or not
-    private isComplete = false;
+    private boolean isComplete = false;
     
     public Move(double distance) {
         // Use requires() here to declare subsystem dependencies
@@ -34,10 +34,8 @@ public class Move extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	isComplete = drive.driveDistance(this.distance,0.85);
+    	isComplete = drive.driveDistance(this.distance,0.85);
 	
-    	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
-    	SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -20,9 +20,9 @@ public class Turn extends Command {
     private Turn.Direction direction;
 
     // Records if complete or not
-    private isComplete = false;
+    private boolean isComplete = false;
     
-    public Move(double degrees, Turn.Direction direction) {
+    public Turn(double degrees, Turn.Direction direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
@@ -40,10 +40,10 @@ public class Turn extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
 	switch (direction) {
-	case Turn.Direction.Left:
+	case LEFT:
 	    isComplete = drive.turn(this.degrees,0.85);
 	    break;
-	case Turn.Direction.Right:
+	case RIGHT:
 	    isComplete = drive.turn(this.degrees,-0.85);
 	    break;
 	default:
