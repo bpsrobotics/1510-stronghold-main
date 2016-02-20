@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.AnalogGyro;
 
 /**
  *
@@ -28,11 +29,10 @@ public class Drive extends Subsystem {
 
     // Robot drive class
     private RobotDrive drive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
-    
-    // The encoders that are hooked up to the gearboxes
-    private Encoder leftEncoder = new Encoder(1,2);
-    private Encoder rightEncoder = new Encoder(3,4);
-    private Gyro gyro = new Gyro();
+
+    // Sensors
+    private AnalogGyro gyro = new AnalogGyro();
+
     // Enabled
     private boolean enabled = false;
     
@@ -94,13 +94,13 @@ public class Drive extends Subsystem {
 
 
     public double[] getEncoderValues() {
-    	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
+    	double[] result = {leftMotors[0].getEncPosition(), rightMotors[0].getEncPosition()};
 	
     	return result;
     }
 
     public double getAverageDistance() {
-    	return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+    	return (leftMotors[0].getEncPosition() + rightMotors[0].getEncPosition()) / 2;
     }
     
     public boolean driveDistance(double distance, double motorThrottle) {
