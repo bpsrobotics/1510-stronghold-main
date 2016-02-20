@@ -16,15 +16,20 @@ public class Turn extends Command {
     // Degrees to turn
     private double degrees;
 
+    // Direction to turn
+    private Turn.Direction direction;
+
     // Records if complete or not
     private isComplete = false;
     
-    public Move(double degrees) {
+    public Move(double degrees, Turn.Direction direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
 
 	this.degrees = degrees;
+
+	this.direction = direction;
     }
     
     // Called just before this Command runs the first time
@@ -34,7 +39,16 @@ public class Turn extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	isComplete = drive.turn(this.degrees,0.85);
+	switch (direction) {
+	case Turn.Direction.Left:
+	    isComplete = drive.turn(this.degrees,0.85);
+	    break;
+	case Turn.Direction.Right:
+	    isComplete = drive.turn(this.degrees,-0.85);
+	    break;
+	default:
+	    break;
+	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -51,5 +65,9 @@ public class Turn extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	end();
+    }
+
+    public enum Direction {
+        LEFT, RIGHT
     }
 }
