@@ -4,6 +4,7 @@ import org.usfirst.frc.team1510.robot.Robot;
 import org.usfirst.frc.team1510.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import org.usfirst.frc.team1510.robot.*;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Teleop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	OI.leftTrigger.whenPressed(new AutoAim());
+	Robot.oi.leftTrigger.whenPressed(new AutoAim());
 	Robot.drive.setDefault();
     }
 
