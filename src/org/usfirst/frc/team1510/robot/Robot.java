@@ -29,6 +29,9 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static TargetLight targetLight;
     public static Shooter shooter;
+    public static BallCollector ballCollector;
+    public static WheelArms wheelArms;
+    
     
     Command autonomousCommand;
     Command teleopCommand;
