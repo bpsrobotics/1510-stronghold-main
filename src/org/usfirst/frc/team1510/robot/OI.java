@@ -37,10 +37,20 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
     
     public Joystick leftStick = new Joystick(0);
-    public Joystick rightStick = new Joystick(1);
+    public Joystick gamepad2 = new Joystick(1);
 
     // Buttons
     public JoystickButton leftTrigger = new JoystickButton(leftStick,1);
+    
+    //public JoystickButton trigger1 = new JoystickButton(gamepad2, 1);
+    //public JoystickButton trigger2 = new JoystickButton(gamepad2, 2);
+    public JoystickButton btnA = new JoystickButton(gamepad2, 0);
+    public JoystickButton btnB = new JoystickButton(gamepad2, 1);
+    public JoystickButton btnX = new JoystickButton(gamepad2, 2);
+    public JoystickButton btnY = new JoystickButton(gamepad2, 3);
+    public JoystickButton leftBumper = new JoystickButton(gamepad2, 4);
+    public JoystickButton rightBumper = new JoystickButton(gamepad2, 5);
+    
     
     public static final double deadzoneThreshold = 0.35;
     
