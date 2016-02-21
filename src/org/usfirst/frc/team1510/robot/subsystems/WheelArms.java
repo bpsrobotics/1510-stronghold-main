@@ -26,28 +26,34 @@ public class WheelArms extends Subsystem {
     private double currentSpeed = 0;
     private double speedAdjustPerCycle = 0.04;
     
-    private DigitalInput limitSwitch = new DigitalInput(1);
-    private Counter counter = new Counter(limitSwitch);
-    
-    public boolean isSwitchSet() {
-        return counter.get() > 0;
+    private Encoder encoder = new Encoder(1,2);
+    boolean finished = false;
+    public void extend(double distance) {
+    	encoder.reset();
+    	if(encoder.getDistance() < distance){
+    		armMotor.set(-.25);
+    	}
+    	else {
+    		armMotor.set(0);
+    		finished = true;
+    	}
+    }
+    public void retract(double distance) { 
+
+    	encoder.reset();
+    	if(encoder.getDistance() > -distance){
+    		armMotor.set(-.25);
+    	}
+    	else {
+    		armMotor.set(0);
+    		finished = true;
+    	}
+//    	if(isSwitchSet()) armMotor.set(0);
     }
     
-    public void initializeCounter() {
-        counter.reset();
+    public boolean isComplete(){
+    	return finished;
     }
-    
-    public void extend(int distance) { 
-    	initializeCounter();
-    	armMotor.set(-.25);
-    	if(isSwitchSet()) armMotor.set(0);
-    }
-    public void retract(int distance) { 
-    	initializeCounter();
-    	armMotor.set(.25);
-    	if(isSwitchSet()) armMotor.set(0);
-    }
-    
     public void move(double speed) {
     	if (!enabled) return;    	
     	// Set goal speed
