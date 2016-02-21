@@ -15,26 +15,33 @@ public class BallCollector extends Subsystem {
 	// Arm systems
     private Talon armMotor = new Talon(1);
     private Relay rollerMotor = new Relay(2 , Relay.Direction.kForward);
-    private DigitalInput limitSwitch = new DigitalInput(1);
-    private Counter counter = new Counter(limitSwitch);
-    
-    public boolean isSwitchSet() {
-        return counter.get() > 0;
+    private DigitalInput limitSwitch1 = new DigitalInput(1);
+    private Counter counter1 = new Counter(limitSwitch1);
+    private DigitalInput limitSwitch2 = new DigitalInput(2);
+    private Counter counter2 = new Counter(limitSwitch2);
+    public boolean isSwitch1Set() {
+        return counter1.get() > 0;
     }
     
-    public void initializeCounter() {
-        counter.reset();
+    public void initializeCounter1() {
+        counter1.reset();
+    }
+    public boolean isSwitch2Set() {
+        return counter2.get() > 0;
     }
     
-    public void extend(int distance) { 
-    	initializeCounter();
+    public void initializeCounter2() {
+        counter2.reset();
+    }
+    public void extend() { 
+    	initializeCounter1();
     	armMotor.set(-.25);
-    	if(isSwitchSet()) armMotor.set(0);
+    	if(isSwitch1Set()) armMotor.set(0);
     }
-    public void retract(int distance) { 
-    	initializeCounter();
+    public void retract() { 
+    	initializeCounter2();
     	armMotor.set(.25);
-    	if(isSwitchSet()) armMotor.set(0);
+    	if(isSwitch2Set()) armMotor.set(0);
     }
     public void on(){
 	rollerMotor.set(Relay.Value.kForward);
