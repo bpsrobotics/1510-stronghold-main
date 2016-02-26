@@ -10,9 +10,16 @@ class PIDcontroller {
 
     private static final double Kp = 0.5, // K constants, gotta tune them
                                 Ki = 0.1,
-                                Kd = 0.0;
-    public static Encoder encoder;
-    private static double lastEncoderValue;
+                                Kd = -0.1;
+    
+    public static double speedMulti = 1;
+
+    private static double previousError = 0,
+                          previousSpeed = 0;
+
+    public static CANTalon encoder;
+    
+    private static double lastEncoderSpeed = 0;
 
     // private static double prevError = 0.0; // Used for calculating Ki or something
 
@@ -26,6 +33,7 @@ class PIDcontroller {
     
     //private static double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid. Depricated, cause i'm using the cool variable thingy. 
     //                      integratorMin = 0.0; 
+    
 
     private double CalcError(double speed, double goalspeed) { // Calculates error from input values
         return goalspeed - speed;
@@ -39,40 +47,58 @@ class PIDcontroller {
         return integrator * Ki;
     }
 
-    private double CalcKd(double error) { // Calculates Kd value -- TODO
+    private double CalcKd(double error, double previousSpeed) { // Calculates Kd value -- TODO
         return Kd * (error - derivator);
     }
 
-    private void UpdateIntegrator(double error) {
+    private double UpdateIntegrator(double error) {
         integrator += error;
-        CheckIntegratorMaxMin(integrator);
+        integrator = CheckIntegratorMaxMin(integrator);
+        return integrator;
+    }
+
+    private double UpdateDerivator(double goalSpeed, double previousSpeed) {
+        derivator = currentSpeed - previousSpeed;
+        return derivator;
     }
 
     public void SetGoal(double goal) { // USE FOR SETTING GOAL SPEED
         this.goalSpeed = goal;
     }
 
-    private void GetSpeed() {}
 
-    private void CheckIntegratorMaxMin(double integrator) {
+    private double CheckIntegratorMaxMin(double integrator) {
         //EXPERIMENTAL - thanks to https://www.reddit.com/r/FRC/comments/44zy05/pi_loops/czuc2g1
         //Essentially makes it so I term can be max of what can command 1.0 (hence 1.0/Ki)
         if (integrator > (1.0/Ki))
             integrator = (1.0/Ki); // sorry i'm a python programmer
         else if (integrator < (-1.0/Ki))
             integrator = (-1.0/Ki); // AT LEAST I REMEMBERED THE SEMICOLON
-        this.integrator = integrator;
+        return integrator;
     }
 
     public double PIDRun() {
         if (encoder != null) {
+            currentSpeed = encoder.getSpeed() * speedMulti;
+            this.currentSpeed = currentSpeed;
+
             double error = CalcError(currentSpeed, goalSpeed);
-            UpdateIntegrator(error);
+            this.integrator = UpdateIntegrator(error);
+            this.derivator = UpdateDerivator(this.goalSpeed, this.previousSpeed);
+
             double pValue = CalcKp(error);
             double iValue = CalcKi();
-            this.returnSpeed = pValue + iValue;
+            double dValue = CalcKd(error, previousError);
+
+
+            this.previousError = error;
+            this.previousSpeed = currentSpeed;
+            
+            this.returnSpeed = pValue + iValue + dValue;
             return this.returnSpeed;
         }
+
+        private void SetDrive(
 
         else {
             return 0;
