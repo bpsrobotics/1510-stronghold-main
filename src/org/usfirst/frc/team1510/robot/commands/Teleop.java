@@ -20,12 +20,16 @@ public class Teleop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	Robot.oi.leftTrigger.whenPressed(new AutoAim());
-	Robot.drive.setDefault();
+    	Robot.oi.leftTrigger.whenPressed(new AutoAim());
+    	Robot.drive.setDefault();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.oi.btnA.toggleWhenPressed(new DeployRoller());
+    	Robot.oi.btnB.toggleWhenPressed(new BallPickup());
+    	Robot.oi.btnX.toggleWhenPressed(new DeployWheels(30));
+    	Robot.oi.btnY.toggleWhenPressed(new RunWheels(drive.getAverageDistance()));
 
     }
 

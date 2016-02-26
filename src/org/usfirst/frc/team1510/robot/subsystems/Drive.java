@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 public class Drive extends Subsystem {
 
     // Arrays that contain the motor controllers
-    private CANTalon[] leftMotors = {new CANTalon(1), new CANTalon(2)};
-    private CANTalon[] rightMotors = {new CANTalon(3), new CANTalon(4)};
+    private CANTalon[] leftMotors = {new CANTalon(5), new CANTalon(6)};
+    private CANTalon[] rightMotors = {new CANTalon(1), new CANTalon(2)};
     /*
      * "private" -- Access modifier, can be package-protected (no keyword, default), protected (only subclasses), public (anybody), or private (only this class)
      * "CANTalon" -- Data type; primitives are int, double, float, boolean; classes are valid data types as well
