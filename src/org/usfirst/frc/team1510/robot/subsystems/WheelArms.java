@@ -28,9 +28,9 @@ public class WheelArms extends Subsystem {
     
     private Encoder encoder = new Encoder(1,2);
     boolean finished = false;
-    public void extend(double distance) {
+    public void extend(double angle) {
     	encoder.reset();
-    	if(encoder.getDistance() < distance){
+    	if(encoder.getDistance() < angle){
     		armMotor.set(-.25);
     	}
     	else {
@@ -38,10 +38,10 @@ public class WheelArms extends Subsystem {
     		finished = true;
     	}
     }
-    public void retract(double distance) { 
+    public void retract(double angle) { 
 
     	encoder.reset();
-    	if(encoder.getDistance() > -distance){
+    	if(encoder.getDistance() > -angle){
     		armMotor.set(-.25);
     	}
     	else {
