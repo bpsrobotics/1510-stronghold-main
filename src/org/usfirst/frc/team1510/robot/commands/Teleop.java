@@ -28,7 +28,7 @@ public class Teleop extends Command {
     protected void execute() {
     	Robot.oi.btnA.toggleWhenPressed(new DeployRoller());
     	Robot.oi.btnB.toggleWhenPressed(new BallPickup());
-    	Robot.oi.btnX.toggleWhenPressed(new DeployWheels(30));
+    	Robot.oi.btnX.toggleWhenPressed(new DeployWheels(135));
     	Robot.oi.btnY.toggleWhenPressed(new RunWheels(drive.getAverageDistance()));
 
     }
