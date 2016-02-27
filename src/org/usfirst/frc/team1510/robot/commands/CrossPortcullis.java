@@ -8,8 +8,20 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossPortcullis extends CommandGroup {
 
     public CrossPortcullis() {
-    	addParallel(new Move(3.4));
-    	addParallel(new DeployWheels(67));
+    	//Move forward
+    	addSequential(new Move(40));
+    	//Move second set of wheels down
+    	addSequential(new DeployWheels(135));
+    	//Drive underneath portcullis opening
+    	addParallel(new RunWheels(.85));
+    	addParallel(new Move(40));
+    	//Stop secondary wheels
+    	addSequential(new RunWheels(0));
+    	//Move secondary wheels back while moving forward
+    	//This will let the robot slide under
+    	addParallel(new RetractWheels(135));
+    	addParallel(new Move(180));
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

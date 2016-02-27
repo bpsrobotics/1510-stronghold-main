@@ -10,8 +10,11 @@ import org.usfirst.frc.team1510.robot.commands.Move;
 public class CrossLowBar extends CommandGroup {
 
     public CrossLowBar() {
-    	addParallel(new Move(3.4));
-    	addParallel(new DeployWheels(135));
+    	//Move wheels down so they don't hit the low bar
+    	addSequential(new DeployWheels(135));
+    	//Move all 8 wheels forward
+    	addParallel(new Move(40));
+    	addParallel(new RunWheels(.85));
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

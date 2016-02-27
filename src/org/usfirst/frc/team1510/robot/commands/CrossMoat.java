@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossMoat extends CommandGroup {
 
     public CrossMoat() {
-    	addParallel(new Move(3.4));
+    	addSequential(new Move(400));
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossRoughTerrain extends CommandGroup {
 
     public CrossRoughTerrain() {
-    	addParallel(new Move(3.4));
+    	//Charge forward
+    	addSequential(new Move(500));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

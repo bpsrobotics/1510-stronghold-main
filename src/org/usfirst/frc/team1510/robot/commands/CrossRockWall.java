@@ -8,7 +8,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossRockWall extends CommandGroup {
 
     public CrossRockWall() {
-    	addParallel(new Move(3.4));
+    	//Move up to defense
+    	addSequential(new Move(300));
+    	//Deploy wheels over the rock wall
+    	addSequential(new DeployWheels(150));
+    	//Charge forward
+    	addParallel(new Move(200));
+    	addParallel(new RunWheels(.85));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
