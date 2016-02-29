@@ -13,7 +13,7 @@ public class CrossRamparts extends CommandGroup {
     	//Deploy wheels
     	addSequential(new DeployWheels(135));
     	//Move all 8 wheels forward
-    	addParallel(new Move(40));
+    	addSequential(new Move(40));
     	addParallel(new RunWheels(.85));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

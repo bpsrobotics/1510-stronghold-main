@@ -13,7 +13,7 @@ public class CrossChevalDeFrise extends CommandGroup {
     	//Deploy wheel arms to stabilize seesaws
     	addSequential(new DeployWheels(135));
     	//Move forward with all 8 wheels
-    	addParallel(new Move(40));
+    	addSequential(new Move(40));
     	addParallel(new RunWheels(.85));
     	
     	
