@@ -119,7 +119,11 @@ public class Drive extends Subsystem {
     		return true;
     	}
 
-    	move(motorThrottle,motorThrottle);
+	double kp = 0.03;
+
+	double angle = gyro.getAngle();
+	
+    	drive.drive(motorThrottle, -angle * kp);
 
     	if (getAverageDistance() >= distance) {
     		resetEncoders();
