@@ -13,7 +13,7 @@ public class CrossLowBar extends CommandGroup {
     	//Move wheels down so they don't hit the low bar
     	addSequential(new DeployWheels(135));
     	//Move all 8 wheels forward
-    	addParallel(new Move(40));
+    	addSequential(new Move(40));
     	addParallel(new RunWheels(.85));
     	
         // Use requires() here to declare subsystem dependencies

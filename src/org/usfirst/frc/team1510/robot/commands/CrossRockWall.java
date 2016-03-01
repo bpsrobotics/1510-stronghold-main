@@ -13,7 +13,7 @@ public class CrossRockWall extends CommandGroup {
     	//Deploy wheels over the rock wall
     	addSequential(new DeployWheels(150));
     	//Charge forward
-    	addParallel(new Move(200));
+    	addSequential(new Move(200));
     	addParallel(new RunWheels(.85));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
