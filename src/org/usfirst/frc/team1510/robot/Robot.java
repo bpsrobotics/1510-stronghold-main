@@ -37,6 +37,10 @@ public class Robot extends IterativeRobot {
     Command teleopCommand;
     SendableChooser chooser;
     
+    // Autonomous settings
+    SendableChooser startingPosition;
+    SendableChooser defense;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -45,6 +49,23 @@ public class Robot extends IterativeRobot {
     	oi = new OI();
     	drive = new Drive();
     	targetLight = new TargetLight(1);
+    	
+    	startingPosition = new SendableChooser();
+    	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
+    	startingPosition.addObject("2", Autonomous.StartingPosition.POS2);
+    	startingPosition.addObject("3", Autonomous.StartingPosition.POS3);
+    	startingPosition.addObject("4", Autonomous.StartingPosition.POS4);
+    	startingPosition.addObject("5", Autonomous.StartingPosition.POS5);
+    	
+    	defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
+    	defense.addObject("Cheval de Frise", Autonomous.Defense.CHEVAL_DE_FRISE);
+    	defense.addObject("Moat", Autonomous.Defense.MOAT);
+    	defense.addObject("Ramparts", Autonomous.Defense.RAMPARTS);
+    	//defense.addObject("Drawbridge", Autonomous.Defense.DRAWBRIDGE);
+    	//defense.addObject("Sally Port", Autonomous.Defense.SALLY_PORT);
+    	defense.addObject("Rock Wall", Autonomous.Defense.ROCK_WALL);
+    	defense.addObject("Rough Terrain", Autonomous.Defense.ROUGH_TERRAIN);
+    	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
 	/*
 	  chooser = new SendableChooser();
 	  chooser.addDefault("Default Auto", new ExampleCommand());

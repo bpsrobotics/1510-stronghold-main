@@ -7,9 +7,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class Autonomous extends CommandGroup {
     
+	
     public  Autonomous() {
-    	
-    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,13 +27,14 @@ public class Autonomous extends CommandGroup {
         // arm.
     	
     	
+    	
     }
     
     public enum StartingPosition {
-    	LEFT, CENTER, RIGHT
+    	POS1, POS2, POS3, POS4, POS5
     }
     
-    public enum MoveTarget {
-    	POSITION1, POSITION2, POSITION3, POSITION4, POSITION5
+    public enum Defense {
+    	PORTCULLIS, CHEVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, LOW_BAR
     }
 }
