@@ -1,30 +1,31 @@
 package org.usfirst.frc.team1510.robot.commands;
 
-import org.usfirst.frc.team1510.robot.Robot;
-import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
-
 import edu.wpi.first.wpilibj.command.Command;
-
+import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.subsystems.Shooter;
+import org.usfirst.frc.team1510.robot.subsystems.UltrasonicSubsystem;
 /**
  *
  */
-public class BallPickup extends Command {
-
-	BallCollector ballCollector = new BallCollector();
-    public BallPickup() {
+public class Shoot extends Command {
+	
+	Shooter shooter = Robot.shooter;
+	UltrasonicSubsystem sonic = new UltrasonicSubsystem(1,2);
+    public Shoot() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.ballCollector);
+    	requires(Robot.shooter);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	double distance = sonic.getMillimeters()/1000;
+    	shooter.fire(distance);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ballCollector.forward();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +35,6 @@ public class BallPickup extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	ballCollector.off();
     }
 
     // Called when another command which requires one or more of the same

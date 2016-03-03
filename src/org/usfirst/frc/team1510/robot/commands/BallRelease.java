@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BallPickup extends Command {
+public class BallRelease extends Command {
 
 	BallCollector ballCollector = new BallCollector();
-    public BallPickup() {
+    public BallRelease() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.ballCollector);
@@ -24,7 +24,7 @@ public class BallPickup extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ballCollector.forward();
+    	ballCollector.reverse();
     }
 
     // Make this return true when this Command no longer needs to run execute()

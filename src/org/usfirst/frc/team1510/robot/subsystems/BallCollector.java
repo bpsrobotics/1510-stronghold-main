@@ -43,8 +43,13 @@ public class BallCollector extends Subsystem {
     	armMotor.set(.25);
     	if(isSwitch2Set()) armMotor.set(0);
     }
-    public void on(){
-	rollerMotor.set(Relay.Value.kForward);
+    public void forward(){
+    	rollerMotor.set(Relay.Value.kForward);
+    	rollerMotor.set(Relay.Value.kOn);
+    }
+    
+    public void reverse(){
+    	rollerMotor.set(Relay.Value.kReverse);
     	rollerMotor.set(Relay.Value.kOn);
     }
     public void off() {
