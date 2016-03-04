@@ -68,8 +68,7 @@ public class AutoAim extends Command{
 		    	if(ratio > .7){
 		    		System.out.println("The target is angled too much, cannot shoot");
 		    		complete = true;
-		    	}
-		    	
+		    	}		    	
 		    	if (Math.abs(hzdiff) < 100) {
 		    	 	distance = sonic.getMillimeters()/1000;
 		    		System.out.println("You are clear to shoot");
