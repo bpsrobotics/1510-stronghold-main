@@ -47,17 +47,6 @@ public class Drive extends Subsystem {
      * @param right The right motor value
      */
 
-    public void move(double left, double right) {
-    	if (!enabled) return;
-    	//drive.tankDrive(left,right,true);
-    	
-    	// Set goal speed
-    	goalSpeed[0] = left;
-    	goalSpeed[1] = right;
-    
-    	// Update motor throttle
-    	drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
-    }
 
     /**
      * Move based on left and right joystick
@@ -65,24 +54,8 @@ public class Drive extends Subsystem {
      * @param left The left joystick
      * @param right The right joystick
      */
-    public void move(GenericHID left, GenericHID right) {
-    	if (!enabled) return;
-    	drive.tankDrive(left,right,true);
-    }
-
-
-    public double[] getEncoderValues() {
-    	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
-	
-    	return result;
-    }
     
     public void stop() {
-    	drive.stopMotor();
-    	goalSpeed[0] = 0;
-    	goalSpeed[1] = 0;
-    	currentSpeed[0] = 0;
-    	currentSpeed[1] = 0;
     }
     
     public void enable() {
@@ -95,10 +68,10 @@ public class Drive extends Subsystem {
     	resetEncoders();
     }
     
-    public void resetEncoders() {
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    }
+    // public void resetEncoders() {
+    // 	leftEncoder.reset();
+    // 	rightEncoder.reset();
+    // }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
