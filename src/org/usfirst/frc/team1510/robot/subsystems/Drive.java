@@ -59,18 +59,18 @@ public class Drive extends Subsystem {
     }
     
     public void enable() {
-    	enabled = true;
+        enabled = true;
     }
     
     public void disable() {
-    	enabled = false;
-    	stop();
-    	resetEncoders();
+        enabled = false;
+        stop();
+        resetEncoders();
     }
     
     // public void resetEncoders() {
-    // 	leftEncoder.reset();
-    // 	rightEncoder.reset();
+    //     leftEncoder.reset();
+    //     rightEncoder.reset();
     // }
 
     public void initDefaultCommand() {
