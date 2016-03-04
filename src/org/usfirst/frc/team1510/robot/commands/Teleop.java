@@ -41,7 +41,7 @@ public class Teleop extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	wheelArms.move(Robot.oi.gamepad2.getRawAxis(2));
-    	if (Robot.oi.gamepad2.getRawAxis(3) > 0.5) new Shoot();
+    	if (Robot.oi.gamepad2.getRawAxis(3) > 50) new Shoot();
     	
     }
 
