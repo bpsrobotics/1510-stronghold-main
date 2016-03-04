@@ -40,6 +40,9 @@ public class Drive extends Subsystem {
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
 
+    private PIDcontroller leftController = new PIDcontroller();
+    private PIDcontroller rightController = new PIDcontroller();
+
     /**
      * Move based on left and right motor values
      *
