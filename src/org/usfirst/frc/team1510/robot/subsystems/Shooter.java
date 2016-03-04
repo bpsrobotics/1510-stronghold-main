@@ -19,7 +19,7 @@ public class Shooter extends Subsystem {
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
 
-
+/
     /**
      * Fires the shooter with the given distance
      *

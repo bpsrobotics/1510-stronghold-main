@@ -47,13 +47,13 @@ public class Drive extends Subsystem {
      * @param left The left motor value
      * @param right The right motor value
      */
-    public void move(double left, double right) {
+    public void move(double throttle, double turn) {
     	if (!enabled) return;
     	//drive.tankDrive(left,right,true);
     	
     	// Set goal speed
-    	goalSpeed[0] = left;
-    	goalSpeed[1] = right;
+    	goalSpeed[0] = throttle;
+    	goalSpeed[1] = turn;
     	
     	// Logic for left motors
     	if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
@@ -78,7 +78,11 @@ public class Drive extends Subsystem {
     		currentSpeed[1] += speedAdjustPerCycle;
     	
     	// Update motor throttle
-    	drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
+
+	currentSpeed[0] = Math.pow(currentSpeed[0],4);
+	currentSpeed[1] = Math.pow(currentSpeed[1],2);
+	
+    	drive.drive(currentSpeed[0], currentSpeed[1]);
     }
 
     /**
