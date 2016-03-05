@@ -77,6 +77,11 @@ public class Drive extends Subsystem {
         UpdatePIDMotors();
     }
 
+    public void move() {
+        UpdatePIDMotors();
+    }
+
+
     public double[] GetSpeeds() {
         double[] speeds = {leftController.GetSpeed(), rightController.GetSpeed()};
         return speeds;
