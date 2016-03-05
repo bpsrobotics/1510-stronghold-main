@@ -28,25 +28,25 @@ public class Autonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+	if(Robot.defense.getSelected().equals(Defense.PORTCULLIS)){
+	    addSequential(new CrossPortcullis() );
+	} else if(Robot.defense.getSelected().equals(Defense.CHEVAL_DE_FRISE) ){
+	    addSequential(new CrossChevalDeFrise() );
+	} else if(Robot.defense.getSelected().equals(Defense.MOAT) ){
+	    addSequential(new CrossMoat() );
+	} else if(Robot.defense.getSelected().equals(Defense.RAMPARTS)){
+	    addSequential(new CrossRamparts() );
+	} else if(Robot.defense.getSelected().equals(Defense.ROCK_WALL)){
+	    addSequential(new CrossRockWall() );
+    	} else if(Robot.defense.getSelected().equals(Defense.ROUGH_TERRAIN)){
+	    addSequential(new CrossRoughTerrain() );
+	} else if(Robot.defense.getSelected().equals(Defense.LOW_BAR)){
+	    addSequential(new CrossLowBar() );
+    	}
     }
     
     protected void execute(){
-    	if(Robot.defense.getSelected().equals(Defense.PORTCULLIS)){
-    		addSequential(new CrossPortcullis() );
-    	}else if(Robot.defense.getSelected().equals(Defense.CHEVAL_DE_FRISE) ){
-    		addSequential(new CrossChevalDeFrise() );
-    	}else if(Robot.defense.getSelected().equals(Defense.MOAT) ){
-    		addSequential(new CrossMoat() );
-    	}else if(Robot.defense.getSelected().equals(Defense.RAMPARTS)){
-    		addSequential(new CrossRamparts() );
-    	}else if(Robot.defense.getSelected().equals(Defense.ROCK_WALL)){
-    		addSequential(new CrossRockWall() );
-    	}else if(Robot.defense.getSelected().equals(Defense.ROUGH_TERRAIN)){
-    		addSequential(new CrossRoughTerrain() );
-    	}else if(Robot.defense.getSelected().equals(Defense.LOW_BAR)){
-    		addSequential(new CrossLowBar() );
-    	}
+
     }
     
     public enum StartingPosition {
