@@ -38,8 +38,8 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     
     // Autonomous settings
-    SendableChooser startingPosition;
-    SendableChooser defense;
+    public static SendableChooser startingPosition;
+    public static SendableChooser defense;
     
     /**
      * This function is run when the robot is first started up and should be
@@ -59,8 +59,8 @@ public class Robot extends IterativeRobot {
     	startingPosition.addObject("3", Autonomous.StartingPosition.POS3);
     	startingPosition.addObject("4", Autonomous.StartingPosition.POS4);
     	startingPosition.addObject("5", Autonomous.StartingPosition.POS5);
-
-	defense = new SendableChooser();
+    	
+    	defense = new SendableChooser();
     	defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
     	defense.addObject("Cheval de Frise", Autonomous.Defense.CHEVAL_DE_FRISE);
     	defense.addObject("Moat", Autonomous.Defense.MOAT);
