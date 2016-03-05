@@ -17,40 +17,26 @@ class PIDcontroller {
     private double previousError = 0,
                    previousSpeed = 0;
 
-    public CANTalon encoder;
+    public CANTalon[] encoders;
 
     // private  double prevError = 0.0; // Used for calculating Ki or something
 
-    private double goalSpeed = 0.0, // For left and right motors, respectively
-                   currentSpeed = 0.0;
+    private double goalSpeed = 0.0,  // Goal speed that PID will work towards
+                   currentSpeed = 0.0; // Current PID speed
 
     private double returnSpeed = 0.0; // speed to pass to motor controlling class (the direct one, not through PID)
 
-    private double integrator = 0.0, // for left and right motors, respectively
+    private double integrator = 0.0,
                    derivator = 0.0;
     
     //private static double integratorMax = 0.0, // Max and min values of integrator, to prevent it from being stupid. Depricated, cause i'm using the cool variable thingy. 
     //                      integratorMin = 0.0; 
     
-    public PIDcontroller() {
-    }
-
-    public PIDcontroller(double Kp, double Ki, double Kd) {
+    public PIDcontroller(double Kp, double Ki, double Kd, CANTalon[] encoder) {
         this.Kp = Kp;
         this.Ki = Ki;
         this.Kd = Kd;
-    }
-
-
-    public PIDcontroller(CANTalon encoder) {
-        this.encoder = encoder;
-    }
-
-    public PIDcontroller(double Kp, double Ki, double Kd, CANTalon encoder) {
-        this.Kp = Kp;
-        this.Ki = Ki;
-        this.Kd = Kd;
-        this.encoder = encoder;
+        this.encoders = encoder;
     }
 
     private double CalcError(double speed, double goalspeed) { // Calculates error from input values
@@ -94,11 +80,14 @@ class PIDcontroller {
             integrator = (-1.0/Ki); // AT LEAST I REMEMBERED THE SEMICOLON
         return integrator;
     }
+    public double GetSpeed() {
+        currentSpeed = ((encoders[0].getSpeed() + encoders[1].getSpeed())/2) * speedMulti;
+        return currentSpeed;
+    }
 
     public double PIDRun() {
-        if (encoder != null && (Kp != 0 ||  Ki != 0 || Kd != 0)) { // making sure encoder and at least one K variable is assigned
-            currentSpeed = encoder.getSpeed() * speedMulti;
-            this.currentSpeed = currentSpeed;
+        if (encoders[0] != null && encoders[1] != null && (Kp != 0 ||  Ki != 0 || Kd != 0)) { // making sure encoder and at least one K variable is assigned
+            this.currentSpeed = GetSpeed();
 
             double error = CalcError(currentSpeed, goalSpeed);
             this.integrator = UpdateIntegrator(error);

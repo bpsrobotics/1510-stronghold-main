@@ -2,9 +2,7 @@ package org.usfirst.frc.team1510.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.GenericHID;
 
 import org.usfirst.frc.team1510.robot.subsystems.PIDcontroller;
 /**
@@ -29,10 +27,6 @@ public class Drive extends Subsystem {
     // Robot drive class
     private RobotDrive drive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
     
-    // The encoders that are hooked up to the gearboxes
-    private Encoder leftEncoder = new Encoder(1,2);
-    private Encoder rightEncoder = new Encoder(3,4);
-    
     // Enabled
     private boolean enabled = false;
     
@@ -40,8 +34,12 @@ public class Drive extends Subsystem {
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
 
-    private PIDcontroller leftController = new PIDcontroller();
-    private PIDcontroller rightController = new PIDcontroller();
+    double Kp = 0,
+           Ki = 0,
+           Kd = 0;
+
+    private PIDcontroller leftController = new PIDcontroller(Kp, Ki, Kd, leftMotors);
+    private PIDcontroller rightController = new PIDcontroller(Kp, Ki, Kd, rightMotors);
 
     /**
      * Move based on left and right motor values
@@ -57,8 +55,36 @@ public class Drive extends Subsystem {
      * @param left The left joystick
      * @param right The right joystick
      */
-    
+
+    public void UpdatePIDTarget(double[] goalSpeed) { // Updates PID goal speeds, left then right
+        leftController.SetGoal(goalSpeed[0]);
+        rightController.SetGoal(goalSpeed[1]);
+    }
+
+    private double[] PIDRun() { // Shouldn't be used ever. Use UpdatePIDMotors instead
+        double[] speeds = {leftController.PIDRun(), rightController.PIDRun()}; // Runs PID code for the two controllers
+        return speeds;
+    }
+
+    public void UpdatePIDMotors() {
+        double[] speeds = PIDRun(); // Gets speeds motors should be running at
+        drive.tankDrive(speeds[0], speeds[1]); // Normal move stuff
+    }
+
+    public void move(double left, double right) {
+        double[] goal_speed = {left, right};
+        UpdatePIDTarget(goal_speed); //Updates targets w/ values
+        UpdatePIDMotors();
+    }
+
+    public double[] GetSpeeds() {
+        double[] speeds = {leftController.GetSpeed(), rightController.GetSpeed()};
+        return speeds;
+    }
+
     public void stop() {
+        double[] stopped = {0, 0};
+        UpdatePIDTarget(stopped);
     }
     
     public void enable() {
@@ -68,7 +94,6 @@ public class Drive extends Subsystem {
     public void disable() {
         enabled = false;
         stop();
-        resetEncoders();
     }
     
     // public void resetEncoders() {
