@@ -19,29 +19,23 @@ public class BallCollector extends Subsystem {
     private Counter counter1 = new Counter(limitSwitch1);
     private DigitalInput limitSwitch2 = new DigitalInput(2);
     private Counter counter2 = new Counter(limitSwitch2);
-    public boolean isSwitch1Set() {
-        return counter1.get() > 0;
-    }
+
     
-    public void initializeCounter1() {
-        counter1.reset();
-    }
-    public boolean isSwitch2Set() {
-        return counter2.get() > 0;
-    }
-    
-    public void initializeCounter2() {
-        counter2.reset();
-    }
-    public void extend() { 
-    	initializeCounter1();
-    	armMotor.set(-.25);
-    	if(isSwitch1Set()) armMotor.set(0);
+    public boolean extend() { 
+	armMotor.set(-0.25);
+	if (limitSwitch2.get()) {
+	    armMotor.set(0);
+	    return true;
+	}
+	return false;
     }
     public void retract() { 
-    	initializeCounter2();
-    	armMotor.set(.25);
-    	if(isSwitch2Set()) armMotor.set(0);
+	armMotor.set(0.25);
+	if (limitSwitch1.get()) {
+	    armMotor.set(0);
+	    return true;
+	}
+	return false;
     }
     public void forward(){
     	rollerMotor.set(Relay.Value.kForward);
