@@ -3,6 +3,7 @@ package org.usfirst.frc.team1510.robot.commands;
 import org.usfirst.frc.team1510.robot.Robot;
 import org.usfirst.frc.team1510.robot.subsystems.Drive;
 import org.usfirst.frc.team1510.robot.subsystems.WheelArms;
+import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team1510.robot.*;
@@ -14,7 +15,7 @@ public class Teleop extends Command {
 
     Drive drive = Robot.drive;
     WheelArms wheelArms = Robot.wheelArms;
-
+    Shooter shooter = Robot.shooter;
     Shoot shoot;
     Teleop() {
         // Use requires() here to declare subsystem dependencies
@@ -42,9 +43,13 @@ public class Teleop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	wheelArms.move(Robot.oi.gamepad2.getRawAxis(2));
-    	if (Robot.oi.gamepad2.getRawAxis(3) > 50) ;
-    	
+    	//wheelArms.move(Robot.oi.gamepad2.getRawAxis(2));
+    	//if (Robot.oi.gamepad2.getRawAxis(3) > 50) ;
+    	shooter.changeHeight(Robot.oi.gamepad2.getY());
+    	System.out.println(Robot.oi.gamepad2.getY());
+    	shooter.changeHeight(Robot.oi.gamepad2.getRawAxis(5));
+    	System.out.println(Robot.oi.gamepad2.getRawAxis(5));
+
     	
     }
 

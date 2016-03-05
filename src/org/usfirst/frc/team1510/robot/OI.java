@@ -36,13 +36,13 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
     
-    public Joystick leftStick = new Joystick(0);
+    public Joystick gamepad1 = new Joystick(0);
     
     //
     public Joystick gamepad2 = new Joystick(1);
 
     // Buttons
-    public JoystickButton leftTrigger = new JoystickButton(leftStick,1);
+    public JoystickButton leftTrigger = new JoystickButton(gamepad1,1);
     
     //public JoystickButton trigger1 = new JoystickButton(gamepad2, 1);
     //public JoystickButton trigger2 = new JoystickButton(gamepad2, 2);

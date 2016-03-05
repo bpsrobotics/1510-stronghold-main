@@ -25,7 +25,7 @@ public class ScalingMotor extends Subsystem {
 	public static void ExtendWithJoystick()
 	{
 		
-		double OICoords= Robot.oi.leftStick.getY();
+		double OICoords= Robot.oi.gamepad1.getY();
 		if(OICoords>0)
 		{
 			scalingMotorLeft.set(MaxSpeed);
