@@ -10,7 +10,7 @@ import org.usfirst.frc.team1510.robot.subsystems.*;
 public class AutoAim extends Command{
 	
 	private NetworkTable table = NetworkTable.getTable("GRIP/Target");
-	UltrasonicSubsystem sonic = new UltrasonicSubsystem(1,2);
+	UltrasonicSubsystem sonic = Robot.ultrasonic;
 	Shooter shooter = Robot.shooter;
 	Drive drive = Robot.drive;
  	double distance;

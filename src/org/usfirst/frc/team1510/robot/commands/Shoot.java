@@ -14,7 +14,7 @@ public class Shoot extends Command {
 
     BallCollector pickup = Robot.ballCollector;
     
-    UltrasonicSubsystem sonic = new UltrasonicSubsystem(1,2);
+    UltrasonicSubsystem sonic = Robot.ultrasonic;
 
     private double distance;
     private int cycles = 0;
