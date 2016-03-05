@@ -49,6 +49,9 @@ public class Robot extends IterativeRobot {
     	oi = new OI();
     	drive = new Drive();
     	targetLight = new TargetLight(1);
+    	shooter = new Shooter();
+    	ballCollector = new BallCollector();
+    	wheelArms = new WheelArms();
     	
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
@@ -129,7 +132,7 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        teleopCommand = new TeleopDrive();
+        teleopCommand = new Teleop();
         teleopCommand.start();
         
     }

@@ -17,9 +17,12 @@ public class Teleop extends Command {
     WheelArms wheelArms = Robot.wheelArms;
     Shooter shooter = Robot.shooter;
     Shoot shoot;
-    Teleop() {
+    public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	requires(shooter);
+    	requires(wheelArms);
+    	requires(drive);
     }
 
     // Called just before this Command runs the first time
