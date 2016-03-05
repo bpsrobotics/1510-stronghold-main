@@ -12,8 +12,10 @@ import org.usfirst.frc.team1510.robot.*;
  */
 public class Teleop extends Command {
 
-	Drive drive = Robot.drive;
-	WheelArms wheelArms = Robot.wheelArms;
+    Drive drive = Robot.drive;
+    WheelArms wheelArms = Robot.wheelArms;
+
+    Shoot shoot;
     Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,13 +37,13 @@ public class Teleop extends Command {
     	//Robot.oi.btnY.whenPressed(new RunWheels(drive.getAverageDistance()));
     	Robot.drive.setDefault();
     	
-    	
+    	shoot = new Shoot();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	wheelArms.move(Robot.oi.gamepad2.getRawAxis(2));
-    	if (Robot.oi.gamepad2.getRawAxis(3) > 50) new Shoot();
+    	if (Robot.oi.gamepad2.getRawAxis(3) > 50) 
     	
     }
 
