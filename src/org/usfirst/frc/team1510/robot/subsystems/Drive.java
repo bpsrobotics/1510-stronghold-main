@@ -82,7 +82,7 @@ public class Drive extends Subsystem {
 	//currentSpeed[0] = Math.pow(currentSpeed[0],4);
 	//currentSpeed[1] = Math.pow(currentSpeed[1],2);
 	
-    	drive.drive(currentSpeed[0], currentSpeed[1]);
+    	drive.arcadeDrive(currentSpeed[0], currentSpeed[1]);
 
     }
 

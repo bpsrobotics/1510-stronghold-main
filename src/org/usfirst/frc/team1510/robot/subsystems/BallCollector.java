@@ -29,13 +29,13 @@ public class BallCollector extends Subsystem {
 	}
 	return false;
     }
-    public void retract() { 
+    public boolean retract() { 
 	armMotor.set(0.25);
 	if (limitSwitch1.get()) {
 	    armMotor.set(0);
 	    return true;
 	}
-	return false;
+		return false;
     }
     public void forward(){
     	rollerMotor.set(Relay.Value.kForward);

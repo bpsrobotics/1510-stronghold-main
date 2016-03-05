@@ -29,7 +29,7 @@ BallCollector ballCollector = new BallCollector();
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ballCollector.isSwitch2Set();
+        return ballCollector.retract();
     }
 
     // Called once after isFinished returns true

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.CANTalon;
  */
 public class Shooter extends Subsystem {
     private CANTalon shooterMotor = new CANTalon(5);
-    private Talon guideWheels = {new Talon(2), new Talon(3)};
+    private Talon[] guideWheels = {new Talon(2), new Talon(3)};
     private boolean justShot = false;
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters
@@ -19,7 +19,6 @@ public class Shooter extends Subsystem {
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
 
-/
     /**
      * Fires the shooter with the given distance
      *
