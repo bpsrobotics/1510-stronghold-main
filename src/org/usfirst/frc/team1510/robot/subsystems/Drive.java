@@ -78,11 +78,15 @@ public class Drive extends Subsystem {
     		currentSpeed[1] += speedAdjustPerCycle;
     	
     	// Update motor throttle
+<<<<<<< HEAD
 
 	currentSpeed[0] = Math.pow(currentSpeed[0],4);
 	currentSpeed[1] = Math.pow(currentSpeed[1],2);
 	
     	drive.drive(currentSpeed[0], currentSpeed[1]);
+=======
+    	drive.drive(currentSpeed[0], currentSpeed[1], true);
+>>>>>>> 2681c416759a58eb862eb6ec39bdbb49e32a6f0b
     }
 
     /**
