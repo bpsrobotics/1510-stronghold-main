@@ -1,0 +1,146 @@
+<grip:Pipeline>
+  <sources>
+    <grip:ImageFile>
+      <property name="path" value="C:\Users\Anna\Documents\FRC2016\SampleGoalImage.png"/>
+    </grip:ImageFile>
+    <grip:Camera>
+      <property name="deviceNumber" value="0"/>
+    </grip:Camera>
+  </sources>
+  <steps>
+    <grip:Step name="HSL Threshold">
+      <grip:Input step="0" socket="0"/>
+      <grip:Input step="0" socket="1">
+        <value>
+          <double>74.46043165467627</double>
+          <double>93.6363636363636</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="2">
+        <value>
+          <double>130.71043165467623</double>
+          <double>255.0</double>
+        </value>
+      </grip:Input>
+      <grip:Input step="0" socket="3">
+        <value>
+          <double>43.57014388489208</double>
+          <double>106.8939393939394</double>
+        </value>
+      </grip:Input>
+      <grip:Output step="0" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="CV erode">
+      <grip:Input step="1" socket="0"/>
+      <grip:Input step="1" socket="1"/>
+      <grip:Input step="1" socket="2"/>
+      <grip:Input step="1" socket="3">
+        <value>5.0</value>
+      </grip:Input>
+      <grip:Input step="1" socket="4">
+        <value>BORDER_CONSTANT</value>
+      </grip:Input>
+      <grip:Input step="1" socket="5"/>
+      <grip:Output step="1" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="CV dilate">
+      <grip:Input step="2" socket="0"/>
+      <grip:Input step="2" socket="1"/>
+      <grip:Input step="2" socket="2"/>
+      <grip:Input step="2" socket="3">
+        <value>12.0</value>
+      </grip:Input>
+      <grip:Input step="2" socket="4">
+        <value>BORDER_CONSTANT</value>
+      </grip:Input>
+      <grip:Input step="2" socket="5"/>
+      <grip:Output step="2" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="CV erode">
+      <grip:Input step="3" socket="0"/>
+      <grip:Input step="3" socket="1"/>
+      <grip:Input step="3" socket="2"/>
+      <grip:Input step="3" socket="3">
+        <value>3.0</value>
+      </grip:Input>
+      <grip:Input step="3" socket="4">
+        <value>BORDER_CONSTANT</value>
+      </grip:Input>
+      <grip:Input step="3" socket="5"/>
+      <grip:Output step="3" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="Blur">
+      <grip:Input step="4" socket="0"/>
+      <grip:Input step="4" socket="1">
+        <value>GAUSSIAN</value>
+      </grip:Input>
+      <grip:Input step="4" socket="2">
+        <value>2.7027027027027026</value>
+      </grip:Input>
+      <grip:Output step="4" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="Find Lines">
+      <grip:Input step="5" socket="0"/>
+      <grip:Output step="5" socket="0" previewed="true"/>
+    </grip:Step>
+    <grip:Step name="Publish LinesReport">
+      <grip:Input step="6" socket="0"/>
+      <grip:Input step="6" socket="1">
+        <value>myLinesReport</value>
+      </grip:Input>
+      <grip:Input step="6" socket="2">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="6" socket="3">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="6" socket="4">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="6" socket="5">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="6" socket="6">
+        <value>true</value>
+      </grip:Input>
+      <grip:Input step="6" socket="7">
+        <value>true</value>
+      </grip:Input>
+    </grip:Step>
+  </steps>
+  <connections>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="5" socket="0" previewed="true"/>
+      <grip:Input step="6" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="0" socket="0" previewed="true"/>
+      <grip:Input step="1" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="4" socket="0" previewed="true"/>
+      <grip:Input step="5" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="2" socket="0" previewed="true"/>
+      <grip:Input step="3" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="3" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+  </connections>
+  <settings>
+    <teamNumber>0</teamNumber>
+    <publishAddress></publishAddress>
+    <deployAddress></deployAddress>
+  </settings>
+</grip:Pipeline>

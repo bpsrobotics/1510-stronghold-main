@@ -2,10 +2,9 @@ package org.usfirst.frc.team1510.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.GenericHID;
 
+import org.usfirst.frc.team1510.robot.subsystems.PIDcontroller;
 /**
  *
  */
@@ -28,17 +27,19 @@ public class Drive extends Subsystem {
     // Robot drive class
     private RobotDrive drive = new RobotDrive(leftMotors[0], leftMotors[1], rightMotors[0], rightMotors[1]);
     
-    // The encoders that are hooked up to the gearboxes
-    private Encoder leftEncoder = new Encoder(1,2);
-    private Encoder rightEncoder = new Encoder(3,4);
-    
     // Enabled
     private boolean enabled = false;
     
     // Speed ramping variables
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
-    private double speedAdjustPerCycle = 0.04;
+
+    double Kp = 0,
+           Ki = 0,
+           Kd = 0;
+
+    private PIDcontroller leftController = new PIDcontroller(Kp, Ki, Kd, leftMotors);
+    private PIDcontroller rightController = new PIDcontroller(Kp, Ki, Kd, rightMotors);
 
     /**
      * Move based on left and right motor values
@@ -46,39 +47,7 @@ public class Drive extends Subsystem {
      * @param left The left motor value
      * @param right The right motor value
      */
-    public void move(double left, double right) {
-    	if (!enabled) return;
-    	//drive.tankDrive(left,right,true);
-    	
-    	// Set goal speed
-    	goalSpeed[0] = left;
-    	goalSpeed[1] = right;
-    	
-    	// Logic for left motors
-    	if (Math.abs(goalSpeed[0] - currentSpeed[0]) < speedAdjustPerCycle)
-    		// If within one-cycle range of goal
-    		currentSpeed[0] = goalSpeed[0];
-    	else if (currentSpeed[0] > goalSpeed[0])
-    		// If more than goal
-    		currentSpeed[0] -= speedAdjustPerCycle;
-    	else if (currentSpeed[0] < goalSpeed[0])
-    		// If less than goal
-    		currentSpeed[0] += speedAdjustPerCycle;
-    	
-    	// Logic for right motors
-    	if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
-    		// If within one-cycle range of goal
-    		currentSpeed[1] = goalSpeed[1];
-    	else if (currentSpeed[1] > goalSpeed[1])
-    		// If more than goal
-    		currentSpeed[1] -= speedAdjustPerCycle;
-    	else if (currentSpeed[1] < goalSpeed[1])
-    		// If less than goal
-    		currentSpeed[1] += speedAdjustPerCycle;
-    	
-    	// Update motor throttle
-    	drive.tankDrive(currentSpeed[0], currentSpeed[1], true);
-    }
+
 
     /**
      * Move based on left and right joystick
@@ -86,40 +55,56 @@ public class Drive extends Subsystem {
      * @param left The left joystick
      * @param right The right joystick
      */
-    public void move(GenericHID left, GenericHID right) {
-    	if (!enabled) return;
-    	drive.tankDrive(left,right,true);
+
+    public void UpdatePIDTarget(double[] goalSpeed) { // Updates PID goal speeds, left then right
+        leftController.SetGoal(goalSpeed[0]);
+        rightController.SetGoal(goalSpeed[1]);
+    }
+
+    private double[] PIDRun() { // Shouldn't be used ever. Use UpdatePIDMotors instead
+        double[] speeds = {leftController.PIDRun(), rightController.PIDRun()}; // Runs PID code for the two controllers
+        return speeds;
+    }
+
+    public void UpdatePIDMotors() {
+        double[] speeds = PIDRun(); // Gets speeds motors should be running at
+        drive.tankDrive(speeds[0], speeds[1]); // Normal move stuff
+    }
+
+    public void move(double left, double right) {
+        double[] goal_speed = {left, right};
+        UpdatePIDTarget(goal_speed); //Updates targets w/ values
+        UpdatePIDMotors();
+    }
+
+    public void move() {
+        UpdatePIDMotors();
     }
 
 
-    public double[] getEncoderValues() {
-    	double[] result = {leftEncoder.getDistance(), rightEncoder.getDistance()};
-	
-    	return result;
+    public double[] GetSpeeds() {
+        double[] speeds = {leftController.GetSpeed(), rightController.GetSpeed()};
+        return speeds;
     }
-    
+
     public void stop() {
-    	drive.stopMotor();
-    	goalSpeed[0] = 0;
-    	goalSpeed[1] = 0;
-    	currentSpeed[0] = 0;
-    	currentSpeed[1] = 0;
+        double[] stopped = {0, 0};
+        UpdatePIDTarget(stopped);
     }
     
     public void enable() {
-    	enabled = true;
+        enabled = true;
     }
     
     public void disable() {
-    	enabled = false;
-    	stop();
-    	resetEncoders();
+        enabled = false;
+        stop();
     }
     
-    public void resetEncoders() {
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    }
+    // public void resetEncoders() {
+    //     leftEncoder.reset();
+    //     rightEncoder.reset();
+    // }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
