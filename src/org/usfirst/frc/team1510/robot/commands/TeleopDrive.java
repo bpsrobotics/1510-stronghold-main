@@ -26,10 +26,10 @@ public class TeleopDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	drive.move(-Robot.oi.leftStick.getY(), -Robot.oi.leftStick.getRawAxis(5));
-    	double[] encoderValues = drive.getEncoderValues();
+    	double[] speedValues = drive.GetSpeeds();
     	
-    	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
-    	SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
+    	SmartDashboard.putNumber("Left Motors Avg. Speed", speedValues[0]);
+    	SmartDashboard.putNumber("Right Motors Avg. Speed", speedValues[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()
