@@ -1,20 +1,26 @@
-package org.usfirst.frc.team1510.robot.commands;
+package org.usfirst.frc.team1510.robot.commands.crossers;
 
-import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.commands.DeployWheels;
+import org.usfirst.frc.team1510.robot.commands.Move;
+import org.usfirst.frc.team1510.robot.commands.RunWheels;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team1510.robot.commands.Move;
+
 /**
  *
  */
-public class CrossLowBar extends CommandGroup {
+public class CrossChevalDeFrise extends CommandGroup {
 
-    public CrossLowBar() {
-    	//Move wheels down so they don't hit the low bar
+    public CrossChevalDeFrise() {
+    	//Move forward to the defense
+    	addSequential(new Move(400));
+    	//Deploy wheel arms to stabilize seesaws
     	addSequential(new DeployWheels(135));
-    	//Move all 8 wheels forward
+    	//Move forward with all 8 wheels
     	addSequential(new Move(40));
     	addParallel(new RunWheels(.85));
+    	
+    	
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

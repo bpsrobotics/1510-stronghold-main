@@ -1,6 +1,13 @@
 package org.usfirst.frc.team1510.robot.commands;
 
 import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossChevalDeFrise;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossLowBar;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossMoat;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossPortcullis;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossRamparts;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossRockWall;
+import org.usfirst.frc.team1510.robot.commands.crossers.CrossRoughTerrain;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
