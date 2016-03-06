@@ -1,6 +1,4 @@
-package org.usfirst.frc.team1510.robot.commands.crossers;
-
-import org.usfirst.frc.team1510.robot.commands.Move;
+package org.usfirst.frc.team1510.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

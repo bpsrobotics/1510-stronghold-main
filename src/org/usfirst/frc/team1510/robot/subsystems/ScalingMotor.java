@@ -14,7 +14,7 @@ public class ScalingMotor extends Subsystem {
 	private static Talon scalingMotorRight = new Talon(0);
 	public final static double MaxSpeed = 88.5;
 	private Encoder encoder1=new Encoder(7,8);
-	//private Encoder encoder2=new Encoder(7,8);
+	private Encoder encoder2=new Encoder(7,8);
 	public static boolean terminate=false;
 
 	public void ExtendMax()
