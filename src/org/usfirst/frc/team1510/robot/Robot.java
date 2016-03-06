@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
     public static Shooter shooter;
     public static BallCollector ballCollector;
     public static WheelArms wheelArms;
+    public static UltrasonicSubsystem ultrasonic;
     
     
     Command autonomousCommand;
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
     	shooter = new Shooter();
     	ballCollector = new BallCollector();
     	wheelArms = new WheelArms();
+    	ultrasonic = new UltrasonicSubsystem(1,2);
     	
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);

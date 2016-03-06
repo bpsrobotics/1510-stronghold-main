@@ -26,7 +26,7 @@ public class WheelArms extends Subsystem {
     private double currentSpeed = 0;
     private double speedAdjustPerCycle = 0.04;
     
-    private Encoder encoder = new Encoder(1,2);
+    private Encoder encoder = new Encoder(3,4);
     boolean finished = false;
     public void extend(double angle) {
     	encoder.reset();
