@@ -1,12 +1,11 @@
 package org.usfirst.frc.team1510.robot.commands;
 
-import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.*;
 import org.usfirst.frc.team1510.robot.subsystems.Drive;
 import org.usfirst.frc.team1510.robot.subsystems.WheelArms;
 import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import org.usfirst.frc.team1510.robot.*;
 
 /**
  *
@@ -17,6 +16,16 @@ public class Teleop extends Command {
     WheelArms wheelArms = Robot.wheelArms;
     Shooter shooter = Robot.shooter;
     Shoot shoot;
+
+    private OI oi = Robot.oi;
+
+    private DeployRoller deployRoller = new DeployRoller();
+    private RetractRoller retractRoller = new RetractRoller();
+    private DeployWheels deployWheels = new DeployWheels();
+    private RetractWheels retractWheels = new RetractWheels();
+    private BallPickup pickupBall = new BallPickup();
+    private BallRelease releaseBall = new BallRelease();
+    
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -27,12 +36,12 @@ public class Teleop extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.oi.btnA.whenPressed(new DeployRoller());
-    	Robot.oi.btnB.whenPressed(new RetractRoller());
-    	Robot.oi.btnX.whenPressed(new DeployWheels(135));
-    	Robot.oi.btnY.whenPressed(new RetractWheels(135));
-    	Robot.oi.rightBumper.whenPressed(new BallPickup());
-    	Robot.oi.leftBumper.whenPressed(new BallRelease());
+    	//Robot.oi.btnA.whenPressed(new DeployRoller());
+    	//Robot.oi.btnB.whenPressed(new RetractRoller());
+    	//Robot.oi.btnX.whenPressed(new DeployWheels(135));
+    	//Robot.oi.btnY.whenPressed(new RetractWheels(135));
+    	//Robot.oi.rightBumper.whenPressed(new BallPickup());
+    	//Robot.oi.leftBumper.whenPressed(new BallRelease());
 
     	//Need to make command to reset distance
     	//Robot.oi.lStick.whenPressed(new ResetDistance);
@@ -53,6 +62,35 @@ public class Teleop extends Command {
     	shooter.changeHeight(Robot.oi.gamepad2.getRawAxis(5));
     	System.out.println(Robot.oi.gamepad2.getRawAxis(5));
 
+	if (oi.btnA.get() && !deployRoller.isRunning()) {
+	    // End commands requiring roller
+	    retractRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    // Start command
+	    deployRoller.start();
+	} else if (oi.btnB.get() && !retractRoller.isRunning()) {
+	    // End commands requiring roller
+	    deployRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    // Start command
+	    retractRoller.start();
+	} else if (oi.rightBumper.get() && !pickupBall.isRunning()) {
+	    // End commands requiring roller
+	    deployRoller.cancel();
+	    retractRoller.cancel();
+	    releaseBall.cancel();
+	    // Start command
+	    pickupBall.start();
+	} else if (oi.leftBumper.get() && !releaseBall.isRunning()) {
+	    // End commands requiring roller
+	    deployRoller.cancel();
+	    retractRoller.cancel();
+	    pickupBall.cancel();
+	    // Start command
+	    releaseBall.start();
+	}
     	
     }
 
