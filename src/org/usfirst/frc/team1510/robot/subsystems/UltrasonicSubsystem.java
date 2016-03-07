@@ -21,7 +21,7 @@ public class UltrasonicSubsystem extends SensorBase{
 	 * Returns the recorded distance from the Ultrasonic sensor
 	 * @return the recorded distance from the Ultrasonic sensor
 	 */
-	public double getDistanceInches(){
+	public double getInches(){
 		return sonic.getRangeInches();
 	}
 	
@@ -29,7 +29,7 @@ public class UltrasonicSubsystem extends SensorBase{
 	 * Returns the recorded distance from the Ultrasonic sensor
 	 * @return the recorded distance from the Ultrasonic sensor
 	 */
-	public double getDistanceMM(){
+	public double getMillimeters(){
 		return sonic.getRangeMM();
 	}
 	

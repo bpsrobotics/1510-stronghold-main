@@ -35,15 +35,33 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
-	
-	public Joystick leftStick = new Joystick(0);
-	public Joystick rightStick = new Joystick(1);
-	
-	public static final double deadzoneThreshold = 0.35;
-	
-	public static double deadzone(double value) {
-		if (Math.abs(value) < deadzoneThreshold) return 0;
-		return deadzoneThreshold;
-	}
-	
+    
+    public Joystick gamepad1 = new Joystick(0);
+    
+    //
+    public Joystick gamepad2 = new Joystick(1);
+
+    // Buttons
+    public JoystickButton leftTrigger = new JoystickButton(gamepad1,1);
+    
+    //public JoystickButton trigger1 = new JoystickButton(gamepad2, 1);
+    //public JoystickButton trigger2 = new JoystickButton(gamepad2, 2);
+    public JoystickButton btnA = new JoystickButton(gamepad2, 1);
+    public JoystickButton btnB = new JoystickButton(gamepad2, 2);
+    public JoystickButton btnX = new JoystickButton(gamepad2, 3);
+    public JoystickButton btnY = new JoystickButton(gamepad2, 4);
+    public JoystickButton leftBumper = new JoystickButton(gamepad2, 5);
+    public JoystickButton rightBumper = new JoystickButton(gamepad2, 6);
+    public JoystickButton lStick = new JoystickButton(gamepad2, 9);
+    public JoystickButton rStick = new JoystickButton(gamepad2, 10);
+    
+    
+    
+    public static final double deadzoneThreshold = 0.35;
+    
+    public static double deadzone(double value) {
+	if (Math.abs(value) < deadzoneThreshold) return 0;
+	return deadzoneThreshold;
+    }
+    
 }

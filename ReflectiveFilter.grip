@@ -19,29 +19,32 @@
       <grip:Input step="1" socket="0"/>
       <grip:Input step="1" socket="1">
         <value>
-          <double>50.17985611510791</double>
-          <double>107.27272727272728</double>
+          <double>69.60431654676259</double>
+          <double>108.78787878787884</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="2">
         <value>
-          <double>103.19244604316548</double>
+          <double>206.3849452310152</double>
           <double>255.0</double>
         </value>
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>41.276978417266186</double>
-          <double>139.0909090909091</double>
+          <double>77.96762589928058</double>
+          <double>164.84848484848484</double>
         </value>
       </grip:Input>
-      <grip:Output step="1" socket="0" previewed="false"/>
+      <grip:Output step="1" socket="0" previewed="true"/>
     </grip:Step>
-    <grip:Step name="Find Lines">
+    <grip:Step name="Find Contours">
       <grip:Input step="2" socket="0"/>
+      <grip:Input step="2" socket="1">
+        <value>false</value>
+      </grip:Input>
       <grip:Output step="2" socket="0" previewed="true"/>
     </grip:Step>
-    <grip:Step name="Publish LinesReport">
+    <grip:Step name="Publish ContoursReport">
       <grip:Input step="3" socket="0"/>
       <grip:Input step="3" socket="1">
         <value>Target</value>
@@ -65,28 +68,38 @@
         <value>true</value>
       </grip:Input>
     </grip:Step>
+    <grip:Step name="Publish Video">
+      <grip:Input step="4" socket="0"/>
+      <grip:Input step="4" socket="1">
+        <value>58.37837837837838</value>
+      </grip:Input>
+    </grip:Step>
   </steps>
   <connections>
+    <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="0" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
+    </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="true"/>
       <grip:Input step="3" socket="0"/>
     </grip:Connection>
     <grip:Connection>
+      <grip:Output source="0" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
       <grip:Input step="1" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output step="1" socket="0" previewed="false"/>
-      <grip:Input step="2" socket="0"/>
-    </grip:Connection>
-    <grip:Connection>
-      <grip:Output source="0" socket="0" previewed="true"/>
-      <grip:Input step="0" socket="0"/>
     </grip:Connection>
   </connections>
   <settings>
     <teamNumber>1510</teamNumber>
-    <publishAddress></publishAddress>
+    <publishAddress>roborio-1510-frc.local</publishAddress>
     <deployAddress></deployAddress>
   </settings>
 </grip:Pipeline>
