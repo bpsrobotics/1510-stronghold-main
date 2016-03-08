@@ -15,14 +15,13 @@ public class Teleop extends Command {
     Drive drive = Robot.drive;
     WheelArms wheelArms = Robot.wheelArms;
     Shooter shooter = Robot.shooter;
-    Shoot shoot;
 
     private OI oi = Robot.oi;
 
     private DeployRoller deployRoller = new DeployRoller();
     private RetractRoller retractRoller = new RetractRoller();
-    private DeployWheels deployWheels = new DeployWheels(135);
-    private RetractWheels retractWheels = new RetractWheels(135);
+    private DeployWheels deployWheels = new DeployWheels(10);
+    private RetractWheels retractWheels = new RetractWheels(10);
     private BallPickup pickupBall = new BallPickup();
     private BallRelease releaseBall = new BallRelease();
     
@@ -45,12 +44,10 @@ public class Teleop extends Command {
 
     	//Need to make command to reset distance
     	//Robot.oi.lStick.whenPressed(new ResetDistance);
-    	Robot.oi.rStick.whenPressed(new AutoAim());
+    	//Robot.oi.rStick.whenPressed(new AutoAim());
     	
     	//Robot.oi.btnY.whenPressed(new RunWheels(drive.getAverageDistance()));
     	Robot.drive.setDefault();
-    	
-    	shoot = new Shoot();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -90,6 +87,28 @@ public class Teleop extends Command {
 	    pickupBall.cancel();
 	    // Start command
 	    releaseBall.start();
+	}
+
+	if (oi.btnX.get() && !deployWheels.isRunning()) {
+	    // End commands requiring wheel arms
+	    retractWheels.cancel();
+	    // Start command
+	    deployWheels.start();
+	} else if (oi.btnY.get() && !retractWheels.isRunning()) {
+	    // End commands requiring wheel arms
+	    deployWheels.cancel();
+	    // Start command
+	    retractWheels.start();
+	}
+
+	if (oi.start.get()) {
+	    // Cancel all commands
+	    deployRoller.cancel();
+	    retractRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    deployWheels.cancel();
+	    retractWheels.cancel();
 	}
     	
     }
