@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class RetractWheels extends Command {
-	WheelArms wheelArms = new WheelArms();
+	WheelArms wheelArms = Robot.wheelArms;
 	double angle;
     public RetractWheels(double reqAngle) {
         // Use requires() here to declare subsystem dependencies

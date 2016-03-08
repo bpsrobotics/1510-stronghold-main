@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DeployWheels extends Command {
 
-	WheelArms wheelArms = new WheelArms();
+	//WheelArms wheelArms = new WheelArms();
 	double angle;
     public DeployWheels(double reqAngle) {
     	
@@ -26,12 +26,12 @@ public class DeployWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		wheelArms.extend(angle);
+		Robot.wheelArms.extend(angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return wheelArms.isComplete();
+        return Robot.wheelArms.isComplete();
     }
 
     // Called once after isFinished returns true

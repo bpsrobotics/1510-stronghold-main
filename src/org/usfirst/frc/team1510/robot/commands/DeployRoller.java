@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DeployRoller extends Command {
 	
-	BallCollector ballCollector = new BallCollector();
-	
     public DeployRoller() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,12 +22,12 @@ public class DeployRoller extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ballCollector.extend();
+    	Robot.ballCollector.extend();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ballCollector.extend();
+        return Robot.ballCollector.extend();
     }
 
     // Called once after isFinished returns true

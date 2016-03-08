@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class BallRelease extends Command {
 
-	BallCollector ballCollector = new BallCollector();
+	BallCollector ballCollector = Robot.ballCollector;
     public BallRelease() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
