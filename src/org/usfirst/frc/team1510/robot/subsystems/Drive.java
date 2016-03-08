@@ -34,6 +34,8 @@ public class Drive extends Subsystem {
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
 
+    double[] stopped = {0, 0};
+
     double Kp = 0,
            Ki = 0,
            Kd = 0;
@@ -67,14 +69,20 @@ public class Drive extends Subsystem {
     }
 
     public void UpdatePIDMotors() {
-        double[] speeds = PIDRun(); // Gets speeds motors should be running at
-        drive.tankDrive(speeds[0], speeds[1]); // Normal move stuff
+        if (enabled) {
+            double[] speeds = PIDRun(); // Gets speeds motors should be running at
+            drive.tankDrive(speeds[0], speeds[1]); // Normal move stuff
+        } else {
+           double[] speeds = stopped;
+        }
     }
 
     public void move(double left, double right) {
-        double[] goal_speed = {left, right};
-        UpdatePIDTarget(goal_speed); //Updates targets w/ values
-        UpdatePIDMotors();
+        if (enabled) {
+            double[] goal_speed = {left, right};
+            UpdatePIDTarget(goal_speed); //Updates targets w/ values
+            UpdatePIDMotors();
+        }
     }
 
     public void move() {
@@ -88,7 +96,6 @@ public class Drive extends Subsystem {
     }
 
     public void stop() {
-        double[] stopped = {0, 0};
         UpdatePIDTarget(stopped);
     }
     
