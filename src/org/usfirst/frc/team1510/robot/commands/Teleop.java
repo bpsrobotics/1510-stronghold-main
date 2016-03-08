@@ -21,8 +21,8 @@ public class Teleop extends Command {
 
     private DeployRoller deployRoller = new DeployRoller();
     private RetractRoller retractRoller = new RetractRoller();
-    private DeployWheels deployWheels = new DeployWheels();
-    private RetractWheels retractWheels = new RetractWheels();
+    private DeployWheels deployWheels = new DeployWheels(135);
+    private RetractWheels retractWheels = new RetractWheels(135);
     private BallPickup pickupBall = new BallPickup();
     private BallRelease releaseBall = new BallRelease();
     
