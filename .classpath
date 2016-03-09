@@ -5,10 +5,9 @@
 	<classpathentry exported="true" kind="var" path="networktables" sourcepath="networktables.sources"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.8.0_71">
-		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Program Files/Java/jdk1.8.0_71"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/home/solomon/wpilib/java/current/lib/WPILib-sources.jar"/>
+	<classpathentry kind="lib" path="/home/solomon/wpilib/java/current/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="/home/solomon/wpilib/java/current/lib/NetworkTables-sources.jar"/>
+	<classpathentry kind="lib" path="/home/solomon/wpilib/java/current/lib/NetworkTables.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

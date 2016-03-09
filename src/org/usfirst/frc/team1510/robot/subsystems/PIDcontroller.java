@@ -81,7 +81,7 @@ class PIDcontroller {
         return integrator;
     }
     public double GetSpeed() {
-        currentSpeed = ((encoders[0].getSpeed() + encoders[1].getSpeed())/2) * speedMulti;
+        currentSpeed = encoders[0].getSpeed() * speedMulti;
         return currentSpeed;
     }
 
