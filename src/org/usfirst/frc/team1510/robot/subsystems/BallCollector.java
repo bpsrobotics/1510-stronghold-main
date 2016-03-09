@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class BallCollector extends Subsystem {
     
 	// Arm systems
-    private Talon armMotor = new Talon(1);
-    private Relay rollerMotor = new Relay(2 , Relay.Direction.kForward);
+    private Talon armMotor = new Talon(0);
+    private Relay rollerMotor = new Relay(1);
     private DigitalInput limitSwitch1 = new DigitalInput(5);
     private Counter counter1 = new Counter(limitSwitch1);
     private DigitalInput limitSwitch2 = new DigitalInput(6);

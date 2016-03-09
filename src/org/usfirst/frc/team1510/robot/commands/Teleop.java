@@ -20,17 +20,18 @@ public class Teleop extends Command {
 
     private DeployRoller deployRoller = new DeployRoller();
     private RetractRoller retractRoller = new RetractRoller();
-    private DeployWheels deployWheels = new DeployWheels(10);
-    private RetractWheels retractWheels = new RetractWheels(10);
+    private DeployWheels deployWheels = new DeployWheels(1);
+    private RetractWheels retractWheels = new RetractWheels(1);
     private BallPickup pickupBall = new BallPickup();
     private BallRelease releaseBall = new BallRelease();
+    //private RunWheels runWheels = new RunWheels(oi.gamepad1.getY());
     
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(shooter);
-    	requires(wheelArms);
-    	requires(drive);
+    	//requires(shooter);
+    	//requires(wheelArms);
+    	//requires(drive);
     }
 
     // Called just before this Command runs the first time
@@ -48,6 +49,7 @@ public class Teleop extends Command {
     	
     	//Robot.oi.btnY.whenPressed(new RunWheels(drive.getAverageDistance()));
     	Robot.drive.setDefault();
+    	new TeleopDrive().start();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -58,7 +60,7 @@ public class Teleop extends Command {
     	System.out.println(Robot.oi.gamepad2.getY());
     	shooter.changeHeight(Robot.oi.gamepad2.getRawAxis(5));
     	System.out.println(Robot.oi.gamepad2.getRawAxis(5));
-
+    	//wheelArms.move(Robot.oi.gamepad1.getY());
 	if (oi.btnA.get() && !deployRoller.isRunning()) {
 	    // End commands requiring roller
 	    retractRoller.cancel();
@@ -99,8 +101,19 @@ public class Teleop extends Command {
 	    deployWheels.cancel();
 	    // Start command
 	    retractWheels.start();
+	} if (oi.btnX.get() && deployWheels.isRunning()) {
+		deployWheels.cancel();
+		retractWheels.cancel();
+	} if (oi.btnY.get() && retractWheels.isRunning()) {
+		retractWheels.cancel();
+		deployWheels.cancel();
 	}
-
+	/*if(oi.g1btnA.get()){
+		runWheels.start();
+	}
+	//else if (oi.leftStickPress.get() && runWheels.isRunning()){
+		//runWheels.cancel();
+	//}*/
 	if (oi.start.get()) {
 	    // Cancel all commands
 	    deployRoller.cancel();
@@ -109,6 +122,7 @@ public class Teleop extends Command {
 	    releaseBall.cancel();
 	    deployWheels.cancel();
 	    retractWheels.cancel();
+	    //runWheels.cancel();
 	}
     	
     }

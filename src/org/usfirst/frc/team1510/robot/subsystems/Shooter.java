@@ -40,7 +40,7 @@ public class Shooter extends Subsystem {
     
     public void changeDistance(double power) {
 
-    	guideWheels[0].set(power);
+    	guideWheels[0].set(-power);
     	guideWheels[1].set(power);
     	
     }

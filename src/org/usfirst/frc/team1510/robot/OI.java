@@ -43,7 +43,8 @@ public class OI {
 
     // Buttons
     public JoystickButton leftTrigger = new JoystickButton(gamepad1,1);
-    
+    public JoystickButton  leftStickPress = new JoystickButton(gamepad1,9);
+    public JoystickButton  g1btnA = new JoystickButton(gamepad1, 1);
     //public JoystickButton trigger1 = new JoystickButton(gamepad2, 1);
     //public JoystickButton trigger2 = new JoystickButton(gamepad2, 2);
     public JoystickButton btnA = new JoystickButton(gamepad2, 1);

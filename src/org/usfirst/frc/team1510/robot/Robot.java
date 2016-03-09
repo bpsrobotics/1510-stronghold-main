@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	oi = new OI();
     	drive = new Drive();
-    	targetLight = new TargetLight(1);
+    	targetLight = new TargetLight(0);
     	shooter = new Shooter();
     	ballCollector = new BallCollector();
     	wheelArms = new WheelArms();

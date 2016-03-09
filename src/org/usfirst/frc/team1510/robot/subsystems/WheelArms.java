@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Encoder;
 public class WheelArms extends Subsystem {
     
 	// Arm systems
-    private Talon armMotor = new Talon(0);
+    private Talon armMotor = new Talon(1);
     // Wheel motors
     private CANTalon wheelMotor = new CANTalon(4);
     
@@ -30,8 +30,8 @@ public class WheelArms extends Subsystem {
     boolean finished = false;
     public void extend(double angle) {
     	encoder.reset();
-    	if(encoder.getDistance() < angle){
-    		armMotor.set(-.25);
+    	if(encoder.getDistance() > -angle){
+    		armMotor.set(0.25);
     	}
     	else {
     		armMotor.set(0);
@@ -41,7 +41,7 @@ public class WheelArms extends Subsystem {
     public void retract(double angle) { 
 
     	encoder.reset();
-    	if(encoder.getDistance() > -angle){
+    	if(encoder.getDistance() < angle){
     		armMotor.set(-.25);
     	}
     	else {
