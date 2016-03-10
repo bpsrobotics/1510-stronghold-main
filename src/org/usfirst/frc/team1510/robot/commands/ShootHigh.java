@@ -28,20 +28,24 @@ public class ShootHigh extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	//Set power of shooter wheels and guide wheels
     	shooter.changeDistance(1);
 		shooter.changeHeight(.95);
+		//Wait for motors to get up to speed
 		try {
 			Thread.sleep(250);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		//Feed ball into shooter
 		ballCollector.forward();
+		//Wait for ball to shoot
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		//Stop all motors before exiting
 		shooter.stop();
 		ballCollector.off();
 		isDone = true;
