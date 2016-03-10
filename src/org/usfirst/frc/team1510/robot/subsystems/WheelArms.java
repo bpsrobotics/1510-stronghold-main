@@ -28,6 +28,10 @@ public class WheelArms extends Subsystem {
     
     private Encoder encoder = new Encoder(3,4);
     boolean finished = false;
+    public void stop (){
+    	armMotor.set(0);
+    	wheelMotor.set(0);
+    }
     public void extend(double angle) {
     	encoder.reset();
     	if(encoder.getDistance() > -angle){
@@ -74,6 +78,12 @@ public class WheelArms extends Subsystem {
     	wheelMotor.set(currentSpeed);
     }
 	
+    public void moveArm(double speed) {
+ 
+    	// Update motor throttle
+    	armMotor.set(speed);
+    }
+    
     public void enable() {
     	
     }

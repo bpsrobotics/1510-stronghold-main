@@ -1,21 +1,24 @@
 package org.usfirst.frc.team1510.robot.commands;
 
 import org.usfirst.frc.team1510.robot.Robot;
-import org.usfirst.frc.team1510.robot.subsystems.WheelArms;
+import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
+import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class RetractWheels extends Command {
-	WheelArms wheelArms = Robot.wheelArms;
-	double angle;
-    public RetractWheels(double reqAngle) {
+public class ShootLow extends Command {
+
+	Shooter shooter = Robot.shooter;
+	BallCollector ballCollector= Robot.ballCollector;
+	boolean isDone;
+    public ShootLow() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.wheelArms);
-    	angle =reqAngle;
+    	requires(shooter);
+    	requires(ballCollector);
     }
 
     // Called just before this Command runs the first time
@@ -24,17 +27,34 @@ public class RetractWheels extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	wheelArms.retract(angle);
+    	
+    	shooter.changeDistance(1);
+		shooter.changeHeight(.25);
+		try {
+			Thread.sleep(250);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		ballCollector.forward();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		shooter.stop();
+		ballCollector.off();
+		isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return wheelArms.isComplete();
+        return isDone;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	wheelArms.stop();
+    	shooter.stop();
+		ballCollector.off();
     }
 
     // Called when another command which requires one or more of the same

@@ -34,20 +34,22 @@ public class Shooter extends Subsystem {
     
     public void changeHeight(double power) {
 
-    	shooterMotor.set(power);
+    	shooterMotor.set(-power);
     	
     }
     
     public void changeDistance(double power) {
 
-    	guideWheels[0].set(-power);
-    	guideWheels[1].set(power);
+    	guideWheels[0].set(power);
+    	guideWheels[1].set(-power);
     	
     }
 
     public void stop() {
 
-	shooterMotor.set(0);
+    	shooterMotor.set(0);
+    	guideWheels[0].set(0);
+    	guideWheels[1].set(0);
 	
     }
 
