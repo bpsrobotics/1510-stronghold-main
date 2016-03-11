@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DeployRoller extends Command {
-	
+	private boolean isDone = false;
     public DeployRoller() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,21 +22,23 @@ public class DeployRoller extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ballCollector.extend();
+    	isDone = Robot.ballCollector.extend();
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.ballCollector.extend();
+        return isDone;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	Robot.ballCollector.off();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

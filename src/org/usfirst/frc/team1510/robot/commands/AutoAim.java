@@ -12,6 +12,7 @@ public class AutoAim extends Command{
 	private NetworkTable table = NetworkTable.getTable("GRIP/Target");
 	UltrasonicSubsystem sonic = Robot.ultrasonic;
 	Shooter shooter = Robot.shooter;
+	TargetLight targetLight = Robot.targetLight;
 	Drive drive = Robot.drive;
  	double distance;
 	//private TargetLight targetLight = Robot.targetLight;
@@ -93,11 +94,12 @@ public class AutoAim extends Command{
 
 	    // Called once after isFinished returns true
 	    protected void end() {
-	    	//targetLight.off();
+	    	targetLight.off();
 	    }
 
 	    // Called when another command which requires one or more of the same
 	    // subsystems is scheduled to run
 	    protected void interrupted() {
+	    	end();
 	    }
 }

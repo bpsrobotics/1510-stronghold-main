@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class BallRelease extends Command {
-
+	private boolean isDone = false;
 	BallCollector ballCollector = Robot.ballCollector;
     public BallRelease() {
         // Use requires() here to declare subsystem dependencies
@@ -24,12 +24,12 @@ public class BallRelease extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ballCollector.reverse();
+    	isDone = ballCollector.releaseBall();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isDone;
     }
 
     // Called once after isFinished returns true
@@ -40,5 +40,6 @@ public class BallRelease extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
