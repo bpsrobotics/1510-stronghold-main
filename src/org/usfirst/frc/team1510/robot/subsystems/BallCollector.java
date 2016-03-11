@@ -49,13 +49,15 @@ public class BallCollector extends Subsystem {
     	rollerMotor.set(Relay.Value.kOn);
     }
     
-    public void getBall(){
+    public boolean getBall(){
     	transmitter.set(true);
-    	if(receiver.get() == false){
+    	if(!receiver.get()){
     		forward();
+    		return false;
     	}
     	else {
     		off();
+    		return true;
     	}
     }
     public void feedBall(){
@@ -72,7 +74,7 @@ public class BallCollector extends Subsystem {
     		off();
     	}
     }
-    public void releaseBall(){
+    public boolean releaseBall(){
     	transmitter.set(true);
     	if(receiver.get() == true){
     		reverse();
@@ -81,13 +83,19 @@ public class BallCollector extends Subsystem {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+    		return true;
     	}
     	else {
     		off();
+    		return true;
     	}
+    }
+    public void moveArm(double power){
+    	armMotor.set(power);
     }
     public void off() {
     	rollerMotor.set(Relay.Value.kOff);
+    	armMotor.set(0);
     }
     
     public void initDefaultCommand() {
