@@ -9,6 +9,7 @@ import org.usfirst.frc.team1510.robot.commands.*;
 import org.usfirst.frc.team1510.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
     public static WheelArms wheelArms;
     public static UltrasonicSubsystem ultrasonic;
     
+    public static CameraServer camera;
     
     Command autonomousCommand;
     Command teleopCommand;
@@ -54,6 +56,10 @@ public class Robot extends IterativeRobot {
     	ballCollector = new BallCollector();
     	wheelArms = new WheelArms();
     	ultrasonic = new UltrasonicSubsystem(1,2);
+    	
+    	camera = CameraServer.getInstance();
+    	
+    	camera.startAutomaticCapture("cam1");
     	
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
