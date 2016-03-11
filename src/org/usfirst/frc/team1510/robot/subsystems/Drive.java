@@ -114,7 +114,7 @@ public class Drive extends Subsystem {
     }
     
     public boolean driveDistance(double distance, double motorThrottle) {
-    	if (getAverageDistance() >= distance) {
+    	if (Math.abs(getAverageDistance()) >= distance) {
     		resetEncoders();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
@@ -130,7 +130,7 @@ public class Drive extends Subsystem {
 	
     	drive.drive(motorThrottle, -angle * kp);
 
-    	if (getAverageDistance() >= distance) {
+    	if (Math.abs(getAverageDistance()) >= distance) {
     		resetEncoders();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
@@ -148,7 +148,7 @@ public class Drive extends Subsystem {
     //Negative throttle turns Left
     public boolean turn(double angle, double motorThrottle) {
     	gyro.reset();
-    	if (gyro.getAngle() >= angle) {
+    	if (Math.abs(gyro.getAngle()) >= angle) {
     		gyro.reset();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
@@ -160,7 +160,7 @@ public class Drive extends Subsystem {
 
     	move(motorThrottle,-motorThrottle);
     	
-    	if (gyro.getAngle() >= angle) {
+    	if (Math.abs(gyro.getAngle()) >= angle) {
     		gyro.reset();
     		goalSpeed[0] = 0;
     		goalSpeed[1] = 0;
