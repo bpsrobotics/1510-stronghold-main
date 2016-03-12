@@ -127,28 +127,43 @@ public class Teleop extends Command {
     	//System.out.println(speed);
     	//If button A is pressed and the roller isn't being deployed
     	if (oi.btnA.get()) {
-    		// End commands requiring roller
-    		retractRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		// Start command
-    		ballCollector.rollerMotor.set(Relay.Value.kForward);
+	    // End commands requiring roller
+	    retractRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    // Start command
+	    ballCollector.rollerMotor.set(Relay.Value.kForward);
     	}if (oi.btnB.get()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		// Start command
-    		ballCollector.rollerMotor.set(Relay.Value.kReverse);
+	    // End commands requiring roller
+	    deployRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    // Start command
+	    ballCollector.rollerMotor.set(Relay.Value.kReverse);
     	}if (oi.btnX.get()) {
-    		// End commands requiring roller
-    		retractRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		deployRoller.cancel();
-    		//start command
-    		ballCollector.rollerMotor.set(Relay.Value.kOff);
+	    // End commands requiring roller
+	    retractRoller.cancel();
+	    pickupBall.cancel();
+	    releaseBall.cancel();
+	    deployRoller.cancel();
+	    //start command
+	    ballCollector.rollerMotor.set(Relay.Value.kOff);
     	}
+
+	if (oi.leftBumper.get && oi.rightBumper.get()) {
+	    retractRoller.cancel();
+	    deployRoller.cancel();
+	} else if (oi.leftBumper.get() && !deployRoller.isRunning()) {
+	    retractRoller.cancel();
+	    deployRoller.start();
+	} else if (oi.rightBumper.get() && !retractRoller.isRunning()) {
+	    deployRoller.cancel();
+	    retractRoller.start();
+	} else if (retractRoller.isRunning() || deployRoller.isRunning()) {
+	    deployRoller.cancel();
+	    retractRoller.cancel();
+	}
+	
     	/*
     	else if (!oi.btnX.get()) {
     		// End commands requiring roller
@@ -303,8 +318,7 @@ public class Teleop extends Command {
     		deployWheels.cancel();
     		retractWheels.cancel();
     		wheelArms.stop();
-    	} 
-	
+    	}
 
 	
     	/*if(oi.g1btnA.get()){

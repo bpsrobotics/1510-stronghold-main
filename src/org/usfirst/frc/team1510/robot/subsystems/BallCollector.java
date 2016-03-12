@@ -18,9 +18,9 @@ public class BallCollector extends Subsystem {
     private DigitalOutput transmitter = new DigitalOutput(7);
     private DigitalInput receiver = new DigitalInput(8);
     public DigitalInput limitSwitch1 = new DigitalInput(5);
-    private Counter counter1 = new Counter(limitSwitch1);
+    //private Counter counter1 = new Counter(limitSwitch1);
     public DigitalInput limitSwitch2 = new DigitalInput(6);
-    private Counter counter2 = new Counter(limitSwitch2);
+    //private Counter counter2 = new Counter(limitSwitch2);
 
     
     public boolean extend() { 
@@ -37,7 +37,7 @@ public class BallCollector extends Subsystem {
 	    armMotor.set(0);
 	    return true;
 	}
-		return false;
+	return false;
     }
     public void forward(){
     	rollerMotor.set(Relay.Value.kForward);
@@ -52,47 +52,57 @@ public class BallCollector extends Subsystem {
     public boolean getBall(){
     	transmitter.set(true);
     	if(!receiver.get()){
-    		forward();
-    		return false;
+	    forward();
+	    return false;
     	}
     	else {
-    		off();
-    		return true;
+	    off();
+	    return true;
     	}
     }
+    
+    /**
+     * DO NOT USE EVER UNDER ANY CIRCUMSTANCES WILL BREAK EVERYTHING!!!
+     */
     public void feedBall(){
     	transmitter.set(true);
     	if(receiver.get() == true){
-    		forward();
-    		try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+	    forward();
+	    try {
+		Thread.sleep(500);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
     	}
     	else {
-    		off();
+	    off();
     	}
     }
+
+    /**
+     * DO NOT USE EVER UNDER ANY CIRCUMSTANCES WILL BREAK EVERYTHING!!!
+     */
     public boolean releaseBall(){
     	transmitter.set(true);
     	if(receiver.get() == true){
-    		reverse();
-    		try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-    		return true;
+	    reverse();
+	    try {
+		Thread.sleep(500);
+	    } catch (InterruptedException e) {
+		e.printStackTrace();
+	    }
+	    return true;
     	}
     	else {
-    		off();
-    		return true;
+	    off();
+	    return true;
     	}
     }
+    
     public void moveArm(double power){
     	armMotor.set(power);
     }
+    
     public void off() {
     	rollerMotor.set(Relay.Value.kOff);
     	armMotor.set(0);
