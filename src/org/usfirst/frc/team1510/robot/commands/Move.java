@@ -19,10 +19,7 @@ public class Move extends Command {
     // Records if complete or not
     private boolean isComplete = false;
 
-    // Records time
-    private int timer = 0;
-
-
+    
     /**
      * Creates a Move command
      * @param distance The number of degrees on the encoder
@@ -33,20 +30,22 @@ public class Move extends Command {
     	requires(Robot.drive);
 
 	this.distance = distance;
+	setTimeout(5);
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
     	drive.enable();
+	drive.resetEncoders();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	isComplete = drive.driveDistance(this.distance,0.85);
+    	isComplete = drive.driveDistance(this.distance,-0.85);
 
-	timer += 1;
+	
 
-	if (timer >= 100) {
+	if (isTimedOut()) {
 	    isComplete = true;
 	}
 	

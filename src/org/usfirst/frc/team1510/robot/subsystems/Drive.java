@@ -106,7 +106,7 @@ public class Drive extends Subsystem {
     }
 
     public double getAverageDistance() {
-    	return (leftMotors[0].getEncPosition() + rightMotors[0].getEncPosition()) / 2;
+    	return (/*leftMotors[0].getEncPosition() +*/ rightMotors[0].getEncPosition());
     }
     
     public void resetEncoders(){
@@ -129,8 +129,9 @@ public class Drive extends Subsystem {
 
 	double angle = gyro.getAngle();
 	
-    	drive.drive(motorThrottle, -angle * kp);
-
+    	move(motorThrottle, -angle * kp);
+	
+	/*
     	if (Math.abs(getAverageDistance()) >= distance) {
     		resetEncoders();
     		goalSpeed[0] = 0;
@@ -140,6 +141,7 @@ public class Drive extends Subsystem {
     		move(0,0);
     		return true;
     	}
+	*/
 
     	return false;
     }

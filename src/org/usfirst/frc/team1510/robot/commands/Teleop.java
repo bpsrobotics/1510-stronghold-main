@@ -150,7 +150,7 @@ public class Teleop extends Command {
 	    ballCollector.rollerMotor.set(Relay.Value.kOff);
     	}
 
-	if (oi.leftBumper.get && oi.rightBumper.get()) {
+	if (oi.leftBumper.get() && oi.rightBumper.get()) {
 	    retractRoller.cancel();
 	    deployRoller.cancel();
 	} else if (oi.leftBumper.get() && !deployRoller.isRunning()) {
