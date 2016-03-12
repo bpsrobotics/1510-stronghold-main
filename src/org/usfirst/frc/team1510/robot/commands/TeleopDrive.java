@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class TeleopDrive extends Command {
 
 	Drive drive = Robot.drive;
-	
+	private double multiplier = .9;
     public TeleopDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -25,7 +25,13 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.move(Robot.oi.gamepad1.getY(), Robot.oi.gamepad1.getRawAxis(4));
+    	if (Robot.oi.g1rightBumper.get()){
+    		multiplier = .5;
+    	}
+    	else{
+    		multiplier = .9;
+    	}
+    	drive.move(Robot.oi.gamepad1.getY()*multiplier, Robot.oi.gamepad1.getRawAxis(4)*multiplier);
     	double[] encoderValues = drive.getEncoderValues();
     	
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
