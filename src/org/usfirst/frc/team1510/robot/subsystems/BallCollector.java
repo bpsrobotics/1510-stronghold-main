@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 public class BallCollector extends Subsystem {
     
 	// Arm systems
-    private Talon armMotor = new Talon(0);
-    private Relay rollerMotor = new Relay(1);
+    public Talon armMotor = new Talon(2);
+    public Relay rollerMotor = new Relay(1,Relay.Direction.kBoth);
     private DigitalOutput transmitter = new DigitalOutput(7);
     private DigitalInput receiver = new DigitalInput(8);
-    private DigitalInput limitSwitch1 = new DigitalInput(5);
+    public DigitalInput limitSwitch1 = new DigitalInput(5);
     private Counter counter1 = new Counter(limitSwitch1);
-    private DigitalInput limitSwitch2 = new DigitalInput(6);
+    public DigitalInput limitSwitch2 = new DigitalInput(6);
     private Counter counter2 = new Counter(limitSwitch2);
 
     
@@ -41,12 +41,12 @@ public class BallCollector extends Subsystem {
     }
     public void forward(){
     	rollerMotor.set(Relay.Value.kForward);
-    	rollerMotor.set(Relay.Value.kOn);
+    	//rollerMotor.set(Relay.Value.kOn);
     }
     
     public void reverse(){
     	rollerMotor.set(Relay.Value.kReverse);
-    	rollerMotor.set(Relay.Value.kOn);
+    	//rollerMotor.set(Relay.Value.kOn);
     }
     
     public boolean getBall(){

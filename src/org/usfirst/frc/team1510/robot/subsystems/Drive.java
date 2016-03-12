@@ -40,6 +40,7 @@ public class Drive extends Subsystem {
     private double[] currentSpeed = {0.0, 0.0};
     private double[] goalSpeed = {0.0, 0.0};
     private double speedAdjustPerCycle = 0.04;
+    private double turnAdjustPerCycle = 0.1;
 
     /**
      * Move based on left and right motor values
@@ -67,15 +68,15 @@ public class Drive extends Subsystem {
     		currentSpeed[0] += speedAdjustPerCycle;
     	
     	// Logic for right motors
-    	if (Math.abs(goalSpeed[1] - currentSpeed[1]) < speedAdjustPerCycle)
+    	if (Math.abs(goalSpeed[1] - currentSpeed[1]) < turnAdjustPerCycle)
     		// If within one-cycle range of goal
     		currentSpeed[1] = goalSpeed[1];
     	else if (currentSpeed[1] > goalSpeed[1])
     		// If more than goal
-    		currentSpeed[1] -= speedAdjustPerCycle;
+    		currentSpeed[1] -= turnAdjustPerCycle;
     	else if (currentSpeed[1] < goalSpeed[1])
     		// If less than goal
-    		currentSpeed[1] += speedAdjustPerCycle;
+    		currentSpeed[1] += turnAdjustPerCycle;
     	
     	// Update motor throttle
 

@@ -81,6 +81,7 @@ public class ShootLow extends Command {
 			shooterStage = ShooterStage.OFF;
 			break;
 		}
+		
     	/*
     	//Set speed of shooting motors
     	shooter.changeDistance(1);

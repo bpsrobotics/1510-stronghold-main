@@ -58,8 +58,8 @@ public class Robot extends IterativeRobot {
     	ultrasonic = new UltrasonicSubsystem(1,2);
     	
     	camera = CameraServer.getInstance();
-    	
-    	camera.startAutomaticCapture("cam1");
+    	camera.setQuality(50);
+    	camera.startAutomaticCapture("cam0");
     	
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
