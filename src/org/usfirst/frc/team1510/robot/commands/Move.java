@@ -18,7 +18,15 @@ public class Move extends Command {
 
     // Records if complete or not
     private boolean isComplete = false;
-    
+
+    // Records time
+    private int timer = 0;
+
+
+    /**
+     * Creates a Move command
+     * @param distance The number of degrees on the encoder
+     */
     public Move(double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -35,6 +43,12 @@ public class Move extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	isComplete = drive.driveDistance(this.distance,0.85);
+
+	timer += 1;
+
+	if (timer >= 100) {
+	    isComplete = true;
+	}
 	
     }
 
