@@ -78,7 +78,8 @@ public class Teleop extends Command {
     protected void execute() {
     	// Post ultrasonic distance to ShitDashboard
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getInches());
-		System.out.println(Robot.ballCollector.limitSwitch1.get());
+    	SmartDashboard.putNumber("Speed of shooter", speed);
+		//System.out.println(Robot.ballCollector.limitSwitch1.get());
     	/**
     	 * 
     	 * Begin controls for manipulator
@@ -97,17 +98,19 @@ public class Teleop extends Command {
     		wheelArms.moveArm(0);
     	}
     	//If input from joystick is greater than deadzone
-    	/*if (Math.abs(Robot.oi.gamepad2.getY()) > .1){
+    	if (Math.abs(Robot.oi.gamepad2.getY()) > .1){
     		//Cancel all commands requiring the ball collector
-    		retractRoller.cancel();
-    		deployRoller.cancel();
+    		//retractRoller.cancel();
+    		//deployRoller.cancel();
+    		//Stop roller
+    		ballCollector.rollerMotor.set(Relay.Value.kOff);
     		//Set the arm motor of the ball collector to joystick value
     		ballCollector.armMotor.set(Robot.oi.gamepad2.getY()/3);
     	}
     	//Else stop arms from moving
     	else if (Math.abs(Robot.oi.gamepad2.getY()) <= .1){
     		ballCollector.armMotor.set(0);
-    	}*/
+    	}
     	/*If the top of the d-pad is pressed and the current speed
     		is less than 1 (max) then increase speed by increments of .001
     	 */
@@ -121,7 +124,7 @@ public class Teleop extends Command {
     		speed -= .001;
     	}
     	//Print the current value of speed for drivers to see
-    	System.out.println(speed);
+    	//System.out.println(speed);
     	//If button A is pressed and the roller isn't being deployed
     	if (oi.btnA.get()) {
     		// End commands requiring roller
@@ -274,8 +277,12 @@ public class Teleop extends Command {
     	}
     	//If left trigger is pressed 
     	if(oi.gamepad2.getRawAxis(2) > .5){
+    		//Guide wheels will always be at full power
+    		shooter.changeDistance(1);
+    		//Main shooter wheels are set to 25% power
+    		shooter.changeHeight(.25);
     		//Start command
-    		shootLow.start();
+    		//shootLow.start();
     	}
     	/**
     	 * 
