@@ -1,0 +1,25 @@
+/**
+ * Factor for calibration. Will be made final once calibration is complete.
+ */
+public static double CALIBRATION_FACTOR;
+
+/**
+ * Constructor for analog ultrasonic sensors
+ *
+ * @param analogChannel The analog channel the sensor is connected to
+ */
+public UltrasonicSubsytem(int analogChannel) {}
+
+/**
+ * Returns calibrated distance
+ *
+ * @return Calibrated distance
+ */
+public double getRange() {}
+
+/**
+ * Returns raw analog voltage
+ *
+ * @return raw analog voltage
+ */
+public double getVoltage() {}
