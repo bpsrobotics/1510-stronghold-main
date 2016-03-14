@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
     	shooter = new Shooter();
     	ballCollector = new BallCollector();
     	wheelArms = new WheelArms();
-    	ultrasonic = new UltrasonicSubsystem(1,2);
+    	ultrasonic = new UltrasonicSubsystem(0);
     	
     	camera = CameraServer.getInstance();
     	camera.setQuality(50);

@@ -6,32 +6,40 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class UltrasonicSubsystem extends SensorBase{
 	
-	private Ultrasonic sonic;
 	
 	/**
-	 * Constructor for objects of class UltrasonicSubsystem
-	 * @param a Ultrasonic ping channel
-	 * @param b Ultrasonic echo channel
+	 * Factor for calibration. Will be made final once calibration is complete.
 	 */
-	public UltrasonicSubsystem (int a, int b){
-		sonic = new Ultrasonic(a,b);
-	}
-	
+	public static double CALIBRATION_FACTOR;
+	private AnalogInput channel;
+
 	/**
-	 * Returns the recorded distance from the Ultrasonic sensor
-	 * @return the recorded distance from the Ultrasonic sensor
+	 * Constructor for analog ultrasonic sensors
+	 *
+	 * @param analogChannel The analog channel the sensor is connected to
 	 */
-	public double getInches(){
-		return sonic.getRangeInches();
+	public UltrasonicSubsystem(int analogChannel) {
+		channel = new AnalogInput(analogChannel);
 	}
-	
+
 	/**
-	 * Returns the recorded distance from the Ultrasonic sensor
-	 * @return the recorded distance from the Ultrasonic sensor
+	 * Returns calibrated distance
+	 *
+	 * @return Calibrated distance
 	 */
-	public double getMillimeters(){
-		return sonic.getRangeMM();
+	public double getRange() {
+		return getVoltage() * CALIBRATION_FACTOR;
 	}
+
+	/**
+	 * Returns raw analog voltage
+	 *
+	 * @return raw analog voltage
+	 */
+	public double getVoltage() {
+		return channel.getVoltage();
+	}
+
 	
 
 
