@@ -3,8 +3,9 @@ package org.usfirst.frc.team1510.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class UltrasonicSubsystem extends SensorBase{
+public class UltrasonicSubsystem extends Subsystem{
 	
 	
 	/**
@@ -38,6 +39,12 @@ public class UltrasonicSubsystem extends SensorBase{
 	 */
 	public double getVoltage() {
 		return channel.getVoltage();
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
