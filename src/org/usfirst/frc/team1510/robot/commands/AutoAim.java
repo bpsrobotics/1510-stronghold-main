@@ -72,7 +72,7 @@ public class AutoAim extends Command{
 		    	}
 		    	
 		    	if (Math.abs(hzdiff) < 100) {
-		    	 	distance = sonic.getMillimeters()/1000;
+		    	 	distance = sonic.getRange()/1000;
 		    		System.out.println("You are clear to shoot");
 		    		shooter.fire(distance);
 		    		complete = true;

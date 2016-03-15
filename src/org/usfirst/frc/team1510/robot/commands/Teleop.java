@@ -77,7 +77,7 @@ public class Teleop extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	// Post ultrasonic distance to ShitDashboard
-    	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getInches());
+    	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
 		//System.out.println(Robot.ballCollector.limitSwitch1.get());
     	/**
