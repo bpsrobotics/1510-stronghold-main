@@ -9,11 +9,11 @@ public class CrossRockWall extends CommandGroup {
 
     public CrossRockWall() {
     	//Move up to defense
-    	addSequential(new Move(300));
+    	addSequential(new Move(300, Move.MoveDirection.FORWARD));
     	//Deploy wheels over the rock wall
     	addSequential(new DeployWheels(150));
     	//Charge forward
-    	addSequential(new Move(200));
+    	addSequential(new Move(200, Move.MoveDirection.FORWARD));
     	addParallel(new RunWheels(.85));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
