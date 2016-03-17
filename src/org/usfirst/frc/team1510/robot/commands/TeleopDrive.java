@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class TeleopDrive extends Command {
 
 	Drive drive = Robot.drive;
+    public double multiplier = .9;
 	
     public TeleopDrive() {
         // Use requires() here to declare subsystem dependencies
@@ -25,7 +26,13 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drive.move(-Robot.oi.leftStick.getY(), -Robot.oi.leftStick.getRawAxis(5));
+    	if (Robot.oi.g1rightBumper.get()) {
+    	    multiplier = .5;
+    	}
+    	else {
+    	    multiplier = .9;
+    	}
+    	drive.move(Robot.oi.gamepad1.getY()*multiplier, Robot.oi.gamepad1.getRawAxis(4)*multiplier);
     	double[] speedValues = drive.GetSpeeds();
     	
     	SmartDashboard.putNumber("Left Motors Avg. Speed", speedValues[0]);

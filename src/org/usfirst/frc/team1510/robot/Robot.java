@@ -9,6 +9,7 @@ import org.usfirst.frc.team1510.robot.commands.*;
 import org.usfirst.frc.team1510.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,6 +34,7 @@ public class Robot extends IterativeRobot {
     public static WheelArms wheelArms;
     public static UltrasonicSubsystem ultrasonic;
     
+    public static CameraServer camera;
     
     Command autonomousCommand;
     Command teleopCommand;
@@ -49,11 +51,15 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	oi = new OI();
     	drive = new Drive();
-    	targetLight = new TargetLight(1);
+    	targetLight = new TargetLight(0);
     	shooter = new Shooter();
     	ballCollector = new BallCollector();
     	wheelArms = new WheelArms();
-    	ultrasonic = new UltrasonicSubsystem(1,2);
+    	ultrasonic = new UltrasonicSubsystem(0);
+    	
+    	camera = CameraServer.getInstance();
+    	camera.setQuality(50);
+    	camera.startAutomaticCapture("cam0");
     	
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
@@ -61,17 +67,20 @@ public class Robot extends IterativeRobot {
     	startingPosition.addObject("3", Autonomous.StartingPosition.POS3);
     	startingPosition.addObject("4", Autonomous.StartingPosition.POS4);
     	startingPosition.addObject("5", Autonomous.StartingPosition.POS5);
+	//SmartDashboard.putData("Starting Position",startingPosition);
     	
     	defense = new SendableChooser();
-    	defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
-    	defense.addObject("Cheval de Frise", Autonomous.Defense.CHEVAL_DE_FRISE);
-    	defense.addObject("Moat", Autonomous.Defense.MOAT);
-    	defense.addObject("Ramparts", Autonomous.Defense.RAMPARTS);
+	defense.addDefault("Do nothing", Autonomous.Defense.NOTHING);
+    	//defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
+    	//defense.addObject("Cheval de Frise", Autonomous.Defense.CHEVAL_DE_FRISE);
+    	//defense.addObject("Moat", Autonomous.Defense.MOAT);
+    	//defense.addObject("Ramparts", Autonomous.Defense.RAMPARTS);
     	//defense.addObject("Drawbridge", Autonomous.Defense.DRAWBRIDGE);
     	//defense.addObject("Sally Port", Autonomous.Defense.SALLY_PORT);
-    	defense.addObject("Rock Wall", Autonomous.Defense.ROCK_WALL);
-    	defense.addObject("Rough Terrain", Autonomous.Defense.ROUGH_TERRAIN);
-    	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
+    	//defense.addObject("Rock Wall", Autonomous.Defense.ROCK_WALL);
+    	defense.addObject("Move Forward", Autonomous.Defense.ROUGH_TERRAIN);
+    	//defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
+	SmartDashboard.putData("Defense", defense);
 	/*
 	  chooser = new SendableChooser();
 	  chooser.addDefault("Default Auto", new ExampleCommand());
@@ -104,7 +113,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousInit() {
     	if (teleopCommand != null) teleopCommand.cancel();
-        autonomousCommand = new AutoAim();
+        autonomousCommand = new Autonomous();
         
 	/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 	   switch(autoSelected) {

@@ -9,11 +9,11 @@ public class CrossRamparts extends CommandGroup {
 
     public CrossRamparts() {
     	//Move up to the defense
-    	addSequential(new Move (45));
+    	addSequential(new Move (45, Move.MoveDirection.FORWARD));
     	//Deploy wheels
     	addSequential(new DeployWheels(135));
     	//Move all 8 wheels forward
-    	addSequential(new Move(40));
+    	addSequential(new Move(40, Move.MoveDirection.FORWARD));
     	addParallel(new RunWheels(.85));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

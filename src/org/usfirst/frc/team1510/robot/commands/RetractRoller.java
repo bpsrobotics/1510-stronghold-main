@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RetractRoller extends Command {
 
-BallCollector ballCollector = new BallCollector();
+BallCollector ballCollector = Robot.ballCollector;
 	
     public RetractRoller() {
         // Use requires() here to declare subsystem dependencies
@@ -34,11 +34,12 @@ BallCollector ballCollector = new BallCollector();
 
     // Called once after isFinished returns true
     protected void end() {
-    	
+    	ballCollector.off();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

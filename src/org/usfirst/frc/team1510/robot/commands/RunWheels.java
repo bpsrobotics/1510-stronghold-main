@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunWheels extends Command {
 	double speed;
-	WheelArms wheelArms = new WheelArms();
+	WheelArms wheelArms = Robot.wheelArms;
 	
     public RunWheels(double reqSpeed) {
         // Use requires() here to declare subsystem dependencies
@@ -41,5 +41,6 @@ public class RunWheels extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

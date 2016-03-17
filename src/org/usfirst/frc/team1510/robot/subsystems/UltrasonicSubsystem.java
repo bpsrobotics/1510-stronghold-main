@@ -3,35 +3,50 @@ package org.usfirst.frc.team1510.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.Ultrasonic.Unit;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class UltrasonicSubsystem extends SensorBase{
+public class UltrasonicSubsystem extends Subsystem{
 	
-	private Ultrasonic sonic;
-	
-	/**
-	 * Constructor for objects of class UltrasonicSubsystem
-	 * @param a Ultrasonic ping channel
-	 * @param b Ultrasonic echo channel
-	 */
-	public UltrasonicSubsystem (int a, int b){
-		sonic = new Ultrasonic(a,b);
-	}
 	
 	/**
-	 * Returns the recorded distance from the Ultrasonic sensor
-	 * @return the recorded distance from the Ultrasonic sensor
+	 * Factor for calibration. Will be made final once calibration is complete.
 	 */
-	public double getInches(){
-		return sonic.getRangeInches();
-	}
-	
+	public static double CALIBRATION_FACTOR;
+	private AnalogInput channel;
+
 	/**
-	 * Returns the recorded distance from the Ultrasonic sensor
-	 * @return the recorded distance from the Ultrasonic sensor
+	 * Constructor for analog ultrasonic sensors
+	 *
+	 * @param analogChannel The analog channel the sensor is connected to
 	 */
-	public double getMillimeters(){
-		return sonic.getRangeMM();
+	public UltrasonicSubsystem(int analogChannel) {
+		channel = new AnalogInput(analogChannel);
 	}
+
+	/**
+	 * Returns calibrated distance
+	 *
+	 * @return Calibrated distance
+	 */
+	public double getRange() {
+		return getVoltage() * CALIBRATION_FACTOR;
+	}
+
+	/**
+	 * Returns raw analog voltage
+	 *
+	 * @return raw analog voltage
+	 */
+	public double getVoltage() {
+		return channel.getVoltage();
+	}
+
+	@Override
+	protected void initDefaultCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 

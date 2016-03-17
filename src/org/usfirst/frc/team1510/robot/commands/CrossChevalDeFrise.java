@@ -9,11 +9,11 @@ public class CrossChevalDeFrise extends CommandGroup {
 
     public CrossChevalDeFrise() {
     	//Move forward to the defense
-    	addSequential(new Move(400));
+    	addSequential(new Move(400, Move.MoveDirection.FORWARD));
     	//Deploy wheel arms to stabilize seesaws
     	addSequential(new DeployWheels(135));
     	//Move forward with all 8 wheels
-    	addSequential(new Move(40));
+    	addSequential(new Move(40, Move.MoveDirection.FORWARD));
     	addParallel(new RunWheels(.85));
     	
     	

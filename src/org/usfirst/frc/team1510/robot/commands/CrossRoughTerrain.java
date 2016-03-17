@@ -9,7 +9,7 @@ public class CrossRoughTerrain extends CommandGroup {
 
     public CrossRoughTerrain() {
     	//Charge forward
-    	addSequential(new Move(500));
+    	addSequential(new Move(500, Move.MoveDirection.FORWARD));
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

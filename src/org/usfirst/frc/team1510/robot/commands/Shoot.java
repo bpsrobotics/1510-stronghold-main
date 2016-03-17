@@ -29,7 +29,7 @@ public class Shoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	distance = sonic.getMillimeters()/1000;
+    	distance = sonic.getRange()/1000;
     }
 
     // Called repeatedly when this Command is scheduled to run
