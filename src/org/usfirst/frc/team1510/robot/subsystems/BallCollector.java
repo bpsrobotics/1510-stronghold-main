@@ -14,7 +14,7 @@ public class BallCollector extends Subsystem {
     
 	// Arm systems
     public Talon armMotor = new Talon(2);
-    public Relay rollerMotor = new Relay(1,Relay.Direction.kBoth);
+    public Relay rollerMotor = new Relay(3,Relay.Direction.kBoth);
     private DigitalOutput transmitter = new DigitalOutput(7);
     private DigitalInput receiver = new DigitalInput(8);
     public DigitalInput limitSwitch1 = new DigitalInput(5);

@@ -79,7 +79,7 @@ public class Robot extends IterativeRobot {
     	//defense.addObject("Sally Port", Autonomous.Defense.SALLY_PORT);
     	//defense.addObject("Rock Wall", Autonomous.Defense.ROCK_WALL);
     	defense.addObject("Move Forward", Autonomous.Defense.ROUGH_TERRAIN);
-    	//defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
+    	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
 	SmartDashboard.putData("Defense", defense);
 	/*
 	  chooser = new SendableChooser();

@@ -113,8 +113,14 @@ public class Drive extends Subsystem {
     	leftMotors[0].setEncPosition(0);
     	rightMotors[0].setEncPosition(0);
     }
-    
+    /**
+     * 
+     * @param distance in feet
+     * @param motorThrottle
+     * @return
+     */
     public boolean driveDistance(double distance, double motorThrottle) {
+    	//distance = distance / 3 * 16 * Math.PI / 12;
     	if (Math.abs(getAverageDistance()) >= distance) {
     		resetEncoders();
     		goalSpeed[0] = 0;

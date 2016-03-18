@@ -105,7 +105,7 @@ public class Teleop extends Command {
     		//Stop roller
     		ballCollector.rollerMotor.set(Relay.Value.kOff);
     		//Set the arm motor of the ball collector to joystick value
-    		ballCollector.armMotor.set(Robot.oi.gamepad2.getY()/3);
+    		ballCollector.armMotor.set(Robot.oi.gamepad2.getY());
     	}
     	//Else stop arms from moving
     	else if (Math.abs(Robot.oi.gamepad2.getY()) <= .1){
@@ -128,28 +128,29 @@ public class Teleop extends Command {
     	//If button A is pressed and the roller isn't being deployed
     	if (oi.btnA.get()) {
 	    // End commands requiring roller
-	    retractRoller.cancel();
-	    pickupBall.cancel();
-	    releaseBall.cancel();
+	    //retractRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
 	    // Start command
-	    ballCollector.rollerMotor.set(Relay.Value.kForward);
+    	ballCollector.rollerMotor.set(Relay.Value.kForward);
     	}if (oi.btnB.get()) {
 	    // End commands requiring roller
-	    deployRoller.cancel();
-	    pickupBall.cancel();
-	    releaseBall.cancel();
+	    //deployRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
 	    // Start command
 	    ballCollector.rollerMotor.set(Relay.Value.kReverse);
     	}if (oi.btnX.get()) {
 	    // End commands requiring roller
-	    retractRoller.cancel();
-	    pickupBall.cancel();
-	    releaseBall.cancel();
-	    deployRoller.cancel();
-	    //start command
-	    ballCollector.rollerMotor.set(Relay.Value.kOff);
+	    //retractRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
+	    //deployRoller.cancel();
+	    //start command*/
+	     ballCollector.rollerMotor.set(Relay.Value.kOff);
+	     
     	}
-
+/*
 	if (oi.leftBumper.get() && oi.rightBumper.get()) {
 	    retractRoller.cancel();
 	    deployRoller.cancel();
