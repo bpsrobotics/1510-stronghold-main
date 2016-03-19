@@ -70,7 +70,7 @@ public class OI {
     
     public static double deadzone(double value) {
 	if (Math.abs(value) < deadzoneThreshold) return 0;
-	return deadzoneThreshold;
+	return value;
     }
     
 }
