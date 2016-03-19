@@ -49,13 +49,13 @@ public class Teleop extends Command {
     	//requires(shooter);
     	//requires(wheelArms);
     	//requires(drive);
-    	//requires(ballCollector);
-    	//setInterruptible(false);
+    	requires(ballCollector);
+    	setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.oi.btnA.toggleWhenPressed(new SpinRoller());
+    	//Robot.oi.btnA.whenPressed(new DeployRoller());
     	//Robot.oi.btnB.whenPressed(new RetractRoller());
     	//Robot.oi.btnX.whenPressed(new DeployWheels(135));
     	//Robot.oi.btnY.whenPressed(new RetractWheels(135));
@@ -123,9 +123,33 @@ public class Teleop extends Command {
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .7){
     		speed -= .001;
     	}
-    	
     	//Print the current value of speed for drivers to see
     	//System.out.println(speed);
+    	//If button A is pressed and the roller isn't being deployed
+    	if (oi.btnA.get()) {
+	    // End commands requiring roller
+	    //retractRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
+	    // Start command
+    	ballCollector.rollerMotor.set(Relay.Value.kForward);
+    	}if (oi.btnB.get()) {
+	    // End commands requiring roller
+	    //deployRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
+	    // Start command
+	    ballCollector.rollerMotor.set(Relay.Value.kReverse);
+    	}if (oi.btnX.get()) {
+	    // End commands requiring roller
+	    //retractRoller.cancel();
+	    //pickupBall.cancel();
+	    //releaseBall.cancel();
+	    //deployRoller.cancel();
+	    //start command*/
+	     ballCollector.rollerMotor.set(Relay.Value.kOff);
+	     
+    	}
 /*
 	if (oi.leftBumper.get() && oi.rightBumper.get()) {
 	    retractRoller.cancel();
