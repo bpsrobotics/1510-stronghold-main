@@ -120,7 +120,7 @@ public class Drive extends Subsystem {
      * @return
      */
     public boolean driveDistance(double distance, double motorThrottle) {
-    	//distance = distance / 3 * 16 * Math.PI / 12;
+    	distance = distance / 3 * 8 * Math.PI / 12;
     	if (Math.abs(getAverageDistance()) >= distance) {
     		resetEncoders();
     		goalSpeed[0] = 0;
