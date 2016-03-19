@@ -32,7 +32,7 @@ public class TeleopDrive extends Command {
     	else{
     		multiplier = .9;
     	}
-    	drive.move(Robot.oi.gamepad1.getY()*multiplier, Robot.oi.gamepad1.getRawAxis(4)*multiplier);
+    	drive.move(OI.deadzone(Robot.oi.gamepad1.getY())*multiplier, OI.deadzone(Robot.oi.gamepad1.getRawAxis(4))*multiplier);
     	double[] encoderValues = drive.getEncoderValues();
     	
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
