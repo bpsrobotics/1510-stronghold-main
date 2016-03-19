@@ -37,6 +37,12 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
+    private boolean switch2(){
+    	return ballCollector.counter2.get() > 0;
+    }
+    private boolean switch1(){
+    	return ballCollector.counter1.get() > 0;
+    }
     //private RunWheels runWheels = new RunWheels(oi.gamepad1.getY());
     
     // Controls for shooter systems
@@ -71,6 +77,7 @@ public class Teleop extends Command {
     	Robot.drive.setDefault();
     	new TeleopDrive().start();
     	wheelArms.stop();
+    	ballCollector.off();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -85,7 +92,7 @@ public class Teleop extends Command {
  		 * 
     	 **/
     	//If input from joystick is greater than deadzone 
-    	if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) > .35){
+    	if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) > .2){
     		//Cancel all commands requiring wheel arms
     		retractWheels.cancel();
     		deployWheels.cancel();
@@ -93,22 +100,8 @@ public class Teleop extends Command {
     		wheelArms.moveArm(Robot.oi.gamepad2.getRawAxis(5));
     	}
     	//Else stop arms from moving
-    	else if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) <= .35){
+    	else if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) <= .2){
     		wheelArms.moveArm(0);
-    	}
-    	//If input from joystick is greater than deadzone
-    	if (Math.abs(Robot.oi.gamepad2.getY()) > .1){
-    		//Cancel all commands requiring the ball collector
-    		//retractRoller.cancel();
-    		//deployRoller.cancel();
-    		//Stop roller
-    		ballCollector.rollerMotor.set(Relay.Value.kOff);
-    		//Set the arm motor of the ball collector to joystick value
-    		ballCollector.armMotor.set(Robot.oi.gamepad2.getY());
-    	}
-    	//Else stop arms from moving
-    	else if (Math.abs(Robot.oi.gamepad2.getY()) <= .1){
-    		ballCollector.armMotor.set(0);
     	}
     	/*If the top of the d-pad is pressed and the current speed
     		is less than 1 (max) then increase speed by increments of .001
@@ -128,62 +121,18 @@ public class Teleop extends Command {
     	}if (!oi.btnB.get()) {
    	     ballCollector.rollerMotor.set(Relay.Value.kOff);
        	}
-/*
-	if (oi.leftBumper.get() && oi.rightBumper.get()) {
-	    retractRoller.cancel();
-	    deployRoller.cancel();
-	} else if (oi.leftBumper.get() && !deployRoller.isRunning()) {
-	    retractRoller.cancel();
-	    deployRoller.start();
-	} else if (oi.rightBumper.get() && !retractRoller.isRunning()) {
-	    deployRoller.cancel();
-	    retractRoller.start();
-	} else if (retractRoller.isRunning() || deployRoller.isRunning()) {
-	    deployRoller.cancel();
-	    retractRoller.cancel();
-	}
-	
-    	/*
-    	else if (!oi.btnX.get()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		retractRoller.cancel();
-    		//start command
-    		ballCollector.off();	
-    	} else if (oi.btnY.get()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		retractRoller.cancel();
-    		//start command
-    		ballCollector.forward();
-    	}else if (!oi.btnY.get()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		pickupBall.cancel();
-    		releaseBall.cancel();
-    		retractRoller.cancel();
-    		//start command
+    	//While button X is held extend roller till limit
+ 		if (oi.btnX.get()) {
+    		ballCollector.extend();	
+    	} else if (!oi.btnX.get()) {
     		ballCollector.off();
-    	} else if (oi.rightBumper.get() && !pickupBall.isRunning()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		retractRoller.cancel();
-    		releaseBall.cancel();
-    		// Start command
-    		pickupBall.start();
-    	} else if (oi.leftBumper.get() && !releaseBall.isRunning()) {
-    		// End commands requiring roller
-    		deployRoller.cancel();
-    		retractRoller.cancel();
-    		pickupBall.cancel();
-    		// Start command
-    		releaseBall.start();
+    	//While button Y is held retract roller till limit
+    	}if (oi.btnY.get()) {
+    		ballCollector.retract();	
+    	} else if (!oi.btnY.get()) {
+    		ballCollector.off();
     	}
-    	*/
+
     	//If right trigger is pressed
     	if(oi.gamepad2.getRawAxis(3) > .5){
     		
@@ -245,27 +194,6 @@ public class Teleop extends Command {
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to double speed
     		shooter.changeHeight(speed);
-    		//Wait for motors to get up to speed
-    		/*
-    		try {
-    			Thread.sleep(250);
-    		} catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
-    		//Feed ball into shooter
-    		ballCollector.rollerMotor.set(Relay.Value.kForward);
-    		//Wait till ball is shot
-    		try {
-    			Thread.sleep(1000);
-    		} catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
-    		//Stop all motors
-    		shooter.stop();
-    		ballCollector.off();
-    		*/
-    		
-    		
     	} else {
     		shooter.stop();
     	}
@@ -275,37 +203,13 @@ public class Teleop extends Command {
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to 25% power
     		shooter.changeHeight(.25);
-    		//Start command
-    		//shootLow.start();
     	}
     	/**
     	 * 
     	 * Begin controls for main driver
     	 * 
     	 **/
-    	if (oi.g1btnX.get() && !deployWheels.isRunning()) {
-    		// End commands requiring wheel arms
-    		retractWheels.cancel();
-    		// Start command
-    		deployWheels.start();
-    	} else if (oi.g1btnY.get() && !retractWheels.isRunning()) {
-    		// End commands requiring wheel arms
-    		deployWheels.cancel();
-    		// Start command
-    		retractWheels.start();
-    	} if(oi.g1btnA.get()) {
-    		deployWheels.cancel();
-    		retractWheels.cancel();
-    		wheelArms.stop();
-    	}
-
 	
-    	/*if(oi.g1btnA.get()){
-			runWheels.start();
-		}
-		//else if (oi.leftStickPress.get() && runWheels.isRunning()){
-		//runWheels.cancel();
-		//}*/
     	//If start button is pressed on either joystick
     	if (oi.start.get() || oi.g1start.get()) {
     		// Cancel all commands
