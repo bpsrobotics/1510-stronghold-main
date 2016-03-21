@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 public class BallCollector extends Subsystem {
     
 	// Arm systems
-    public Talon armMotor = new Talon(2);
-    public Relay rollerMotor = new Relay(3,Relay.Direction.kBoth);
+    public Talon armMotor = new Talon(9);
+    public Relay rollerMotor = new Relay(2,Relay.Direction.kBoth);
     private DigitalOutput transmitter = new DigitalOutput(5);
     private DigitalInput receiver = new DigitalInput(6);
     public DigitalInput limitSwitch1 = new DigitalInput(8);
@@ -104,7 +104,6 @@ public class BallCollector extends Subsystem {
     }
     
     public void off() {
-    	rollerMotor.set(Relay.Value.kOff);
     	armMotor.set(0);
     }
     
