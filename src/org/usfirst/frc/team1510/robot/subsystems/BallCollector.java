@@ -104,8 +104,7 @@ public class BallCollector extends Subsystem {
     }
     
     public void off() {
-    	rollerMotor.set(Relay.Value.kOff);
-    	armMotor.set(0);
+       	armMotor.set(0);
     }
     
     public void initDefaultCommand() {
