@@ -112,7 +112,7 @@ public class Teleop extends Command {
     	/*If the bottom of the d-pad is pressed and the current speed
 			is more than .7 (min) then decrease speed by increments of .001
     	 */
-    	if(oi.gamepad2.getPOV(0) == 180 && speed > .7){
+    	if(oi.gamepad2.getPOV(0) == 180 && speed > .5){
     		speed -= .001;
     	}
     	//While button A is held spin roller
