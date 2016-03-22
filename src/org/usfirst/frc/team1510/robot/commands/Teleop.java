@@ -77,14 +77,15 @@ public class Teleop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	/*
-    	 // Post ultrasonic distance to ShitDashboard
-    	 */
+    	/**
+    	  Post ultrasonic distance 
+    	  Speed of shooter (varied by d-pad)
+    	  Limit Switch values
+    	*/
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
-		//System.out.println(Robot.ballCollector.limitSwitch1.get());
     	/**
     	 * 
     	 * Begin controls for manipulator
@@ -102,16 +103,6 @@ public class Teleop extends Command {
     	else if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) <= .2){
     		wheelArms.moveArm(0);
     	}
-    	/*
-    	if(!ballCollector.limitSwitch2.get() && ballCollector.limitSwitch1.get()){
-    		ballCollector.armMotor.set(-Math.abs(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1)))/4);
-    	}
-    	else if (ballCollector.limitSwitch2.get() && !ballCollector.limitSwitch1.get()){
-    		ballCollector.armMotor.set(Math.abs(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1)))/4);
-    	}
-    	else {
-    		ballCollector.armMotor.set(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1))/4);
-    	}*/
     	/*If the top of the d-pad is pressed and the current speed
     		is less than 1 (max) then increase speed by increments of .001
     	 */
@@ -126,11 +117,10 @@ public class Teleop extends Command {
     	}
     	//While button B is held spin roller
     	if (oi.btnB.get()) {
-	     ballCollector.rollerMotor.set(Relay.Value.kForward);
+    		ballCollector.rollerMotor.set(Relay.Value.kForward);
     	}if (!oi.btnB.get()) {
-   	     ballCollector.rollerMotor.set(Relay.Value.kOff);
+   	     	ballCollector.rollerMotor.set(Relay.Value.kOff);
        	}
-    	
     	//While button X is held extend roller till limit
  		if (oi.btnX.get()) {
     		ballCollector.armMotor.set(.25);
@@ -149,85 +139,23 @@ public class Teleop extends Command {
     	else if (!oi.btnX.get() && !oi.btnY.get()) {
     		ballCollector.off();
     	} 
- 		
- 		//While right bumper is pressed reverse shooter
- 		/*if(oi.rightBumper.get()){
- 			shooter.changeDistance(-1);
- 			shooter.changeHeight(-1);
- 		}
- 		else if(!oi.btnA.get()){
- 			shooter.stop();
- 		}*/
     	//If right trigger is pressed
     	if(oi.gamepad2.getRawAxis(3) > .5){
-    		
-    		/*
-    		switch (shooterStage) {
-    		case OFF:
-    			shooterStage = ShooterStage.STARTSPIN;
-    		case STARTSPIN:
-    			// Begin spinning motors and reset time counter
-    			shooter.changeDistance(1);
-    			shooter.changeHeight(speed);
-    			timeCounter = 0;
-    			// Advance to next stage
-    			shooterStage = ShooterStage.SPIN;
-    			// Delay advancement to next runthrough
-    			break;
-    		case SPIN:
-    			// Count down to 0.25 seconds for motor spinup
-    			timeCounter += 20;
-    			if (timeCounter >= 250) {
-    				// Once time has been reached, advance to shoot
-    				shooterStage = ShooterStage.STARTSHOOT;
-    			} else {
-    				// If not time reached, exit switch
-    				break;
-    			}
-    		case STARTSHOOT:
-    			// Reset time counter
-    			timeCounter = 0;
-    			// Turn on collector
-    			ballCollector.forward();
-    			// Advance to next stage
-    			shooterStage = ShooterStage.SHOOT;
-    			// Delay advancement to next runthrough
-    			break;
-    		case SHOOT:
-    			// Advance time counter by 0.02 seconds
-    			timeCounter += 20;
-    			if (timeCounter >= 1000) {
-    				// If 1 second reached, advance to stop
-    				shooterStage = ShooterStage.STOP;
-    			} else {
-    				// If not time reached, exit switch
-    				break;
-    			}
-    		case STOP:
-    			// Turn off all motors
-    			shooter.stop();
-    			ballCollector.off();
-    			// Advance to next stage
-    			shooterStage = ShooterStage.OFF;
-    			break;
-    		}
-    		
-    		*/
     		
     		//Set power for shooting motors
     		//Guide wheels will always be at full power
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to double speed
     		shooter.changeHeight(speed);
-    	} else {
-    		shooter.stop();
-    	}
+    	} 
     	//If left trigger is pressed 
-    	if(oi.gamepad2.getRawAxis(2) > .5){
+    	else if(oi.gamepad2.getRawAxis(2) > .5){
     		//Guide wheels will always be at full power
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to 25% power
-    		shooter.changeHeight(.25);
+    		shooter.changeHeight(-.25);
+    	}else {
+    		shooter.stop();
     	}
     	/**
     	 * 
