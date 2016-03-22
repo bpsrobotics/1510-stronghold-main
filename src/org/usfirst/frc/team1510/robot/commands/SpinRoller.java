@@ -24,7 +24,7 @@ public class SpinRoller extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ballCollector.rollerMotor.set(Relay.Value.kForward);
+    	ballCollector.rollerMotor.set(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +35,7 @@ public class SpinRoller extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	ballCollector.rollerMotor.set(Relay.Value.kOff);
+    	ballCollector.rollerMotor.set(0);
     }
 
     // Called when another command which requires one or more of the same
