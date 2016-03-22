@@ -133,7 +133,7 @@ public class Drive extends Subsystem {
 
 	double kp = 0.03;
 
-	double angle = gyro.getAngle();
+	double angle = gyro.getAngle() - 90;
 	
     	move(motorThrottle, -angle * kp);
 	
