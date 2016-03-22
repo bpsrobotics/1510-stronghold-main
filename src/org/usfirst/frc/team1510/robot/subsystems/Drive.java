@@ -181,17 +181,19 @@ public class Drive extends Subsystem {
 
     	return false;
     }
-    public void setBrake(){
+    public boolean setBrake(){
     	leftMotors[0].enableBrakeMode(true);
     	leftMotors[1].enableBrakeMode(true);
     	rightMotors[0].enableBrakeMode(true);
     	rightMotors[1].enableBrakeMode(true);
+    	return true;
     }
-    public void setCoast(){
+    public boolean setCoast(){
     	leftMotors[0].enableBrakeMode(false);
     	leftMotors[1].enableBrakeMode(false);
     	rightMotors[0].enableBrakeMode(false);
     	rightMotors[1].enableBrakeMode(false);
+    	return true;
     }
     public void stop() {
     	drive.stopMotor();

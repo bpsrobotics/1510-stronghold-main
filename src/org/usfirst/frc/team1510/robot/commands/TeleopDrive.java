@@ -13,6 +13,8 @@ public class TeleopDrive extends Command {
 
 	Drive drive = Robot.drive;
 	private double multiplier = .9;
+	public boolean isCoast = true;
+	public boolean isBrake = false;
     public TeleopDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,27 +24,37 @@ public class TeleopDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	drive.enable();
+    	drive.setCoast();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//Post whether or not the drive is in brake mode or not
+    	if(isBrake){
+    		SmartDashboard.putString("Drive Mode", "Brake");
+    	}
+    	if(isCoast){
+    		SmartDashboard.putString("Drive Mode", "Coast");
+    	}
+    	//Hold right bumper for slow mode
     	if (Robot.oi.g1rightBumper.get()){
     		multiplier = .5;
     	}
     	else{
     		multiplier = .9;
     	}
+    	//Move robot with joystick input
     	drive.move(OI.deadzone(Robot.oi.gamepad1.getY())*multiplier, OI.deadzone(Robot.oi.gamepad1.getRawAxis(4))*multiplier);
     	double[] encoderValues = drive.getEncoderValues();
-    	
+    	//Post encoder values
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
     	SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
-    	
+    	//Press A and B to switch between coast and brake modes
     	if (Robot.oi.g1btnA.get()){
-    		drive.setBrake();
+    		isBrake = drive.setBrake();
     	}
     	if(Robot.oi.g1btnB.get()){
-    		drive.setCoast();
+    		isCoast = drive.setCoast();
     	}
     }
 
