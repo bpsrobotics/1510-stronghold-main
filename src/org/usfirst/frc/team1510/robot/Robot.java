@@ -70,14 +70,14 @@ public class Robot extends IterativeRobot {
 	//SmartDashboard.putData("Starting Position",startingPosition);
     	
     	defense = new SendableChooser();
-	defense.addDefault("Do nothing", Autonomous.Defense.NOTHING);
+    	defense.addDefault("Do nothing", Autonomous.Defense.NOTHING);
     	//defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
     	//defense.addObject("Cheval de Frise", Autonomous.Defense.CHEVAL_DE_FRISE);
     	//defense.addObject("Moat", Autonomous.Defense.MOAT);
     	//defense.addObject("Ramparts", Autonomous.Defense.RAMPARTS);
     	//defense.addObject("Drawbridge", Autonomous.Defense.DRAWBRIDGE);
     	//defense.addObject("Sally Port", Autonomous.Defense.SALLY_PORT);
-    	//defense.addObject("Rock Wall", Autonomous.Defense.ROCK_WALL);
+    	defense.addObject("Spy Bot", Autonomous.Defense.SPYBOT);
     	defense.addObject("Move Forward", Autonomous.Defense.ROUGH_TERRAIN);
     	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
 	SmartDashboard.putData("Defense", defense);

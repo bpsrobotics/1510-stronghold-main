@@ -2,6 +2,7 @@ package org.usfirst.frc.team1510.robot.commands;
 
 import org.usfirst.frc.team1510.robot.Robot;
 
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
@@ -12,7 +13,6 @@ public class ShootHigh extends Command {
 	
 	Shooter shooter = Robot.shooter;
 	BallCollector ballCollector= Robot.ballCollector;
-	boolean isDone;
     public ShootHigh() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,7 +23,7 @@ public class ShootHigh extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	setTimeout(1000);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,29 +31,14 @@ public class ShootHigh extends Command {
     	//Set power of shooter wheels and guide wheels
     	shooter.changeDistance(1);
 		shooter.changeHeight(.95);
-		//Wait for motors to get up to speed
-		try {
-			Thread.sleep(250);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if(timeSinceInitialized() >= 500){
+			ballCollector.rollerMotor.set(Relay.Value.kForward);
 		}
-		//Feed ball into shooter
-		ballCollector.forward();
-		//Wait for ball to shoot
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		//Stop all motors before exiting
-		shooter.stop();
-		ballCollector.off();
-		isDone = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isDone;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
