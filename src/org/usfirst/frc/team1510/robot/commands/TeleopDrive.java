@@ -37,6 +37,13 @@ public class TeleopDrive extends Command {
     	
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
     	SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
+    	
+    	if (Robot.oi.g1btnA.get()){
+    		drive.setBrake();
+    	}
+    	if(Robot.oi.g1btnB.get()){
+    		drive.setCoast();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
