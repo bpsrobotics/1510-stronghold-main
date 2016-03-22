@@ -116,10 +116,13 @@ public class Teleop extends Command {
     		speed -= .001;
     	}
     	//While button B is held spin roller
+    	//While button A is held reverse roller
     	if (oi.btnB.get()) {
-    		ballCollector.rollerMotor.set(Relay.Value.kForward);
-    	}if (!oi.btnB.get()) {
-   	     	ballCollector.rollerMotor.set(Relay.Value.kOff);
+    		ballCollector.rollerMotor.set(1);
+    	}if (oi.btnA.get()) {
+   	     	ballCollector.rollerMotor.set(-1);
+       	}else if (!oi.btnB.get() && !oi.btnA.get()){
+       		ballCollector.rollerMotor.set(0);
        	}
     	//While button X is held extend roller till limit
  		if (oi.btnX.get()) {

@@ -32,7 +32,7 @@ public class ShootHigh extends Command {
     	shooter.changeDistance(1);
 		shooter.changeHeight(.95);
 		if(timeSinceInitialized() >= 500){
-			ballCollector.rollerMotor.set(Relay.Value.kForward);
+			ballCollector.rollerMotor.set(1);
 		}
     }
 
