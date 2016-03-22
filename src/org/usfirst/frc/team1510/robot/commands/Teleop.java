@@ -115,11 +115,11 @@ public class Teleop extends Command {
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .7){
     		speed -= .001;
     	}
-    	//While button B is held spin roller
-    	//While button A is held reverse roller
-    	if (oi.btnB.get()) {
+    	//While button A is held spin roller
+    	//While button b is held reverse roller
+    	if (oi.btnA.get()) {
     		ballCollector.rollerMotor.set(1);
-    	}if (oi.btnA.get()) {
+    	}if (oi.btnB.get()) {
    	     	ballCollector.rollerMotor.set(-1);
        	}else if (!oi.btnB.get() && !oi.btnA.get()){
        		ballCollector.rollerMotor.set(0);
