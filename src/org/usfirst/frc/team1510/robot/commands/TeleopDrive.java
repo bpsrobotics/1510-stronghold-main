@@ -13,6 +13,7 @@ public class TeleopDrive extends Command {
 
 	Drive drive = Robot.drive;
 	private double multiplier = .9;
+	private double multiplierTurn = 1;
 	public boolean isCoast = true;
 	public boolean isBrake = false;
     public TeleopDrive() {
@@ -39,12 +40,15 @@ public class TeleopDrive extends Command {
     	//Hold right bumper for slow mode
     	if (Robot.oi.g1rightBumper.get()){
     		multiplier = .5;
+    		multiplierTurn = .75;
     	}
     	else{
     		multiplier = .9;
+    		multiplierTurn = 1;
+    		
     	}
     	//Move robot with joystick input
-    	drive.move(OI.deadzone(Robot.oi.gamepad1.getY())*multiplier, OI.deadzone(Robot.oi.gamepad1.getRawAxis(4))*multiplier);
+    	drive.move(OI.deadzone(Robot.oi.gamepad1.getY())*multiplier, OI.deadzone(Robot.oi.gamepad1.getRawAxis(4))*multiplierTurn);
     	double[] encoderValues = drive.getEncoderValues();
     	//Post encoder values
     	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
