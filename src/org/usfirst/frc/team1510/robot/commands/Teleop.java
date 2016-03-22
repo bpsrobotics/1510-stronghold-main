@@ -37,12 +37,7 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
-    private boolean switch2(){
-    	return ballCollector.counter2.get() > 0;
-    }
-    private boolean switch1(){
-    	return ballCollector.counter1.get() > 0;
-    }
+ 
     //private RunWheels runWheels = new RunWheels(oi.gamepad1.getY());
     
     // Controls for shooter systems
@@ -82,9 +77,13 @@ public class Teleop extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// Post ultrasonic distance to ShitDashboard
+    	/*
+    	 // Post ultrasonic distance to ShitDashboard
+    	 */
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
+    	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
+    	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
 		//System.out.println(Robot.ballCollector.limitSwitch1.get());
     	/**
     	 * 
@@ -103,6 +102,16 @@ public class Teleop extends Command {
     	else if (Math.abs(Robot.oi.gamepad2.getRawAxis(5)) <= .2){
     		wheelArms.moveArm(0);
     	}
+    	/*
+    	if(!ballCollector.limitSwitch2.get() && ballCollector.limitSwitch1.get()){
+    		ballCollector.armMotor.set(-Math.abs(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1)))/4);
+    	}
+    	else if (ballCollector.limitSwitch2.get() && !ballCollector.limitSwitch1.get()){
+    		ballCollector.armMotor.set(Math.abs(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1)))/4);
+    	}
+    	else {
+    		ballCollector.armMotor.set(OI.deadzone(Robot.oi.gamepad2.getRawAxis(1))/4);
+    	}*/
     	/*If the top of the d-pad is pressed and the current speed
     		is less than 1 (max) then increase speed by increments of .001
     	 */
@@ -121,18 +130,34 @@ public class Teleop extends Command {
     	}if (!oi.btnB.get()) {
    	     ballCollector.rollerMotor.set(Relay.Value.kOff);
        	}
+    	
     	//While button X is held extend roller till limit
  		if (oi.btnX.get()) {
-    		ballCollector.extend();	
-    	} else if (!oi.btnX.get()) {
-    		ballCollector.off();
+    		ballCollector.armMotor.set(.25);
+    		if (!ballCollector.limitSwitch2.get()) {
+    		    ballCollector.armMotor.set(0);
+    		}
+ 		}
     	//While button Y is held retract roller till limit
-    	}if (oi.btnY.get()) {
-    		ballCollector.retract();	
-    	} else if (!oi.btnY.get()) {
-    		ballCollector.off();
+    	else if (oi.btnY.get()) {
+    		ballCollector.armMotor.set(-.25);	
+    		if (!ballCollector.limitSwitch1.get()) {
+    		    ballCollector.armMotor.set(0);
+    		}
     	}
-
+    	//If no button is pressed stop motors
+    	else if (!oi.btnX.get() && !oi.btnY.get()) {
+    		ballCollector.off();
+    	} 
+ 		
+ 		//While right bumper is pressed reverse shooter
+ 		/*if(oi.rightBumper.get()){
+ 			shooter.changeDistance(-1);
+ 			shooter.changeHeight(-1);
+ 		}
+ 		else if(!oi.btnA.get()){
+ 			shooter.stop();
+ 		}*/
     	//If right trigger is pressed
     	if(oi.gamepad2.getRawAxis(3) > .5){
     		
@@ -211,7 +236,7 @@ public class Teleop extends Command {
     	 **/
 	
     	//If start button is pressed on either joystick
-    	if (oi.start.get() || oi.g1start.get()) {
+    	/*if (oi.start.get() || oi.g1start.get()) {
     		// Cancel all commands
     		deployRoller.cancel();
     		retractRoller.cancel();
@@ -224,7 +249,7 @@ public class Teleop extends Command {
     		shooter.stop();
     		ballCollector.off();
     		//runWheels.cancel();
-    	}
+    	}*/
 	}	
 
     // Make this return true when this Command no longer needs to run execute()

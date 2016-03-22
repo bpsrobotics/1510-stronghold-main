@@ -24,7 +24,7 @@ public class BallCollector extends Subsystem {
 
     
     public boolean extend() { 
-	armMotor.set(-0.075);
+	armMotor.set(-0.35);
 	if (!limitSwitch2.get()) {
 	    armMotor.set(0);
 	    return true;
@@ -32,7 +32,7 @@ public class BallCollector extends Subsystem {
 	return false;
     }
     public boolean retract() { 
-	armMotor.set(0.075);
+	armMotor.set(0.35);
 	if (!limitSwitch1.get()) {
 	    armMotor.set(0);
 	    return true;

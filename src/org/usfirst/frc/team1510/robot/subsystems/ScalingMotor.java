@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class ScalingMotor extends Subsystem {
-	private static Talon scalingMotorLeft = new Talon(4);
-	private static Talon scalingMotorRight = new Talon(5);
+	private static Talon scalingMotorLeft = new Talon(5);
+	private static Talon scalingMotorRight = new Talon(6);
 	public final static double MaxSpeed = 88.5;
 	private Encoder encoder1=new Encoder(7,8);
 	private Encoder encoder2=new Encoder(9,10);
