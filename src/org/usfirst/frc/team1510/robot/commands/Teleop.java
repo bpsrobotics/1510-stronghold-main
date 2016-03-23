@@ -78,10 +78,11 @@ public class Teleop extends Command {
     	  Speed of shooter (varied by d-pad)
     	  Limit Switch values
     	*/
+    	recSpeed =  shooter.getRecSpeed(distance);
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	SmartDashboard.putNumber("Estimated Distance", distance);
-    	SmartDashboard.putNumber("Recommended Speed", shooter.getRecSpeed(distance));
+    	SmartDashboard.putNumber("Recommended Speed", recSpeed);
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
     	/**
@@ -117,13 +118,13 @@ public class Teleop extends Command {
 		is less than 17 (max) then increase speed by increments of .1
     	 */
     	if(oi.gamepad1.getPOV(0) == 0 && distance < 17){
-    		speed += .1;
+    		distance += .1;
     	}
     	/*If the bottom of the d-pad is pressed and the current speed
 		is more than 0 (min) then decrease distance by increments of .1
     	 */
     	if(oi.gamepad1.getPOV(0) == 180 && distance > 0){
-    		speed -= .1;
+    		distance -= .1;
     	}
     	//While button A is held spin roller
     	//While button B is held reverse roller
