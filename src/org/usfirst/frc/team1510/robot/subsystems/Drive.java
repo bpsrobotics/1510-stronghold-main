@@ -58,6 +58,11 @@ public class Drive extends Subsystem {
      * @param right The right joystick
      */
 
+    /*public void move(GenericHID left, GenericHID right) {
+    	if (!enabled) return;
+    	//move(left.getY(),right);
+    }*/
+
     public void UpdatePIDTarget(double[] goalSpeed) { // Updates PID goal speeds, left then right
         leftController.SetGoal(goalSpeed[0]);
         rightController.SetGoal(goalSpeed[1]);
@@ -88,12 +93,66 @@ public class Drive extends Subsystem {
     public void move() {
         UpdatePIDMotors();
     }
+    /**
+     * 
+     * @param distance in feet
+     * @param motorThrottle
+     * @return
+     */
+    // public boolean driveDistance(double distance, double motorThrottle) {
+    // 	//distance = distance / 3 * 8 * Math.PI / 12;
+    // 	if (Math.abs(getAverageDistance()) >= distance) {
+    // 		//resetEncoders();
+    // 		//goalSpeed[0] = 0;
+    // 		//goalSpeed[1] = 0;
+    // 		//currentSpeed[0] = 0;
+    // 		//currentSpeed[1] = 0;
+    // 		//move(0,0);
+    // 		//return true;
+    // 	}
+
+	// double kp = 0.03;
+
+	// double angle = gyro.getAngle();
+	// 
+    // 	move(motorThrottle, 0);
+	// 
+	// /*
+    // 	if (Math.abs(getAverageDistance()) >= distance) {
+    // 		resetEncoders();
+    // 		goalSpeed[0] = 0;
+    // 		goalSpeed[1] = 0;
+    // 		currentSpeed[0] = 0;
+    // 		currentSpeed[1] = 0;
+    // 		move(0,0);
+    // 		return true;
+    // 	}
+	// */
+
+    // 	return false;
+    // }
 
 
     public double[] GetSpeeds() {
         double[] speeds = {leftController.GetSpeed(), rightController.GetSpeed()};
         return speeds;
     }
+
+    // Not needed due to PID controlling everything
+    // public boolean setBrake(){
+    // 	leftMotors[0].enableBrakeMode(true);
+    // 	leftMotors[1].enableBrakeMode(true);
+    // 	rightMotors[0].enableBrakeMode(true);
+    // 	rightMotors[1].enableBrakeMode(true);
+    // 	return true;
+    // }
+    // public boolean setCoast(){
+    // 	leftMotors[0].enableBrakeMode(false);
+    // 	leftMotors[1].enableBrakeMode(false);
+    // 	rightMotors[0].enableBrakeMode(false);
+    // 	rightMotors[1].enableBrakeMode(false);
+    // 	return true;
+    // }
 
     public void stop() {
         UpdatePIDTarget(stopped);

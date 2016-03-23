@@ -1,58 +1,54 @@
-<<<<<<< HEAD
 package org.usfirst.frc.team1510.robot.commands;
 
 import org.usfirst.frc.team1510.robot.Robot;
 import org.usfirst.frc.team1510.robot.subsystems.Drive;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  *
  */
-public class TeleopDrive extends Command {
-
-	Drive drive = Robot.drive;
-    public double multiplier = .9;
-	
-    public TeleopDrive() {
+public class TimeMove extends Command {
+    private Drive drive = Robot.drive;
+    private double reqThrottle = 0;
+    private double reqTime = 0;
+    public TimeMove(double time, double throttle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.drive);
+    	reqTime = time;
+    	reqThrottle = throttle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drive.enable();
+    	setTimeout(reqTime);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.oi.g1rightBumper.get()) {
-    	    multiplier = .5;
+    	if(!isTimedOut()){
+    		drive.leftMotors[0].set(-reqThrottle);
+    		drive.leftMotors[1].set(-reqThrottle);
+    		drive.rightMotors[0].set(reqThrottle);
+    		drive.rightMotors[1].set(reqThrottle);
     	}
-    	else {
-    	    multiplier = .9;
+    	else{
+    		drive.stop();
     	}
-    	drive.move(Robot.oi.gamepad1.getY()*multiplier, Robot.oi.gamepad1.getRawAxis(4)*multiplier);
-    	double[] speedValues = drive.GetSpeeds();
-    	
-    	SmartDashboard.putNumber("Left Motors Avg. Speed", speedValues[0]);
-    	SmartDashboard.putNumber("Right Motors Avg. Speed", speedValues[1]);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	drive.disable();
+    	drive.move(0,0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

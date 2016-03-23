@@ -61,8 +61,29 @@ public class OI {
     public JoystickButton rightBumper = new JoystickButton(gamepad2, 6);
     public JoystickButton start = new JoystickButton(gamepad2, 7);
     public JoystickButton back = new JoystickButton(gamepad2, 8);
-    public JoystickButton lStick = new JoystickButton(gamepad2, 9);
-    public JoystickButton rStick = new JoystickButton(gamepad2, 10);
+ //   public JoystickButton lStick = new JoystickButton(gamepad2, 9);
+ //   public JoystickButton rStick = new JoystickButton(gamepad2, 10);
+
+    public boolean leftTriggerPressed = false;
+    public boolean leftStickPressed = false;
+    public boolean g1leftBumperPressed = false;
+    public boolean g1rightBumperPressed = false;
+    public boolean g1btnAPressed = false;
+    public boolean g1btnBPressed = false;
+    public boolean g1btnXPressed = false;
+    public boolean g1btnYPressed = false;
+    public boolean g1startPressed = false;
+
+    public boolean btnAPressed = false;
+    public boolean btnBPressed = false;
+    public boolean btnXPressed = false;
+    public boolean btnYPressed = false;
+    public boolean leftBmperPressed = false;
+    public boolean rightBumperPressed = false;
+    public boolean startPressed = false;
+    public boolean backPressed = false;
+    //public boolean lStick = false;
+    //public boolean rStick = false;
     
     
     
@@ -70,7 +91,7 @@ public class OI {
     
     public static double deadzone(double value) {
 	if (Math.abs(value) < deadzoneThreshold) return 0;
-	return deadzoneThreshold;
+	return value;
     }
     
 }
