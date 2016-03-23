@@ -13,9 +13,9 @@ public class CrossLowBar extends CommandGroup {
     	//Move wheels down so they don't hit the low bar
     	addSequential(new TimeDeployWheels(.4,.5));
     	//Move all 8 wheels forward
-    	addSequential(new Move(500, Move.MoveDirection.FORWARD));
-    	addSequential(new Move(500, Move.MoveDirection.BACKWARD));
-    	addSequential(new Move(500, Move.MoveDirection.FORWARD));
+    	addSequential(new TimeMove(2, .75));
+    	//addSequential(new Move(500, Move.MoveDirection.BACKWARD));
+    	//addSequential(new Move(500, Move.MoveDirection.FORWARD));
     	//addParallel(new RunWheels(.85));
     	
         // Use requires() here to declare subsystem dependencies

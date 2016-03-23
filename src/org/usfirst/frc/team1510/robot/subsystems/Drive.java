@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 public class Drive extends Subsystem {
 
     // Arrays that contain the motor controllers
-    private CANTalon[] leftMotors = {new CANTalon(5), new CANTalon(6)};
-    private CANTalon[] rightMotors = {new CANTalon(1), new CANTalon(2)};
+    public CANTalon[] leftMotors = {new CANTalon(5), new CANTalon(6)};
+    public CANTalon[] rightMotors = {new CANTalon(1), new CANTalon(2)};
     /*
      * "private" -- Access modifier, can be package-protected (no keyword, default), protected (only subclasses), public (anybody), or private (only this class)
      * "CANTalon" -- Data type; primitives are int, double, float, boolean; classes are valid data types as well
@@ -93,10 +93,10 @@ public class Drive extends Subsystem {
      * @param left The left joystick
      * @param right The right joystick
      */
-    public void move(GenericHID left, GenericHID right) {
+    /*public void move(GenericHID left, GenericHID right) {
     	if (!enabled) return;
-    	move(left,right);
-    }
+    	//move(left.getY(),right);
+    }*/
 
 
     public double[] getEncoderValues() {
@@ -120,22 +120,22 @@ public class Drive extends Subsystem {
      * @return
      */
     public boolean driveDistance(double distance, double motorThrottle) {
-    	distance = distance / 3 * 8 * Math.PI / 12;
+    	//distance = distance / 3 * 8 * Math.PI / 12;
     	if (Math.abs(getAverageDistance()) >= distance) {
-    		resetEncoders();
-    		goalSpeed[0] = 0;
-    		goalSpeed[1] = 0;
-    		currentSpeed[0] = 0;
-    		currentSpeed[1] = 0;
-    		move(0,0);
-    		return true;
+    		//resetEncoders();
+    		//goalSpeed[0] = 0;
+    		//goalSpeed[1] = 0;
+    		//currentSpeed[0] = 0;
+    		//currentSpeed[1] = 0;
+    		//move(0,0);
+    		//return true;
     	}
 
 	double kp = 0.03;
 
-	double angle = gyro.getAngle() - 90;
+	double angle = gyro.getAngle();
 	
-    	move(motorThrottle, -angle * kp);
+    	move(motorThrottle, 0);
 	
 	/*
     	if (Math.abs(getAverageDistance()) >= distance) {
