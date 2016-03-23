@@ -61,6 +61,45 @@ public class Shooter extends Subsystem {
 	return velocity / (2 * Math.PI * FLYWHEEL_RADIUS * (MAXSPEED * GEAR_RATIO));
     }
     
+    private double getRecSpeed(double distance){
+    	int distance1 = (int)Math.rint(distance);
+    	double recSpeed = 0;
+    	switch(distance1){
+    	case 0:
+    		recSpeed = 1;
+    	case 1:
+    		recSpeed = 1;
+    	case 2:
+    		recSpeed = 1;
+    	case 3:
+    		recSpeed = 1;
+    	case 4:
+    		recSpeed = .95;
+    	case 5:
+    		recSpeed = .95;
+    	case 6:
+    		recSpeed = .85;
+    	case 7:
+    		recSpeed = .85;
+    	case 8:
+    		recSpeed = .75;
+    	case 9:
+    		recSpeed = .75;
+    	case 10:
+    		recSpeed = .85;
+    	case 11:
+    		recSpeed = .85;
+    	case 12:
+    		recSpeed = .95;
+    	case 13:
+    		recSpeed = .95;
+    	case 14:
+    		recSpeed = 1;
+    	case 15:
+    		recSpeed = 1;
+    	}
+    	return recSpeed;
+    }
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	//setDefaultCommand(new MySpecialCommand());

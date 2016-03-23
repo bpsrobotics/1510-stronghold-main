@@ -17,9 +17,6 @@ public class Teleop extends Command {
 	/**
 	 * Enumerator for shooter system
 	 */
-	private enum ShooterStage {
-		STARTSPIN, SPIN, STARTSHOOT, SHOOT, STOP, OFF
-	}
 	//Declare all necessary subsystems
     Drive drive = Robot.drive;
     WheelArms wheelArms = Robot.wheelArms;
@@ -28,7 +25,11 @@ public class Teleop extends Command {
     //Create new commands
     private OI oi = Robot.oi;
     //Declare default speed of bottom motors in ShootHigh as .95
-    private double speed = .95; 
+    private double speed = .95;
+    //Declare default distance
+    private double distance = 15;
+    //Declare default recommended speed
+    private double recSpeed = .85;
     private DeployRoller deployRoller = new DeployRoller();
     private RetractRoller retractRoller = new RetractRoller();
     private DeployWheels deployWheels = new DeployWheels(1);
@@ -37,12 +38,7 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
- 
-    //private RunWheels runWheels = new RunWheels(oi.gamepad1.getY());
-    
-    // Controls for shooter systems
-    private ShooterStage shooterStage = ShooterStage.OFF;
-    private int timeCounter = 0;    
+     
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -84,6 +80,8 @@ public class Teleop extends Command {
     	*/
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
+    	SmartDashboard.putNumber("Estimated Distance", distance);
+    	SmartDashboard.putNumber("Recommended Speed", recSpeed);
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
     	/**
@@ -115,8 +113,20 @@ public class Teleop extends Command {
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .5){
     		speed -= .001;
     	}
+    	/*If the top of the d-pad is pressed and the current distance
+		is less than 17 (max) then increase speed by increments of .1
+    	 */
+    	if(oi.gamepad1.getPOV(0) == 0 && distance < 17){
+    		speed += .1;
+    	}
+    	/*If the bottom of the d-pad is pressed and the current speed
+		is more than 0 (min) then decrease distance by increments of .1
+    	 */
+    	if(oi.gamepad1.getPOV(0) == 180 && distance > 0){
+    		speed -= .1;
+    	}
     	//While button A is held spin roller
-    	//While button b is held reverse roller
+    	//While button B is held reverse roller
     	if (oi.btnA.get()) {
     		ballCollector.rollerMotor.set(1);
     	}if (oi.btnB.get()) {
