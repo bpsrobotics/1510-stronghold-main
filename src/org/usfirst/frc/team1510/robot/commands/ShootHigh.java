@@ -23,14 +23,14 @@ public class ShootHigh extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(3);
+    	setTimeout(4);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Set power of shooter wheels and guide wheels
-    	shooter.changeDistance(1);
-		shooter.changeHeight(.575);
+    	shooter.changeDistance(2);
+		shooter.changeHeight(.70);
 		if(timeSinceInitialized() >= 1){
 			ballCollector.rollerMotor.set(1);
 		}
