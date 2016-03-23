@@ -81,7 +81,7 @@ public class Teleop extends Command {
     	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	SmartDashboard.putNumber("Estimated Distance", distance);
-    	SmartDashboard.putNumber("Recommended Speed", recSpeed);
+    	SmartDashboard.putNumber("Recommended Speed", shooter.getRecSpeed(distance));
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
     	/**

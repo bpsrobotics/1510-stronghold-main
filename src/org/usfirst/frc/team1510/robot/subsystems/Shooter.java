@@ -61,7 +61,7 @@ public class Shooter extends Subsystem {
 	return velocity / (2 * Math.PI * FLYWHEEL_RADIUS * (MAXSPEED * GEAR_RATIO));
     }
     
-    private double getRecSpeed(double distance){
+    public double getRecSpeed(double distance){
     	int distance1 = (int)Math.rint(distance);
     	double recSpeed = 0;
     	switch(distance1){
