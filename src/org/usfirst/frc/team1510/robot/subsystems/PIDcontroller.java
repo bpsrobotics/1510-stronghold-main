@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.CANTalon;
 
 class PIDcontroller {
 
-    public double Kp = 0, // K constants, gotta tune them. Kp is multiplier of error. Should be between .5 and 1.5 GENERALLY ---- needs testing
-                  Ki = 0, // Ki is multiplier of the integral. Should be pretty small (less than 1)
-                  Kd = 0; // Kd is multiplier of derivivitve. Should be <0 iirc
+    public double Kp = 0.5, // K constants, gotta tune them. Kp is multiplier of error. Should be between .5 and 1.5 GENERALLY ---- needs testing
+                  Ki = 0.1, // Ki is multiplier of the integral. Should be pretty small (less than 1)
+                  Kd = -0.1; // Kd is multiplier of derivivitve. Should be <0 iirc
                   //see? it spells pid!
     public double speedMulti = 1;
 

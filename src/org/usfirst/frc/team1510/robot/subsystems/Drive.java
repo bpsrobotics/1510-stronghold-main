@@ -36,9 +36,9 @@ public class Drive extends Subsystem {
 
     double[] stopped = {0, 0};
 
-    double Kp = 0,
-           Ki = 0,
-           Kd = 0;
+    double Kp = 0.5,
+           Ki = 0.1,
+           Kd = -0.1;
 
     private PIDcontroller leftController = new PIDcontroller(Kp, Ki, Kd, leftMotors);
     private PIDcontroller rightController = new PIDcontroller(Kp, Ki, Kd, rightMotors);
