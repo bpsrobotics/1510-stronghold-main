@@ -79,7 +79,7 @@ public class Teleop extends Command {
     	  Limit Switch values
     	*/
     	recSpeed =  shooter.getRecSpeed(distance);
-    	SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
+    	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	SmartDashboard.putNumber("Estimated Distance", distance);
     	SmartDashboard.putNumber("Recommended Speed", recSpeed);

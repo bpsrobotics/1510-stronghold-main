@@ -51,8 +51,8 @@ public class TeleopDrive extends Command {
     	drive.move(OI.deadzone(Robot.oi.gamepad1.getY())*multiplier, OI.deadzone(Robot.oi.gamepad1.getRawAxis(4))*multiplierTurn);
     	double[] encoderValues = drive.getEncoderValues();
     	//Post encoder values
-    	SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
-    	SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
+    	//SmartDashboard.putNumber("Left Encoder", encoderValues[0]);
+    	//SmartDashboard.putNumber("Right Encoder", encoderValues[1]);
     	//Press A and B to switch between coast and brake modes
     	if (Robot.oi.g1btnA.get()){
     		isBrake = drive.setBrake();

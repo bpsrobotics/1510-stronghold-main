@@ -60,15 +60,15 @@ public class Robot extends IterativeRobot {
     	camera = CameraServer.getInstance();
     	camera.setQuality(50);
     	camera.startAutomaticCapture("cam0");
-    	
+    	/*
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
     	startingPosition.addObject("2", Autonomous.StartingPosition.POS2);
     	startingPosition.addObject("3", Autonomous.StartingPosition.POS3);
     	startingPosition.addObject("4", Autonomous.StartingPosition.POS4);
     	startingPosition.addObject("5", Autonomous.StartingPosition.POS5);
-	//SmartDashboard.putData("Starting Position",startingPosition);
-    	
+		//SmartDashboard.putData("Starting Position",startingPosition);
+    	*/
     	defense = new SendableChooser();
     	defense.addDefault("Do nothing", Autonomous.Defense.NOTHING);
     	//defense.addDefault("Portcullis", Autonomous.Defense.PORTCULLIS);
@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
     	defense.addObject("Spy Bot", Autonomous.Defense.SPYBOT);
     	defense.addObject("Move Forward", Autonomous.Defense.ROUGH_TERRAIN);
     	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
-	SmartDashboard.putData("Defense", defense);
+    	SmartDashboard.putData("Defense", defense);
 	/*
 	  chooser = new SendableChooser();
 	  chooser.addDefault("Default Auto", new ExampleCommand());
