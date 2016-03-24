@@ -91,15 +91,18 @@ public class Teleop extends Command {
  		 * 
     	 **/
     	//If input from joystick is greater than deadzone 
-    	if (Math.abs(Robot.oi.gamepad2.getRawAxis(1)) > .2){
+    	if (Math.abs(oi.gamepad2.getRawAxis(1)) > .2){
     		//Cancel all commands requiring wheel arms
     		retractWheels.cancel();
     		deployWheels.cancel();
     		//Set the arm motor of the wheel arms to joystick value
-    		wheelArms.moveArm(Robot.oi.gamepad2.getRawAxis(1));
+    		wheelArms.moveArm(oi.gamepad2.getRawAxis(1));
+    	}
+    	else if (Math.abs(oi.gamepad2.getRawAxis(5)) > .2){
+    		wheelArms.moveArm(oi.gamepad2.getRawAxis(5));
     	}
     	//Else stop arms from moving
-    	else if (Math.abs(Robot.oi.gamepad2.getRawAxis(1)) <= .2){
+    	else if (Math.abs(oi.gamepad2.getRawAxis(1)) <= .2 && Math.abs(oi.gamepad2.getRawAxis(5)) <= .2){
     		wheelArms.moveArm(0);
     	}
     	/*If the top of the d-pad is pressed and the current speed
