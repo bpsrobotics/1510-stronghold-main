@@ -8,7 +8,7 @@ import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.USBCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
@@ -194,6 +194,7 @@ public class Teleop extends Command {
     		shooter.stop();
     	}
     	
+    	/*
     	//Controls for Target Light
     	if(oi.rightBumper.get()){
     		toggleLight = -toggleLight;
@@ -204,6 +205,9 @@ public class Teleop extends Command {
     	else if(toggleCam == -1){
     		Robot.targetLight.on();
     	}
+    	*/
+    	
+    	
     	/**
     	 * 
     	 * Begin controls for main driver
