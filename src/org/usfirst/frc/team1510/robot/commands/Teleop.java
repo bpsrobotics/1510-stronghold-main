@@ -39,6 +39,7 @@ public class Teleop extends Command {
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
     public int toggleCam = 1;
+    public int toggleLight = 1;
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -173,6 +174,17 @@ public class Teleop extends Command {
     		shooter.changeHeight(-.25);
     	}else {
     		shooter.stop();
+    	}
+    	
+    	//Controls for Target Light
+    	if(oi.rightBumper.get()){
+    		toggleLight = -toggleLight;
+    	}
+    	if(toggleLight == 1){
+    		Robot.targetLight.off();
+    	}
+    	else if(toggleCam == -1){
+    		Robot.targetLight.on();
     	}
     	/**
     	 * 
