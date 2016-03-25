@@ -34,9 +34,8 @@ public class Robot extends IterativeRobot {
     public static WheelArms wheelArms;
     public static UltrasonicSubsystem ultrasonic;
     
-    public static CameraServer camera0;
-    public static CameraServer camera1;
-
+    public static CameraServer camera;
+    
     Command autonomousCommand;
     Command teleopCommand;
     SendableChooser chooser;
@@ -58,13 +57,9 @@ public class Robot extends IterativeRobot {
     	wheelArms = new WheelArms();
     	ultrasonic = new UltrasonicSubsystem(0);
     	
-    	camera0 = CameraServer.getInstance();
-    	camera0.setQuality(50);
-    	//camera0.startAutomaticCapture("cam0");
-    	
-    	camera1 = CameraServer.getInstance();
-    	camera1.setQuality(50);
-    	//camera1.startAutomaticCapture("cam0");
+    	camera = CameraServer.getInstance();
+    	camera.setQuality(50);
+    	camera.startAutomaticCapture("cam0");
     	/*
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);

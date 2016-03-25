@@ -38,8 +38,12 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
+<<<<<<< HEAD
     public int toggleCam = 1;
     public int toggleLight = 1;
+=======
+     
+>>>>>>> parent of 2de2fd9... Added toggle function for front/back camera
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -191,15 +195,7 @@ public class Teleop extends Command {
     	 * Begin controls for main driver
     	 * 
     	 **/
-    	if(oi.g1rightBumper.get()){
-    		toggleCam = -toggleCam;
-    	}
-    	if(toggleCam == 1){
-    		Robot.camera0.startAutomaticCapture("cam0");
-    	}
-    	else if(toggleCam == -1){
-    		Robot.camera1.startAutomaticCapture("cam1");
-    	}
+	
     	//If start button is pressed on either joystick
     	/*if (oi.start.get() || oi.g1start.get()) {
     		// Cancel all commands
