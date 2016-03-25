@@ -38,12 +38,7 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
-<<<<<<< HEAD
-    public int toggleCam = 1;
-    public int toggleLight = 1;
-=======
-     
->>>>>>> parent of 2de2fd9... Added toggle function for front/back camera
+
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -148,7 +143,7 @@ public class Teleop extends Command {
     		ballCollector.armMotor.set(.25);
     		if (!ballCollector.limitSwitch2.get()) {
     		    ballCollector.armMotor.set(0);
-    		}
+  		}
  		}
     	//While button Y is held retract roller till limit
     	else if (oi.btnY.get()) {
