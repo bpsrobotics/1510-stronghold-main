@@ -8,6 +8,7 @@ import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.USBCamera;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
@@ -38,6 +39,9 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
+
+    private boolean rightBumperPressedLast = false;
+    private USBCamera currentCamera = Robot.forwardCamera;
 
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
@@ -85,6 +89,21 @@ public class Teleop extends Command {
     	SmartDashboard.putNumber("Recommended Speed", recSpeed);
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
+
+	// Controls for camera switching
+	if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.forwardCamera) {
+	    Robot.camera.startAutomaticCapture(Robot.reverseCamera);
+	    rightBumperPressedLast = true;
+	}
+	else if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.reverseCamera) {
+	    Robot.camera.startAutomaticCapture(Robot.forwardCamera);
+	    rightBumperPressedLast = true;
+	}
+	else if (!Robot.oi.g1rightBumper.get()) {
+	    rightBumperPressedLast = false;
+	}
+	
+	
     	/**
     	 * 
     	 * Begin controls for manipulator
