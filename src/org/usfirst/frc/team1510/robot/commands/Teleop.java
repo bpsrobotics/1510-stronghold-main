@@ -159,14 +159,14 @@ public class Teleop extends Command {
        	}
     	//While button X is held extend roller till limit
  		if (oi.btnX.get()) {
-    		ballCollector.armMotor.set(.25);
+    		ballCollector.armMotor.set(.35);
     		if (!ballCollector.limitSwitch2.get()) {
     		    ballCollector.armMotor.set(0);
   		}
  		}
     	//While button Y is held retract roller till limit
     	else if (oi.btnY.get()) {
-    		ballCollector.armMotor.set(-.25);	
+    		ballCollector.armMotor.set(-.35);	
     		if (!ballCollector.limitSwitch1.get()) {
     		    ballCollector.armMotor.set(0);
     		}
