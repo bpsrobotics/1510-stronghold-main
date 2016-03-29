@@ -100,16 +100,17 @@ public class Drive extends Subsystem {
 
 
     public double[] getEncoderValues() {
-    	double[] result = {leftMotors[0].getEncPosition(), rightMotors[0].getEncPosition()};
+    	double[] result = {leftMotors[1].getEncPosition(), rightMotors[0].getEncPosition()};
 	
     	return result;
     }
 
     public double getAverageDistance() {
-    	return (/*leftMotors[0].getEncPosition() +*/ rightMotors[0].getEncPosition());
+    	return (leftMotors[1].getEncPosition() + rightMotors[0].getEncPosition())/2;
     }
     
-    public void resetEncoders(){
+    public
+	void resetEncoders(){
     	leftMotors[0].setEncPosition(0);
     	rightMotors[0].setEncPosition(0);
     }
