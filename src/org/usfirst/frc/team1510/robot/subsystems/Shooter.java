@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.CANTalon;
  */
 public class Shooter extends Subsystem {
     private CANTalon shooterMotor = new CANTalon(3);
-    private Talon[] guideWheels = {new Talon(3), new Talon(4)};
+    // Talon 3 is left, talon 4 is right
+    public Talon[] guideWheels = {new Talon(3), new Talon(4)};
     private boolean justShot = false;
+    private double upperWheelSpeed = 0;
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters
     public final double SHOOTER_HEIGHT = 0.3048; // in meters
@@ -43,6 +45,22 @@ public class Shooter extends Subsystem {
     	guideWheels[0].set(power);
     	guideWheels[1].set(-power);
     	
+    	upperWheelSpeed = power;
+    	
+    }
+    
+    /**
+     * Adds spin to the shooter. 
+     * Always call changeDistance first or the spin will be canceled by changeDistance.
+     * @param spin
+     */
+    public void addSpin(double spin) {
+    	spin %= 1.0;
+    	if (spin < 0) {
+    		guideWheels[0].set(upperWheelSpeed + spin);
+    	} else if (spin > 0) {
+    		guideWheels[1].set(-(upperWheelSpeed + spin));
+    	}
     }
 
     public void stop() {
@@ -50,7 +68,8 @@ public class Shooter extends Subsystem {
     	shooterMotor.set(0);
     	guideWheels[0].set(0);
     	guideWheels[1].set(0);
-	
+    	upperWheelSpeed = 0;
+    	
     }
 
     private double getVelocity(double distance) {

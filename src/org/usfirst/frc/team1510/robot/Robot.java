@@ -60,12 +60,12 @@ public class Robot extends IterativeRobot {
     	wheelArms = new WheelArms();
     	ultrasonic = new UltrasonicSubsystem(0);
 
-	forwardCamera = new USBCamera("cam0");
-	reverseCamera = new USBCamera("cam2");
+    	//forwardCamera = new USBCamera("cam0");
+	    //reverseCamera = new USBCamera("cam2");
 	
     	camera = CameraServer.getInstance();
     	camera.setQuality(50);
-	camera.startAutomaticCapture(forwardCamera);
+    	camera.startAutomaticCapture("cam0");
     	/*
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);
