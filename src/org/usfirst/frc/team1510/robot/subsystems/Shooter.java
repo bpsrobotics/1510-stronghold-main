@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.CANTalon;
  */
 public class Shooter extends Subsystem {
     private CANTalon shooterMotor = new CANTalon(3);
-    private Talon[] guideWheels = {new Talon(3), new Talon(4)};
+    public Talon[] guideWheels = {new Talon(3), new Talon(4)};
     private boolean justShot = false;
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters

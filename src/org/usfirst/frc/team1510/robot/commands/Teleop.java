@@ -31,6 +31,10 @@ public class Teleop extends Command {
     private double distance = 15;
     //Declare default recommended speed
     private double recSpeed = .85;
+    // Default spin
+    private double rightSpeed = 1;
+    private double leftSpeed = 1;
+    private double spin = 0;
     private DeployRoller deployRoller = new DeployRoller();
     private RetractRoller retractRoller = new RetractRoller();
     private DeployWheels deployWheels = new DeployWheels(1);
@@ -89,7 +93,8 @@ public class Teleop extends Command {
     	SmartDashboard.putNumber("Recommended Speed", recSpeed);
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
-
+    	SmartDashboard.putNumber("Shooter Curve", spin);
+    	
 	// Controls for camera switching
 	if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.forwardCamera) {
 	    Robot.camera.startAutomaticCapture(Robot.reverseCamera);
@@ -135,6 +140,18 @@ public class Teleop extends Command {
     	 */
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .5){
     		speed -= .001;
+    	}
+    	// If left decrease spin
+    	if (oi.gamepad2.getPOV(0) == 270 && spin < 1) {
+    		rightSpeed -= 0.01;
+    		leftSpeed += 0.01;
+    		spin += 0.01;
+    	}
+    	// If right increase spin
+    	if (oi.gamepad2.getPOV(0) == 90 && spin > -1) {
+    		leftSpeed -= 0.01;
+    		rightSpeed += 0.01;
+    		spin -= 0.01;
     	}
     	/*If the top of the d-pad is pressed and the current distance
 		is less than 17 (max) then increase speed by increments of .1
@@ -183,6 +200,10 @@ public class Teleop extends Command {
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to double speed
     		shooter.changeHeight(speed);
+    		// Apply spin
+    		shooter.guideWheels[0].set(leftSpeed);
+    		shooter.guideWheels[1].set(rightSpeed);
+    		//shooter.addSpin(distance);
     	} 
     	//If left trigger is pressed 
     	else if(oi.gamepad2.getRawAxis(2) > .5){
