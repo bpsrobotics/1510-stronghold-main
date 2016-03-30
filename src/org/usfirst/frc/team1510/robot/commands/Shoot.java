@@ -5,6 +5,7 @@ import org.usfirst.frc.team1510.robot.Robot;
 import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
 import org.usfirst.frc.team1510.robot.subsystems.UltrasonicSubsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 /**
  *
  */
@@ -19,6 +20,10 @@ public class Shoot extends Command {
     private double distance;
     private int cycles = 0;
     private boolean complete = false;
+
+    public static final TARGET_WIDTH_FT = (1+2/3);
+    public static final CAMERA_FOV = 0.652753 / 2;
+    public static final CAMERA_FOV_PIXELS = 320 / 2;
     
     public Shoot() {
         // Use requires() here to declare subsystem dependencies
@@ -29,7 +34,11 @@ public class Shoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	distance = sonic.getRange()/1000;
+    	String tPixel = NetworkTable.getTable("CameraInfo").getString("XWidth", "-1");
+
+	double TPIXEL = Double.toDouble(tPixel);
+	
+	distance = TARGET_WIDTH_FT * CAMERA_FOV_PIXELS / (2*TPIXEL*Math.tan(CAMERA_FOV);
     }
 
     // Called repeatedly when this Command is scheduled to run
