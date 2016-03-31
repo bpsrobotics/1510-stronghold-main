@@ -77,6 +77,7 @@ public class Teleop extends Command {
     	new TeleopDrive().start();
     	wheelArms.stop();
     	ballCollector.off();
+    	//Robot
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -96,6 +97,7 @@ public class Teleop extends Command {
     	SmartDashboard.putNumber("Shooter Curve", spin);
     	
 	// Controls for camera switching
+    	/*
 	if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.forwardCamera) {
 	    Robot.camera.startAutomaticCapture(Robot.reverseCamera);
 	    rightBumperPressedLast = true;
@@ -107,6 +109,7 @@ public class Teleop extends Command {
 	else if (!Robot.oi.g1rightBumper.get()) {
 	    rightBumperPressedLast = false;
 	}
+	*/
 	
 	
     	/**
@@ -202,15 +205,15 @@ public class Teleop extends Command {
     		shooter.changeHeight(speed);
     		// Apply spin
     		shooter.guideWheels[0].set(leftSpeed);
-    		shooter.guideWheels[1].set(rightSpeed);
+    		shooter.guideWheels[1].set(-rightSpeed);
     		//shooter.addSpin(distance);
     	} 
     	//If left trigger is pressed 
     	else if(oi.gamepad2.getRawAxis(2) > .5){
     		//Guide wheels will always be at full power
-    		shooter.changeDistance(1);
+    		shooter.changeDistance(.6);
     		//Main shooter wheels are set to 25% power
-    		shooter.changeHeight(-.25);
+    		shooter.changeHeight(.25);
     	}else {
     		shooter.stop();
     	}
