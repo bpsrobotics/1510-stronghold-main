@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CrossChevalDeFrise extends CommandGroup {
 
     public CrossChevalDeFrise() {
+    	/*
     	//Move forward to the defense
     	addSequential(new Move(400, Move.MoveDirection.FORWARD));
     	//Deploy wheel arms to stabilize seesaws
@@ -15,7 +16,7 @@ public class CrossChevalDeFrise extends CommandGroup {
     	//Move forward with all 8 wheels
     	addSequential(new Move(40, Move.MoveDirection.FORWARD));
     	addParallel(new RunWheels(.85));
-    	
+    	*/
     	
     	
         // Use requires() here to declare subsystem dependencies
