@@ -28,11 +28,18 @@ public class ShootLow extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	setTimeout(4);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		switch (shooterStage) {
+    	shooter.changeHeight(0.60);
+		shooter.guideWheels[0].set(.70);
+		shooter.guideWheels[1].set(-1);
+		if(timeSinceInitialized() >= 1){
+			ballCollector.rollerMotor.set(1);
+		}
+		/*switch (shooterStage) {
 		case OFF:
 			shooterStage = ShooterStage.STARTSPIN;
 		case STARTSPIN:

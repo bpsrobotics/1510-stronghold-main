@@ -22,11 +22,12 @@ public class CrossRockWall extends CommandGroup {
         // eg. requires(chassis);
 		*/
     	//new Move();
-    	addSequential(new Move(8500));
-    	addParallel(new TimeDeployWheels(1,.65));
-    	addParallel(new Move(2500));
+    	addSequential(new TimeDeployWheels(.5,.5));
+    	addSequential(new Move(7000, .8));
+    	addSequential(new Turn(2200,-.8));
+    	//addSequential(new Move(1000, -.5));
+    	addSequential(new ShootLow());
     	//addSequential(new TimeDeployWheels(2, 0));
-    	
     	
     }
     protected void execute(){
