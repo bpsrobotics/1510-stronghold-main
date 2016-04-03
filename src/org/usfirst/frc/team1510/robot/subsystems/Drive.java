@@ -100,15 +100,18 @@ public class Drive extends Subsystem {
 
 
     public double[] getEncoderValues() {
-    	double[] result = {leftMotors[1].getEncPosition(), rightMotors[0].getEncPosition()};
+    	double[] result = {leftMotors[0].getEncPosition(), rightMotors[0].getEncPosition()};
 	
     	return result;
     }
 
     public double getAverageDistance() {
-    	return (leftMotors[1].getEncPosition() + rightMotors[0].getEncPosition())/2;
+    	return (-leftMotors[0].getEncPosition() + rightMotors[0].getEncPosition())/2;
     }
     
+    public double getDistance(){
+    	return rightMotors[0].getEncPosition();
+    }
     public
 	void resetEncoders(){
     	leftMotors[0].setEncPosition(0);
@@ -122,19 +125,20 @@ public class Drive extends Subsystem {
      */
     public boolean driveDistance(double distance, double motorThrottle) {
     	//distance = distance / 3 * 8 * Math.PI / 12;
-    	if (Math.abs(getAverageDistance()) >= distance) {
+    	//rightMotors[0].getEncPosition();
+    	if (Math.abs(getDistance()) >= distance) {
     		//resetEncoders();
     		//goalSpeed[0] = 0;
     		//goalSpeed[1] = 0;
     		//currentSpeed[0] = 0;
     		//currentSpeed[1] = 0;
-    		//move(0,0);
+    		move(0,0);
     		//return true;
     	}
 
-	double kp = 0.03;
+	//double kp = 0.03;
 
-	double angle = gyro.getAngle();
+	//double angle = gyro.getAngle();
 	
     	move(motorThrottle, 0);
 	
