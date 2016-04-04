@@ -26,7 +26,7 @@ public class Teleop extends Command {
     //Create new commands
     private OI oi = Robot.oi;
     //Declare default speed of bottom motors in ShootHigh as .95
-    private double speed = .95;
+    private double speed = .61;
     //Declare default distance
     private double distance = 15;
     //Declare default recommended speed
@@ -136,26 +136,28 @@ public class Teleop extends Command {
     		is less than 1 (max) then increase speed by increments of .001
     	 */
     	if(oi.gamepad2.getPOV(0) == 0 && speed < 1){
-    		speed += .001;
+    		speed += .01;
     	}
     	/*If the bottom of the d-pad is pressed and the current speed
 			is more than .7 (min) then decrease speed by increments of .001
     	 */
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .5){
-    		speed -= .001;
+    		speed -= .01
+    				;
     	}
+    	/*
     	// If left decrease spin
     	if (oi.gamepad2.getPOV(0) == 270 && spin < 1) {
-    		rightSpeed -= 0.01;
+    		rightSpeed += 0.01;
     		leftSpeed += 0.01;
     		spin += 0.01;
     	}
     	// If right increase spin
     	if (oi.gamepad2.getPOV(0) == 90 && spin > -1) {
     		leftSpeed -= 0.01;
-    		rightSpeed += 0.01;
+    		rightSpeed -= 0.01;
     		spin -= 0.01;
-    	}
+    	}*/
     	/*If the top of the d-pad is pressed and the current distance
 		is less than 17 (max) then increase speed by increments of .1
     	 */
@@ -218,18 +220,14 @@ public class Teleop extends Command {
     		shooter.stop();
     	}
     	
-    	/*
+    	
     	//Controls for Target Light
     	if(oi.rightBumper.get()){
-    		toggleLight = -toggleLight;
+    		speed = .61;
     	}
-    	if(toggleLight == 1){
-    		Robot.targetLight.off();
+    	if(oi.leftBumper.get()){
+    		speed = .95;
     	}
-    	else if(toggleCam == -1){
-    		Robot.targetLight.on();
-    	}
-    	*/
     	
     	
     	/**

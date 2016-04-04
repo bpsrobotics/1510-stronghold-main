@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 	
     	camera = CameraServer.getInstance();
     	camera.setQuality(50);
-	camera.startAutomaticCapture("cam0");
+    	camera.startAutomaticCapture("cam0");
     	/*
     	startingPosition = new SendableChooser();
     	startingPosition.addDefault("1", Autonomous.StartingPosition.POS1);

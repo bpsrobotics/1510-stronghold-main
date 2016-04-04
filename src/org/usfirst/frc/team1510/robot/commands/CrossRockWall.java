@@ -23,8 +23,8 @@ public class CrossRockWall extends CommandGroup {
 		*/
     	//new Move();
     	addSequential(new TimeDeployWheels(.5,.5));
-    	addSequential(new Move(7000, .8));
-    	addSequential(new Turn(2200,-.8));
+    	addSequential(new Move(10000, .8));
+    	addSequential(new Turn(2200,-1));
     	//addSequential(new Move(1000, -.5));
     	addSequential(new ShootLow());
     	//addSequential(new TimeDeployWheels(2, 0));
