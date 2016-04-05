@@ -13,7 +13,7 @@ public class CrossLowBar extends CommandGroup {
     	//Move wheels down so they don't hit the low bar
     	addSequential(new TimeDeployWheels(.4,.5));
     	//Move all 8 wheels forward
-    	addSequential(new TimeMove(1.5, .75));
+    	addSequential(new TimeMove(2.5, .75));
     	//addSequential(new Move(500, Move.MoveDirection.BACKWARD));
     	//addSequential(new Move(500, Move.MoveDirection.FORWARD));
     	//addParallel(new RunWheels(.85));

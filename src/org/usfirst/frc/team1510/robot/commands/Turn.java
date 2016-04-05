@@ -21,25 +21,41 @@ public class Turn extends Command {
 
     // Records if complete or not
     private boolean isComplete = false;
-    
-    public Turn(double degrees, Turn.Direction direction) {
+    private double power;
+    public Turn(double encCounts , double reqPower) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
 
-    	this.degrees = degrees;
-
-    	this.direction = direction;
+    	degrees = encCounts;
+    	power = reqPower;
+    	//this.direction = direction;
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
     	drive.enable();
+    	drive.rightMotors[0].setEncPosition(0);
+    	drive.leftMotors[0].enableBrakeMode(true);
+    	drive.leftMotors[1].enableBrakeMode(true);
+    	drive.rightMotors[0].enableBrakeMode(true);
+    	drive.rightMotors[1].enableBrakeMode(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	switch (direction) {
+    	
+    	if(Math.abs(drive.rightMotors[0].getEncPosition()) <= degrees){
+    		drive.leftMotors[0].set(power);
+        	drive.leftMotors[1].set(power);
+        	drive.rightMotors[0].set(power);
+        	drive.rightMotors[1].set(power);
+    	}
+    	else{
+    		drive.move(0, 0);
+    		isComplete = true;
+    	}
+    	/*switch (direction) {
     	case LEFT:
     		isComplete = drive.turn(this.degrees,-0.85);
     		break;
@@ -48,7 +64,8 @@ public class Turn extends Command {
     		break;
     	default:
     		break;
-    	}
+    	}*/
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -17,7 +17,7 @@ public class Move extends Command {
     }
     // Distance to move
     private double distance;
-    
+    private double power;
     // Records if complete or not
     private boolean isComplete = false;
     private int isReversed = 1;
@@ -29,13 +29,14 @@ public class Move extends Command {
      * @param reverse Whether or not to go forward or backward
      * 					1 goes forward, -1 goes backward
      */
-    public Move(double reqdistance) {
+    public Move(double reqDistance, double reqPower) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	//requires(Robot.drive);
     //moveDirection = direction;
 	///this.distance = distance;
-    	distance = reqdistance;
+    	distance = reqDistance;
+    	power = reqPower;
 	setTimeout(5);
     }
     
@@ -54,11 +55,11 @@ public class Move extends Command {
     	//switch(moveDirection) {
     	//case FORWARD:
     	
-    	if(drive.rightMotors[0].getEncPosition() <= distance){
-    		drive.leftMotors[0].set(-.8);
-        	drive.leftMotors[1].set(-.8);
-        	drive.rightMotors[0].set(.8);
-        	drive.rightMotors[1].set(.8);
+    	if(Math.abs(drive.rightMotors[0].getEncPosition()) <= distance){
+    		drive.leftMotors[0].set(-power);
+        	drive.leftMotors[1].set(-power);
+        	drive.rightMotors[0].set(power);
+        	drive.rightMotors[1].set(power);
     	}
     	else{
     		drive.move(0, 0);
