@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -19,16 +20,24 @@ public class Shooter extends Subsystem {
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
 
+    private NetworkTable autoAimTable;
+
+    public Shooter () {
+	autoAimTable = NetworkTable.getTable("AutoAim");
+    }
+
     /**
      * Fires the shooter with the given distance
      *
      * @param distance The distance, in meters, 
      */
-    public void fire(double distance) { 
+    public void fire() { 
 
-	shooterMotor.set(getMotorPower(getVelocity(distance)));
-	guideWheels[0].set(getMotorPower(getVelocity(distance)));
-	guideWheels[1].set(-getMotorPower(getVelocity(distance)));
+	
+	
+	shooterMotor.set(getMotorPower(distance));
+	guideWheels[0].set(1);
+	guideWheels[1].set(-1);
 	
     }
     
@@ -53,12 +62,13 @@ public class Shooter extends Subsystem {
 	
     }
 
-    private double getVelocity(double distance) {
-	return distance / Math.sqrt(GOAL_HEIGHT - SHOOTER_HEIGHT/9.807);
+    private double getDistance() {
+	
     }
 
-    private double getMotorPower(double velocity) {
-	return velocity / (2 * Math.PI * FLYWHEEL_RADIUS * (MAXSPEED * GEAR_RATIO));
+
+    private double getMotorPower(double distance) {
+	
     }
     
     public double getRecSpeed(double distance){
