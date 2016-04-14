@@ -77,6 +77,9 @@ public class Teleop extends Command {
     	new TeleopDrive().start();
     	wheelArms.stop();
     	ballCollector.off();
+
+	Robot.oi.lStick.toggleWhenPressed(new ToggleLight());
+	
     	//Robot
     }
 
