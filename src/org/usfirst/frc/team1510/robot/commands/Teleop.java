@@ -144,11 +144,11 @@ public class Teleop extends Command {
     	/*If the bottom of the d-pad is pressed and the current speed
 			is more than .7 (min) then decrease speed by increments of .001
     	 */
-    	if(oi.gamepad2.getPOV(0) == 180 && speed > .5){
+    	if(oi.gamepad2.getPOV(0) == 180 && speed > .01){
     		speed -= .01
     				;
     	}
-    	/*
+    	
     	// If left decrease spin
     	if (oi.gamepad2.getPOV(0) == 270 && spin < 1) {
     		rightSpeed += 0.01;
@@ -160,7 +160,7 @@ public class Teleop extends Command {
     		leftSpeed -= 0.01;
     		rightSpeed -= 0.01;
     		spin -= 0.01;
-    	}*/
+    	}
     	/*If the top of the d-pad is pressed and the current distance
 		is less than 17 (max) then increase speed by increments of .1
     	 */
@@ -184,14 +184,14 @@ public class Teleop extends Command {
        	}
     	//While button X is held extend roller till limit
  		if (oi.btnX.get()) {
-    		ballCollector.armMotor.set(.35);
+    		ballCollector.armMotor.set(.45);
     		if (!ballCollector.limitSwitch2.get()) {
     		    ballCollector.armMotor.set(0);
   		}
  		}
     	//While button Y is held retract roller till limit
     	else if (oi.btnY.get()) {
-    		ballCollector.armMotor.set(-.35);	
+    		ballCollector.armMotor.set(-.45);	
     		if (!ballCollector.limitSwitch1.get()) {
     		    ballCollector.armMotor.set(0);
     		}
@@ -226,10 +226,10 @@ public class Teleop extends Command {
     	
     	//Controls for Target Light
     	if(oi.rightBumper.get()){
-    		speed = .61;
+    		speed += .01;
     	}
     	if(oi.leftBumper.get()){
-    		speed = .95;
+    		speed -= .01;
     	}
     	
     	
