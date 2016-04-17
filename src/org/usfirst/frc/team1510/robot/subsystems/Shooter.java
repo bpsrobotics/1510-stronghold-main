@@ -13,11 +13,13 @@ public class Shooter extends Subsystem {
     private CANTalon shooterMotor = new CANTalon(3);
     public Talon[] guideWheels = {new Talon(3), new Talon(4)};
     private boolean justShot = false;
+    
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters
     public final double SHOOTER_HEIGHT = 0.3048; // in meters
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
+    public final double CAM_FOV = 28.6;
 
     /**
      * Fires the shooter with the given distance
@@ -53,6 +55,10 @@ public class Shooter extends Subsystem {
 	
     }
 
+    public double getDistance(double Tpx){
+		return 240 / (2 * Math.tan(CAM_FOV)* Tpx);
+    }
+    
     private double getVelocity(double distance) {
 	return distance / Math.sqrt(GOAL_HEIGHT - SHOOTER_HEIGHT/9.807);
     }
