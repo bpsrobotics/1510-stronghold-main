@@ -20,6 +20,10 @@ public class Shooter extends Subsystem {
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
 
+    // Begin shooter calibration curve constants
+    public final double CALIB_A = 1.7420287552521;
+    public final double CALIB_B = 0.90375536482201;
+
     private NetworkTable autoAimTable;
 
     public Shooter () {
@@ -35,7 +39,7 @@ public class Shooter extends Subsystem {
 
 	
 	
-	shooterMotor.set(getMotorPower(distance));
+	shooterMotor.set(getMotorPower(getDistance()));
 	guideWheels[0].set(1);
 	guideWheels[1].set(-1);
 	
@@ -63,12 +67,13 @@ public class Shooter extends Subsystem {
     }
 
     private double getDistance() {
-	
+	// This is a placeholder to avoid errors. It is a value that will not cause the motor controller to crash and burn.
+	return 11;
     }
 
 
     private double getMotorPower(double distance) {
-	
+	return CALIB_A * Math.pow(CALIB_B, distance);
     }
     
     public double getRecSpeed(double distance){
