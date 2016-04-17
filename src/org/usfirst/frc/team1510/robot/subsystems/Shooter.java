@@ -24,7 +24,7 @@ public class Shooter extends Subsystem {
     // Begin shooter calibration curve constants
     public final double CALIB_A = 1.7420287552521;
     public final double CALIB_B = 0.90375536482201;
-
+    private NetworkTable targetInfo = NetworkTable.getTable("GRIP/Target");
     private NetworkTable autoAimTable;
 
     public Shooter () {
@@ -37,13 +37,15 @@ public class Shooter extends Subsystem {
      * @param distance The distance, in meters, 
      */
     public void fire() {
-
-	
-	
-	shooterMotor.set(getMotorPower(getDistance()));
-	guideWheels[0].set(1);
-	guideWheels[1].set(-1);
-	
+    	double[] defaultValue = {};
+    	try {
+	    	double height = targetInfo.getNumberArray("height",defaultValue)[0];
+	    	shooterMotor.set(getMotorPower(getDistance(height)));
+	    	guideWheels[0].set(1);
+	    	guideWheels[1].set(-1);
+    	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("no target");
+		}
     }
     
     public void changeHeight(double power) {
