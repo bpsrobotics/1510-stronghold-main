@@ -43,7 +43,7 @@ public class OI {
 
     // Buttons
     public JoystickButton leftTrigger = new JoystickButton(gamepad1,1);
-    public JoystickButton  leftStickPress = new JoystickButton(gamepad1,9);
+    public JoystickButton leftStickPress = new JoystickButton(gamepad1,9);
     public JoystickButton g1leftBumper = new JoystickButton(gamepad1, 5);
     public JoystickButton g1rightBumper = new JoystickButton(gamepad1, 6);
     public JoystickButton g1btnA = new JoystickButton(gamepad1, 1);
@@ -61,8 +61,8 @@ public class OI {
     public JoystickButton rightBumper = new JoystickButton(gamepad2, 6);
     public JoystickButton start = new JoystickButton(gamepad2, 7);
     public JoystickButton back = new JoystickButton(gamepad2, 8);
- //   public JoystickButton lStick = new JoystickButton(gamepad2, 9);
- //   public JoystickButton rStick = new JoystickButton(gamepad2, 10);
+    public JoystickButton lStick = new JoystickButton(gamepad2, 9);
+    public JoystickButton rStick = new JoystickButton(gamepad2, 10);
 
     public boolean leftTriggerPressed = false;
     public boolean leftStickPressed = false;
