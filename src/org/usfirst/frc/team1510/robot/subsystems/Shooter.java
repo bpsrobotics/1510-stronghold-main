@@ -89,6 +89,39 @@ public class Shooter extends Subsystem {
 		}
     }
     
+    /** 
+	*Return array of values containing target info
+	*values[0] = area
+	*values[1] = height
+	*values[2] = width
+	*values[3] = centerX
+	*values[4] = centerY
+	*/
+    
+    public double[] getTargetInfo(){
+    	double[] defaultValue = {};
+    	double[] heights = targetInfo.getNumberArray("height", defaultValue);
+    	double[] widths = targetInfo.getNumberArray("width", defaultValue);
+    	double[] areas = targetInfo.getNumberArray("area", defaultValue);
+    	double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
+    	double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
+    	double[] values = {0,0,0,0,0};
+    	int index = 0;
+    	
+    	for(int i = 0; i < areas.length; i++){
+			if(areas[i] > values[0]){
+				values[0] = areas[i];
+				index = i;
+			}
+		}
+    	
+    	values[1] = heights[index];
+    	values[2] = widths[index];
+    	values[3] = possibleX[index];
+    	values[4] = possibleY[index];
+    	
+    	return values;
+    }
     public void changeHeight(double power) {
 
     	shooterMotor.set(-power);
