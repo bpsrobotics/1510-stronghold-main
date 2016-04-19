@@ -38,15 +38,16 @@ public class Autonomous extends CommandGroup {
 	    addSequential(new CrossRamparts() );
 	} else if(Robot.defense.getSelected().equals(Defense.ROCK_WALL)){
 	    addSequential(new CrossRockWall() );
-    	} else if(Robot.defense.getSelected().equals(Defense.ROUGH_TERRAIN)){
+    } else if(Robot.defense.getSelected().equals(Defense.ROUGH_TERRAIN)){
 	    addSequential(new CrossRoughTerrain() );
 	} else if(Robot.defense.getSelected().equals(Defense.LOW_BAR)){
 	    addSequential(new CrossLowBar() );
     }else if(Robot.defense.getSelected().equals(Defense.SPYBOT)){
 	    addSequential(new ShootHigh() );
-    	}
+    }else if(Robot.defense.getSelected().equals(Defense.AUTO_AIM)){
+	    addSequential(new Shoot() );
     }
-    
+	}
     protected void execute(){
     	
     }
@@ -56,6 +57,6 @@ public class Autonomous extends CommandGroup {
     }
     
     public enum Defense {
-    	SPYBOT, PORTCULLIS, CHEVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, LOW_BAR, NOTHING
+    	AUTO_AIM,SPYBOT, PORTCULLIS, CHEVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, LOW_BAR, NOTHING
     }
 }

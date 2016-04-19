@@ -43,7 +43,7 @@ public class Teleop extends Command {
     private BallRelease releaseBall = new BallRelease();
     private ShootHigh shootHigh = new ShootHigh();
     private ShootLow shootLow = new ShootLow();
-
+    private Shoot shoot = new Shoot();
     private boolean rightBumperPressedLast = false;
     private USBCamera currentCamera = Robot.forwardCamera;
 
@@ -77,9 +77,6 @@ public class Teleop extends Command {
     	new TeleopDrive().start();
     	wheelArms.stop();
     	ballCollector.off();
-
-    	Robot.oi.lStick.toggleWhenPressed(new ToggleLight());
-	
     	//Robot
     }
 
@@ -90,7 +87,6 @@ public class Teleop extends Command {
     	  Speed of shooter (varied by d-pad)
     	  Limit Switch values
     	*/
-    	recSpeed =  shooter.getRecSpeed(distance);
     	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	//SmartDashboard.putNumber("Estimated Distance", distance);
@@ -113,7 +109,8 @@ public class Teleop extends Command {
 	    rightBumperPressedLast = false;
 	}
 	*/
-	
+    	//Set speed to value returned by AutoAim
+    	speed = shooter.getRecPower();
 	
     	/**
     	 * 
@@ -213,14 +210,18 @@ public class Teleop extends Command {
     		shooter.guideWheels[1].set(-rightSpeed);
     		//shooter.addSpin(distance);
     	} 
+    	
     	//If left trigger is pressed 
-    	else if(oi.gamepad2.getRawAxis(2) > .5){
+    	else if(oi.gamepad2.getRawAxis(2) > .5 && !shoot.isRunning()){
+    		
     		//Guide wheels will always be at full power
     		shooter.changeDistance(.6);
     		//Main shooter wheels are set to 25% power
     		shooter.changeHeight(.25);
+    		
     	}else {
     		shooter.stop();
+    		
     	}
     	
     	
