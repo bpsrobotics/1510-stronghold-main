@@ -22,8 +22,8 @@ public class Shooter extends Subsystem {
     public final double CAM_FOV = 28.6;
 
     // Begin shooter calibration curve constants
-    public final double CALIB_A = 1.7420287552521;
-    public final double CALIB_B = 0.90375536482201;
+    public final double CALIB_A = 3.2188255000367;
+    public final double CALIB_B = 0.98337515163017;
     private NetworkTable targetInfo = NetworkTable.getTable("GRIP/Target");
     private NetworkTable autoAimTable;
 
@@ -35,16 +35,57 @@ public class Shooter extends Subsystem {
      * Fires the shooter with the given distance
      *
      * @param distance The distance, in meters, 
-     */
+     */	
     public void fire() {
     	double[] defaultValue = {};
+    	double height = 0;
     	try {
-	    	double height = targetInfo.getNumberArray("height",defaultValue)[0];
-	    	shooterMotor.set(getMotorPower(getDistance(height)));
-	    	guideWheels[0].set(1);
-	    	guideWheels[1].set(-1);
+    		double[] heights = targetInfo.getNumberArray("height", defaultValue);
+    		
+    		for (double possibleHeight : heights) {
+    			if (possibleHeight > height)
+    				height = possibleHeight;
+    		}
+    		
+    		/*
+    		for(int i = 0; i < targetInfo.getNumberArray("height", defaultValue).length; i++){
+    			if(targetInfo.getNumberArray("height",defaultValue)[i] > height){
+    				height = targetInfo.getNumberArray("height", defaultValue)[i]; 
+    			}
+    		}
+    		*/
+	    	//double height = targetInfo.getNumberArray("height",defaultValue)[0];
+	    	changeHeight(getMotorPower(getDistance(height)));
+	    	changeDistance(1);
+	    	System.out.println(height + " " + getMotorPower(getDistance(height)));
     	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("no target");
+		}
+    }
+    
+    public double getRecPower() {
+    	double[] defaultValue = {};
+    	double height = 0;
+    	try {
+    		double[] heights = targetInfo.getNumberArray("height", defaultValue);
+    		
+    		for (double possibleHeight : heights) {
+    			if (possibleHeight > height)
+    				height = possibleHeight;
+    		}
+    		
+    		/*
+    		for(int i = 0; i < targetInfo.getNumberArray("height", defaultValue).length; i++){
+    			if(targetInfo.getNumberArray("height",defaultValue)[i] > height){
+    				height = targetInfo.getNumberArray("height", defaultValue)[i]; 
+    			}
+    		}
+    		*/
+	    	//double height = targetInfo.getNumberArray("height",defaultValue)[0];
+	    	return getMotorPower(getDistance(height));
+    	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("no target");
+			return 0;
 		}
     }
     
@@ -70,9 +111,9 @@ public class Shooter extends Subsystem {
     }
 
 
-
+    //returns distance in inches
     public double getDistance(double Tpx){
-		return 240 / (2 * Math.tan(CAM_FOV)* Tpx);
+		return (240 / (2 * Math.tan(Math.toRadians(CAM_FOV))* Tpx)) * 12;
     }
     
 
@@ -81,45 +122,7 @@ public class Shooter extends Subsystem {
 	return CALIB_A * Math.pow(CALIB_B, distance);
     }
     
-    public double getRecSpeed(double distance){
-    	int distance1 = (int)Math.rint(distance);
-    	switch(distance1){
-    	case 0:
-    		return 1;
-    	case 1:
-	    return 1;
-    	case 2:
-    		return 1;
-    	case 3:
-    		return 1;
-    	case 4:
-       	return .95;
-    	case 5:
-    		return .95;
-    	case 6:
-    		return .85;
-    	case 7:
-       	return .85;
-    	case 8:
-    		return .75;
-    	case 9:
-       	return .75;
-    	case 10:
-    		return .85;
-    	case 11:
-    		return .85;
-    	case 12:
-    		return .95;
-    	case 13:
-    		return .95;
-    	case 14:
-    		return 1;
-    	case 15:
-    		return 1;
-    	default:
-    		return .85;
-    	}
-    }
+    
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	//setDefaultCommand(new MySpecialCommand());
