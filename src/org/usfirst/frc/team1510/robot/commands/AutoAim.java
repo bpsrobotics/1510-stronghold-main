@@ -18,6 +18,10 @@ public class AutoAim extends Command{
 	//private TargetLight targetLight = Robot.targetLight;
 	private boolean complete = false;
 
+    public static final int CENTERED_X = 166;
+    public static final int ADJUSTED_WIDTH = CENTERED_X * 2;
+    public static final double kP = 0.5;
+
 	 public AutoAim() {
 	        // Use requires() here to declare subsystem dependencies
 	        requires(Robot.drive);
@@ -32,57 +36,41 @@ public class AutoAim extends Command{
 	    // Called repeatedly when this Command is scheduled to run
 	    
 	    //@SuppressWarnings("deprecation")
-		protected void execute(){
+	    protected void execute(){
 	    	//turn light on
 	    	//targetLight.on();
     		//Get values printed in network tables
-	   
+
+		/*
     		double[] defaultValue = {};
     		
-    		
-    		try {
-		    	double height = table.getNumberArray("height",defaultValue)[0];
-		    	double width = table.getNumberArray("width",defaultValue)[0];
-		    	double xval = table.getNumberArray("centerX",defaultValue)[0];
-		    	double yval = table.getNumberArray("centerY",defaultValue)[0];
-		    	//Find the ratio of height to width
-		    	double ratio = height/width;
-		    	//Find vertical offset
-		    	//double vertdiff = yval - 120;
-		    	//Find horizontal offset
-		    	double hzdiff = xval - 240;
-		    	/*
-		    	if(vertdiff > 10){
-		    		System.out.println("Move shooter up");
-		    	}
-		    	else if(vertdiff < -10){
-		    		System.out.println("Move shooter down");
-		    	}*/
-		    	if(hzdiff > 10){
-		    		System.out.println("Move robot right");
-		    		drive.turn(10,.5);
-		    	}
-		    	else if(hzdiff < -10){
-		    		System.out.println("Move robot left");
-		    		drive.turn(10,-.5);
-		    	}
-		    	if(ratio > .7){
-		    		System.out.println("The target is angled too much, cannot shoot");
-		    		complete = true;
-		    	}
-		    	
-		    	if (Math.abs(hzdiff) < 100) {
-		    	 	distance = sonic.getRange()/1000;
-		    		System.out.println("You are clear to shoot");
-		    		shooter.fire(distance);
-		    		complete = true;
-		    	}
-    		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-    			System.out.println("no target");
-    		}
-	    	
+		double[] xValues = table.getNumberArray("centerX", defaultValue);
+		double[] areas = table.getNumberArray("area", defaultValue);
 
-    	}
+		if (xValues.length <= 0) return;
+
+		double largestIndex = 0;
+
+		for (int i = 0; i < xValues.length; i++) {
+		    if (areas[i] > largestArea) {
+			largestIndex = i;
+		    }
+		}
+
+		*/
+
+		xValue = shooter.getTargetInfo()[3];
+		
+		double alignmentRatio = (xValue / ADJUSTED_WIDTH - 0.5) * 2;
+
+		if (Math.abs(alignmentRatio <= 0.05) {
+		    complete = true;
+		}
+
+		    drive.move(0, alignmentRatio * kP);
+		    
+		
+	    }
     
 
 	    // Make this return true when this Command no longer needs to run execute()
