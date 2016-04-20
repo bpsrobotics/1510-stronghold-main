@@ -20,7 +20,7 @@ public class AutoAim extends Command{
 
     public static final int CENTERED_X = 166;
     public static final int ADJUSTED_WIDTH = CENTERED_X * 2;
-    public static final double kP = 0.5;
+    public static final double kP = 2;
 
 	 public AutoAim() {
 	        // Use requires() here to declare subsystem dependencies
@@ -59,11 +59,11 @@ public class AutoAim extends Command{
 
 		*/
 
-		xValue = shooter.getTargetInfo()[3];
+		double xValue = shooter.getTargetInfo()[3];
 		
 		double alignmentRatio = (xValue / ADJUSTED_WIDTH - 0.5) * 2;
 
-		if (Math.abs(alignmentRatio <= 0.05) {
+		if (Math.abs(alignmentRatio) <= 0.05) {
 		    complete = true;
 		}
 
