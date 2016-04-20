@@ -46,7 +46,9 @@ public class Teleop extends Command {
     private Shoot shoot = new Shoot();
     private boolean rightBumperPressedLast = false;
     private USBCamera currentCamera = Robot.forwardCamera;
-
+    double offset;
+	double reqX = 175;
+	
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -87,6 +89,7 @@ public class Teleop extends Command {
     	  Speed of shooter (varied by d-pad)
     	  Limit Switch values
     	*/
+    	double x = shooter.getTargetInfo()[3];
     	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	//SmartDashboard.putNumber("Estimated Distance", distance);
@@ -94,7 +97,8 @@ public class Teleop extends Command {
     	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
     	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
     	SmartDashboard.putNumber("Shooter Curve", spin);
-    	
+    	SmartDashboard.putNumber("Offset", (175-x));
+
 	// Controls for camera switching
     	/*
 	if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.forwardCamera) {
@@ -212,7 +216,7 @@ public class Teleop extends Command {
     	} 
     	
     	//If left trigger is pressed 
-    	else if(oi.gamepad2.getRawAxis(2) > .5 && !shoot.isRunning()){
+    	else if(oi.gamepad2.getRawAxis(2) > .5 ){
     		
     		//Guide wheels will always be at full power
     		shooter.changeDistance(.6);
@@ -222,7 +226,8 @@ public class Teleop extends Command {
     	}else {
     		shooter.stop();
     		
-    	}
+        }
+    	
     	
     	
     	//Controls for Target Light

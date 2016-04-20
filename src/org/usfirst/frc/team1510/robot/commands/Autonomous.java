@@ -45,7 +45,8 @@ public class Autonomous extends CommandGroup {
     }else if(Robot.defense.getSelected().equals(Defense.SPYBOT)){
 	    addSequential(new ShootHigh() );
     }else if(Robot.defense.getSelected().equals(Defense.AUTO_AIM)){
-	    addSequential(new Shoot() );
+	    addSequential(new AA2() );
+	    addSequential(new Shoot());
     }
 	}
     protected void execute(){

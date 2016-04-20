@@ -3,6 +3,8 @@ package org.usfirst.frc.team1510.robot.commands;
 import org.usfirst.frc.team1510.robot.OI;
 import org.usfirst.frc.team1510.robot.Robot;
 import org.usfirst.frc.team1510.robot.subsystems.Drive;
+import org.usfirst.frc.team1510.robot.subsystems.Shooter;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
@@ -12,10 +14,13 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 public class TeleopDrive extends Command {
 
 	Drive drive = Robot.drive;
+	Shooter shooter = Robot.shooter;
 	private double multiplier = .9;
 	private double multiplierTurn = 1;
 	public boolean isCoast = true;
 	public boolean isBrake = false;
+	double offset;
+	double reqX = 175;
     public TeleopDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -60,6 +65,50 @@ public class TeleopDrive extends Command {
     	if(Robot.oi.g1btnB.get()){
     		isCoast = drive.setCoast();
     	}
+    	else if(Robot.oi.gamepad1.getRawAxis(2) > .5 ){
+    		/*
+    		//Guide wheels will always be at full power
+    		shooter.changeDistance(.6);
+    		//Main shooter wheels are set to 25% power
+    		shooter.changeHeight(.25);
+    		
+    	}else {
+    		shooter.stop();
+    		*/
+    		double offset = reqX - shooter.getTargetInfo()[3];
+        	if(Math.abs(offset) <= 3){
+        		drive.move(0, 0);
+        	}
+        	else if (offset > 3){
+        		drive.resetEncoders();
+        		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
+        			drive.leftMotors[0].set(.35);
+        			drive.leftMotors[1].set(.35);
+        			drive.rightMotors[0].set(.35);
+        			drive.rightMotors[1].set(.35);
+        		}
+        		/*else{
+        			drive.stop();
+        		}*/
+        	}
+        	else if (offset < -3){
+        		drive.resetEncoders();
+        		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
+        		drive.leftMotors[0].set(-.35);
+        		drive.leftMotors[1].set(-.35);
+        		drive.rightMotors[0].set(-.35);
+        		drive.rightMotors[1].set(-.35);
+        		}
+        		/*
+        		else{
+        			drive.stop();
+        		}*/
+        	}
+        	else{
+        		drive.stop();
+        	}
+        	//System.out.println(offset);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
