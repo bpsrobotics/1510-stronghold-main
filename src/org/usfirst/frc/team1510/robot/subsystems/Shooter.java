@@ -64,7 +64,8 @@ public class Shooter extends Subsystem {
     }
     
     public double getRecPower() {
-    	double[] defaultValue = {};
+    	return getMotorPower(getDistance(getTargetInfo()[1]));
+    	/*double[] defaultValue = {};
     	double height = 0;
     	try {
     		double[] heights = targetInfo.getNumberArray("height", defaultValue);
@@ -81,12 +82,14 @@ public class Shooter extends Subsystem {
     			}
     		}
     		*/
+    	/*
 	    	//double height = targetInfo.getNumberArray("height",defaultValue)[0];
 	    	return getMotorPower(getDistance(height));
     	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("no target");
 			return 0;
-		}
+		}*/
+    	
     }
     
     /** 
@@ -99,28 +102,43 @@ public class Shooter extends Subsystem {
 	*/
     
     public double[] getTargetInfo(){
-    	double[] defaultValue = {};
-    	double[] heights = targetInfo.getNumberArray("height", defaultValue);
-    	double[] widths = targetInfo.getNumberArray("width", defaultValue);
-    	double[] areas = targetInfo.getNumberArray("area", defaultValue);
-    	double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
-    	double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
     	double[] values = {0,0,0,0,0};
-    	int index = 0;
+    	try {
+    		double[] defaultValue = {};
+    		double[] heights = targetInfo.getNumberArray("height", defaultValue);
+    		double[] widths = targetInfo.getNumberArray("width", defaultValue);
+    		double[] areas = targetInfo.getNumberArray("area", defaultValue);
+    		double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
+    		double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
+    		//Sort through contours to minimize list based on height
+    		/*int[] contours = {0,0,0,0,0};
+    		int cindex = 0;
+    		for(int i = 0; i < heights.length; i++){
+    			if(heights[i] < 35 && heights[i] > 15){
+    				contours[cindex] = i;
+    				cindex++;
+    			}
+    		}*/	
+    		int index = 0;    	
+    		for(int i = 0; i < areas.length; i++){
+    			if(areas[i] > values[0] && heights[i] < 35 && heights[i] > 15){
+    				values[0] = areas[i];
+    				index = i;
+    			}	
+    		}
     	
-    	for(int i = 0; i < areas.length; i++){
-			if(areas[i] > values[0]){
-				values[0] = areas[i];
-				index = i;
-			}
+    		values[1] = heights[index];
+    		values[2] = widths[index];
+    		values[3] = possibleX[index];
+    		values[4] = possibleY[index];
+    		return values;
+    	
+    	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("no target");
+			return values;
 		}
     	
-    	values[1] = heights[index];
-    	values[2] = widths[index];
-    	values[3] = possibleX[index];
-    	values[4] = possibleY[index];
     	
-    	return values;
     }
     public void changeHeight(double power) {
 
