@@ -6,6 +6,7 @@ import org.usfirst.frc.team1510.robot.subsystems.WheelArms;
 import org.usfirst.frc.team1510.robot.subsystems.Shooter;
 import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.vision.USBCamera;
@@ -48,6 +49,9 @@ public class Teleop extends Command {
     private USBCamera currentCamera = Robot.forwardCamera;
     double offset;
 	double reqX = 175;
+	double x;
+	double height;
+	//double distance;
 	
     public Teleop() {
         // Use requires() here to declare subsystem dependencies
@@ -119,12 +123,22 @@ public class Teleop extends Command {
 	*/
     	//Set speed to value returned by AutoAim
     	speed = shooter.getRecPower();
+    	
 	
     	/**
     	 * 
     	 * Begin controls for manipulator
  		 * 
     	 **/
+    	//If within the shooting range RUUUUMBLE
+    	if(shooter.inRange){
+    		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kLeftRumble, 1);
+    		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kRightRumble,1);
+    	}
+    	else{
+    		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kLeftRumble, 0);
+    		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kRightRumble, 0);
+    	}
     	//If input from joystick is greater than deadzone 
     	if (Math.abs(oi.gamepad2.getRawAxis(1)) > .2){
     		//Cancel all commands requiring wheel arms
@@ -207,7 +221,9 @@ public class Teleop extends Command {
     	} 
     	//If right trigger is pressed
     	if(oi.gamepad2.getRawAxis(3) > .5){
-    		
+    	    //x = shooter.getTargetInfo()[3];
+        	//height = shooter.getTargetInfo()[1];
+        	//distance = shooter.getDistance(shooter.getTargetInfo()[1]);
     		//Set power for shooting motors
     		//Guide wheels will always be at full power
     		shooter.changeDistance(1);
@@ -273,7 +289,9 @@ public class Teleop extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-	Robot.drive.resetDefault();
+    	Robot.drive.resetDefault();
+    	Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kLeftRumble, 0);
+    	Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kRightRumble, 0);
     }
 
     // Called when another command which requires one or more of the same

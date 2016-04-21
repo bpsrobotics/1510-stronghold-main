@@ -76,10 +76,10 @@ public class TeleopDrive extends Command {
     		shooter.stop();
     		*/
     		double offset = reqX - shooter.getTargetInfo()[3];
-        	if(Math.abs(offset) <= 3){
+        	if(Math.abs(offset) <= 4){
         		drive.move(0, 0);
         	}
-        	else if (offset > 3){
+        	else if (offset > 4){
         		drive.resetEncoders();
         		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
         			drive.leftMotors[0].set(.35);
@@ -91,7 +91,7 @@ public class TeleopDrive extends Command {
         			drive.stop();
         		}*/
         	}
-        	else if (offset < -3){
+        	else if (offset < -4){
         		drive.resetEncoders();
         		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
         		drive.leftMotors[0].set(-.35);

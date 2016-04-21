@@ -13,6 +13,7 @@ public class Shooter extends Subsystem {
     private CANTalon shooterMotor = new CANTalon(3);
     public Talon[] guideWheels = {new Talon(3), new Talon(4)};
     private boolean justShot = false;
+    public boolean inRange = false;
     
     public final double MAXSPEED = 88.5; // in revolutions per second
     public final double GOAL_HEIGHT = 4.5748; // in meters
@@ -24,9 +25,16 @@ public class Shooter extends Subsystem {
     // Begin shooter calibration curve constants
     public final double CALIB_A = 3.2188255000367;
     public final double CALIB_B = 0.98337515163017;
+    // Begin distance calibration values
+    public final double DIST_A = -.0755440578;
+    public final double DIST_B = 23.73012667;
+    public final double DIST_C = -2476.272334;
+    public final double DIST_D = 85851.68825;
+    public final double DIST_E = -4736194.053;
+
     private NetworkTable targetInfo = NetworkTable.getTable("GRIP/Target");
     private NetworkTable autoAimTable;
-
+    
     public Shooter () {
 	autoAimTable = NetworkTable.getTable("AutoAim");
     }
@@ -102,43 +110,56 @@ public class Shooter extends Subsystem {
 	*/
     
     public double[] getTargetInfo(){
-    	double[] values = {0,0,0,0,0};
-    	try {
-    		double[] defaultValue = {};
-    		double[] heights = targetInfo.getNumberArray("height", defaultValue);
-    		double[] widths = targetInfo.getNumberArray("width", defaultValue);
-    		double[] areas = targetInfo.getNumberArray("area", defaultValue);
-    		double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
-    		double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
-    		//Sort through contours to minimize list based on height
-    		/*int[] contours = {0,0,0,0,0};
-    		int cindex = 0;
-    		for(int i = 0; i < heights.length; i++){
+    	double[][] dataSample = new double [5][5];
+    	double[] finalData = new double[5];
+    	for(int j = 0; j < 5; j++){
+    		double[] values = {0,0,0,0,0};
+    		try {
+    			double[] defaultValue = {};
+    			double[] heights = targetInfo.getNumberArray("height", defaultValue);
+    			double[] widths = targetInfo.getNumberArray("width", defaultValue);
+    			double[] areas = targetInfo.getNumberArray("area", defaultValue);
+    			double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
+    			double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
+    			//Sort through contours to minimize list based on height
+    			/*int[] contours = {0,0,0,0,0};
+    			int cindex = 0;
+    			for(int i = 0; i < heights.length; i++){
     			if(heights[i] < 35 && heights[i] > 15){
     				contours[cindex] = i;
     				cindex++;
     			}
-    		}*/	
-    		int index = 0;    	
-    		for(int i = 0; i < areas.length; i++){
-    			if(areas[i] > values[0] && heights[i] < 35 && heights[i] > 15){
-    				values[0] = areas[i];
-    				index = i;
-    			}	
-    		}
+    			}*/	
+    			int index = 0;    	
+    			for(int i = 0; i < areas.length; i++){
+    				if(areas[i] > values[0] && heights[i] < 35 && heights[i] > 15){
+    					values[0] = areas[i];
+    					index = i;
+    				}	
+    			}
     	
-    		values[1] = heights[index];
-    		values[2] = widths[index];
-    		values[3] = possibleX[index];
-    		values[4] = possibleY[index];
-    		return values;
-    	
-    	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-			System.out.println("no target");
-			return values;
-		}
-    	
-    	
+    			values[1] = heights[index];
+    			values[2] = widths[index];
+    			values[3] = possibleX[index];
+    			values[4] = possibleY[index];
+    			dataSample[j] = values;
+    			//Thread.sleep(100);
+    			
+    		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+    			System.out.println("no target");
+    			dataSample[j] = values;
+    		} /*catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} */
+    	}
+    	finalData[0]= (dataSample[0][0] + dataSample[1][0] + dataSample[2][0] + dataSample[3][0] + dataSample[4][0])/5;
+    	finalData[1]= (dataSample[0][1] + dataSample[1][1] + dataSample[2][1] + dataSample[3][1] + dataSample[4][1])/5;
+    	finalData[2]= (dataSample[0][2] + dataSample[1][2] + dataSample[2][2] + dataSample[3][2] + dataSample[4][2])/5;
+    	finalData[3]= (dataSample[0][3] + dataSample[1][3] + dataSample[2][3] + dataSample[3][3] + dataSample[4][3])/5;
+    	finalData[4]= (dataSample[0][4] + dataSample[1][4] + dataSample[2][4] + dataSample[3][4] + dataSample[4][4])/5;
+
+    	return finalData;
     }
     public void changeHeight(double power) {
 
@@ -164,13 +185,34 @@ public class Shooter extends Subsystem {
 
     //returns distance in inches
     public double getDistance(double Tpx){
-		return (240 / (2 * Math.tan(Math.toRadians(CAM_FOV))* Tpx)) * 12;
+		double distance = (240 / (2 * Math.tan(Math.toRadians(CAM_FOV))* Tpx)) * 12;
+		double correction = 12;
+		/*
+		double kP = DIST_A * Math.pow(distance, 3) + DIST_B * Math.pow(distance, 2) 
+		+ DIST_C * Math.pow(distance, 1) + DIST_D * Math.pow(distance, 0); //+ DIST_E * Math.pow(distance, 0);
+		*/
+		return distance + correction;
     }
     
 
 
     private double getMotorPower(double distance) {
-	return CALIB_A * Math.pow(CALIB_B, distance);
+    	if(102 <= distance && distance <= 126){
+    		inRange = true;
+    		return CALIB_A * Math.pow(CALIB_B, distance);	
+    	}
+    	else if(distance < 102){
+    		inRange = false;
+    		return .95 ;
+    	}
+    	else if(126 < distance && distance < 160){
+    		inRange = true;
+    		return .95;
+    	}
+    	else {
+    		inRange = false;
+    		return .95;
+    	}
     }
     
     
