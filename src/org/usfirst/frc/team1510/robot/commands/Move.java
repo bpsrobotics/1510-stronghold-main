@@ -33,11 +33,11 @@ public class Move extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	//requires(Robot.drive);
-    //moveDirection = direction;
-	///this.distance = distance;
+    	//moveDirection = direction;
+    	///this.distance = distance;
     	distance = reqDistance;
     	power = reqPower;
-	setTimeout(5);
+    	setTimeout(5);
     }
     
     // Called just before this Command runs the first time
@@ -71,9 +71,9 @@ public class Move extends Command {
     	//}
     	
 
-	if (isTimedOut()) {
-	    isComplete = true;
-	}
+    	if (isTimedOut()) {
+    		isComplete = true;
+    	}
 	
     }
 

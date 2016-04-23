@@ -47,6 +47,8 @@ public class Autonomous extends CommandGroup {
     }else if(Robot.defense.getSelected().equals(Defense.AUTO_AIM)){
 	    addSequential(new AA2() );
 	    addSequential(new Shoot());
+    }else if(Robot.defense.getSelected().equals(Defense.LOW_BAR_SHOOT)){
+	    addSequential(new LowBarShoot());
     }
 	}
     protected void execute(){
@@ -58,6 +60,6 @@ public class Autonomous extends CommandGroup {
     }
     
     public enum Defense {
-    	AUTO_AIM,SPYBOT, PORTCULLIS, CHEVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, LOW_BAR, NOTHING
+    	LOW_BAR_SHOOT,AUTO_AIM,SPYBOT, PORTCULLIS, CHEVAL_DE_FRISE, MOAT, RAMPARTS, DRAWBRIDGE, SALLY_PORT, ROCK_WALL, ROUGH_TERRAIN, LOW_BAR, NOTHING
     }
 }

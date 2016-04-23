@@ -29,7 +29,7 @@ public class Teleop extends Command {
     //Declare default speed of bottom motors in ShootHigh as .95
     private double speed = .61;
     //Declare default distance
-    private double distance = 15;
+    //private double distance = 15;
     //Declare default recommended speed
     private double recSpeed = .85;
     // Default spin
@@ -97,7 +97,7 @@ public class Teleop extends Command {
     	double x = shooter.getApproxData()[3];
     	double height = shooter.getApproxData()[1];
     	double distance = shooter.getDistance(shooter.getApproxData()[1]);
-    	inRange = shooter.getInRange();
+    	inRange = shooter.getInRange(distance);
     	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	//SmartDashboard.putNumber("Estimated Distance", distance);

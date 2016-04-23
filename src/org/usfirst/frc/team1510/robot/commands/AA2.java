@@ -14,7 +14,7 @@ public class AA2 extends Command {
 	Drive drive = Robot.drive;
 	Shooter shooter = Robot.shooter;
 	double offset;
-	double reqX = 175;
+	double reqX = 170;
 	boolean isComplete = false;
 	public AA2() {
         // Use requires() here to declare subsystem dependencies

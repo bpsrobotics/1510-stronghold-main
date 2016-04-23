@@ -254,19 +254,19 @@ public class Shooter extends Subsystem {
 			return values;
 		} 
     }
-    public boolean getInRange() {
-    	double distance = getApproxData()[1];
+    public boolean getInRange(double dist) {
+    	double distance = dist;
     	if(102 <= distance && distance <= 122){
     		return true;	
     	}
     	else if( 95 < distance && distance < 102){
-    		return true;
+    		return false;
     	}
     	else if(122 < distance && distance < 140){
     		return true;
     	}
     	else {
-    		return true;
+    		return false;
     	}
     }
     public void initDefaultCommand() {

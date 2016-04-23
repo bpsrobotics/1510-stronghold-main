@@ -20,7 +20,8 @@ public class Shoot extends Command {
     private double distance;
     private int cycles = 0;
     private boolean complete = false;
-
+    double speed;
+    
     public static final double TARGET_WIDTH_FT = (1+2/3);
     public static final double CAMERA_FOV = 0.652753 / 2;
     public static final double CAMERA_FOV_PIXELS = 320 / 2;
@@ -40,7 +41,9 @@ public class Shoot extends Command {
     	
     	//distance = TARGET_WIDTH_FT * CAMERA_FOV_PIXELS / (2*TPIXEL*Math.tan(CAMERA_FOV));
     	setTimeout(4);
-    	shooter.fire();
+    	speed = shooter.getRecPower();
+    	shooter.changeDistance(1);
+    	shooter.changeHeight(speed);
     }
 
     // Called repeatedly when this Command is scheduled to run

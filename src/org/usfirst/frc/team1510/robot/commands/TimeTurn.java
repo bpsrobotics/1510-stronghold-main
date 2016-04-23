@@ -1,40 +1,40 @@
 package org.usfirst.frc.team1510.robot.commands;
 
 import org.usfirst.frc.team1510.robot.Robot;
+import org.usfirst.frc.team1510.robot.subsystems.Drive;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1510.robot.subsystems.Shooter;
-import org.usfirst.frc.team1510.robot.subsystems.BallCollector;
+
 /**
  *
  */
-public class ShootHigh extends Command {
-	
-	Shooter shooter = Robot.shooter;
-	BallCollector ballCollector= Robot.ballCollector;
-    public ShootHigh() {
+public class TimeTurn extends Command {
+    private Drive drive = Robot.drive;
+    private double reqThrottle = 0;
+    private double reqTime = 0;
+    public TimeTurn(double time, double throttle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(shooter);
-    	requires(ballCollector);
-
+    	reqTime = time;
+    	reqThrottle = throttle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(4);
+    	setTimeout(reqTime);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//Set power of shooter wheels and guide wheels
-    	shooter.changeHeight(0.65);
-		shooter.guideWheels[0].set(1);
-		shooter.guideWheels[1].set(-1);
-		if(timeSinceInitialized() >= 2){
-			ballCollector.rollerMotor.set(1);
-		}
+    	if(!isTimedOut()){
+    		drive.leftMotors[0].set(reqThrottle);
+    		drive.leftMotors[1].set(reqThrottle);
+    		drive.rightMotors[0].set(reqThrottle);
+    		drive.rightMotors[1].set(reqThrottle);
+    	}
+    	else{
+    		drive.stop();
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -44,13 +44,11 @@ public class ShootHigh extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	shooter.stop();
-		ballCollector.rollerMotor.set(0);
+    	drive.move(0,0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

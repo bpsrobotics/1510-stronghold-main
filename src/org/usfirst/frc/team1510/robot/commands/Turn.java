@@ -35,6 +35,7 @@ public class Turn extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	drive.enable();
+    	drive.resetEncoders();
     	drive.rightMotors[0].setEncPosition(0);
     	drive.leftMotors[0].enableBrakeMode(true);
     	drive.leftMotors[1].enableBrakeMode(true);

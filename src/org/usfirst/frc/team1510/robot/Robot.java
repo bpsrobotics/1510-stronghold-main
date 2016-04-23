@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
     	defense.addObject("Spy Bot", Autonomous.Defense.SPYBOT);
     	defense.addObject("Move Forward", Autonomous.Defense.ROUGH_TERRAIN);
     	defense.addObject("Low Bar", Autonomous.Defense.LOW_BAR);
-    	defense.addObject("Low Bar and Shoot", Autonomous.Defense.ROCK_WALL);
+    	defense.addObject("Low Bar and Shoot", Autonomous.Defense.LOW_BAR_SHOOT);
     	defense.addObject("AutoAim Test", Autonomous.Defense.AUTO_AIM);
 
     	SmartDashboard.putData("Defense", defense);
