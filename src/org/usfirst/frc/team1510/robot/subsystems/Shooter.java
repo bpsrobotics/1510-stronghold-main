@@ -22,16 +22,18 @@ public class Shooter extends Subsystem {
     public final double GEAR_RATIO = 1.0/1.0;
     public final double CAM_FOV = 28.6;
 
-    // Begin shooter calibration curve constants
-    public final double CALIB_A = 3.2188255000367;
-    public final double CALIB_B = 0.98337515163017;
-    // Begin distance calibration values
-    public final double DIST_A = -.0755440578;
-    public final double DIST_B = 23.73012667;
-    public final double DIST_C = -2476.272334;
-    public final double DIST_D = 85851.68825;
-    public final double DIST_E = -4736194.053;
-
+    // Begin shooter calibration curve constants for range 2
+    public final double RANGE_1_A = 3.2188255000367;
+    public final double RANGE_1_B = 0.98337515163017;
+    //Begin shooter calibration curve constants for range 1
+    public final double RANGE_2_A = .0102927382;
+    public final double RANGE_2_B = -2.091007601;
+    public final double RANGE_2_C =  106.730875;
+    //Begin shooter calibration curve constants for range 3
+    public final double RANGE_3_A = -.0001930294;
+    public final double RANGE_3_B = .0534539807;
+    public final double RANGE_3_C =  -3.251681599;
+   
     private NetworkTable targetInfo = NetworkTable.getTable("GRIP/Target");
     private NetworkTable autoAimTable;
     
@@ -143,15 +145,15 @@ public class Shooter extends Subsystem {
     			values[3] = possibleX[index];
     			values[4] = possibleY[index];
     			dataSample[j] = values;
-    			//Thread.sleep(100);
+    			Thread.sleep(50);
     			
     		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
     			System.out.println("no target");
     			dataSample[j] = values;
-    		} /*catch (InterruptedException e) {
+    		} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} */
+			} 
     	}
     	finalData[0]= (dataSample[0][0] + dataSample[1][0] + dataSample[2][0] + dataSample[3][0] + dataSample[4][0])/5;
     	finalData[1]= (dataSample[0][1] + dataSample[1][1] + dataSample[2][1] + dataSample[3][1] + dataSample[4][1])/5;
@@ -197,25 +199,76 @@ public class Shooter extends Subsystem {
 
 
     private double getMotorPower(double distance) {
-    	if(102 <= distance && distance <= 126){
+    	if(97 <= distance && distance <= 122){
     		inRange = true;
-    		return CALIB_A * Math.pow(CALIB_B, distance);	
+    		return RANGE_1_A * Math.pow(RANGE_1_B, distance);	
     	}
-    	else if(distance < 102){
-    		inRange = false;
-    		return .95 ;
-    	}
-    	else if(126 < distance && distance < 160){
+    	/*else if( 95 < distance && distance < 102){
     		inRange = true;
-    		return .95;
+    		return .61;//RANGE_2_A * Math.pow(distance, 2) + RANGE_2_B * distance + RANGE_2_C;
+    	}*/
+    	else if(122 < distance && distance < 145){
+    		inRange = true;
+    		return RANGE_3_A * Math.pow(distance, 2) + RANGE_3_B * distance + RANGE_3_C;
     	}
     	else {
     		inRange = false;
-    		return .95;
+    		return .75;
     	}
     }
     
-    
+    public double[] getApproxData(){
+    	double[] values = {0,0,0,0,0};
+		try {
+			double[] defaultValue = {};
+			double[] heights = targetInfo.getNumberArray("height", defaultValue);
+			double[] widths = targetInfo.getNumberArray("width", defaultValue);
+			double[] areas = targetInfo.getNumberArray("area", defaultValue);
+			double[] possibleX = targetInfo.getNumberArray("centerX", defaultValue);
+			double[] possibleY = targetInfo.getNumberArray("centerY", defaultValue);
+			//Sort through contours to minimize list based on height
+			/*int[] contours = {0,0,0,0,0};
+			int cindex = 0;
+			for(int i = 0; i < heights.length; i++){
+			if(heights[i] < 35 && heights[i] > 15){
+				contours[cindex] = i;
+				cindex++;
+			}
+			}*/	
+			int index = 0;    	
+			for(int i = 0; i < areas.length; i++){
+				if(areas[i] > values[0] && heights[i] < 35 && heights[i] > 15){
+					values[0] = areas[i];
+					index = i;
+				}	
+			}
+	
+			values[1] = heights[index];
+			values[2] = widths[index];
+			values[3] = possibleX[index];
+			values[4] = possibleY[index];
+			return values;
+			
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			System.out.println("no target");
+			return values;
+		} 
+    }
+    public boolean getInRange() {
+    	double distance = getApproxData()[1];
+    	if(102 <= distance && distance <= 122){
+    		return true;	
+    	}
+    	else if( 95 < distance && distance < 102){
+    		return true;
+    	}
+    	else if(122 < distance && distance < 140){
+    		return true;
+    	}
+    	else {
+    		return true;
+    	}
+    }
     public void initDefaultCommand() {
 	// Set the default command for a subsystem here.
 	//setDefaultCommand(new MySpecialCommand());

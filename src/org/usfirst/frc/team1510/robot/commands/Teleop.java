@@ -51,6 +51,7 @@ public class Teleop extends Command {
 	double reqX = 175;
 	double x;
 	double height;
+	boolean inRange;
 	//double distance;
 	
     public Teleop() {
@@ -93,20 +94,21 @@ public class Teleop extends Command {
     	  Speed of shooter (varied by d-pad)
     	  Limit Switch values
     	*/
-    	double x = shooter.getTargetInfo()[3];
-    	double height = shooter.getTargetInfo()[1];
-    	double distance = shooter.getDistance(shooter.getTargetInfo()[1]);
+    	double x = shooter.getApproxData()[3];
+    	double height = shooter.getApproxData()[1];
+    	double distance = shooter.getDistance(shooter.getApproxData()[1]);
+    	inRange = shooter.getInRange();
     	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	//SmartDashboard.putNumber("Estimated Distance", distance);
     	//SmartDashboard.putNumber("Recommended Speed", recSpeed);
-    	SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
-    	SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
-    	SmartDashboard.putNumber("Shooter Curve", spin);
+    	//SmartDashboard.putBoolean("Home Limit", ballCollector.limitSwitch1.get());
+    	//SmartDashboard.putBoolean("Away Limit", ballCollector.limitSwitch2.get());
+    	//SmartDashboard.putNumber("Shooter Curve", spin);
     	SmartDashboard.putNumber("Offset", (175-x));
     	SmartDashboard.putNumber("distance", distance);
     	SmartDashboard.putNumber("height", height);
-
+    	SmartDashboard.putBoolean("In Range", inRange);
 	// Controls for camera switching
     	/*
 	if (Robot.oi.g1rightBumper.get() && !rightBumperPressedLast && currentCamera == Robot.forwardCamera) {
@@ -122,7 +124,7 @@ public class Teleop extends Command {
 	}
 	*/
     	//Set speed to value returned by AutoAim
-    	speed = shooter.getRecPower();
+    	//speed = shooter.getRecPower();
     	
 	
     	/**
@@ -131,14 +133,14 @@ public class Teleop extends Command {
  		 * 
     	 **/
     	//If within the shooting range RUUUUMBLE
-    	if(shooter.inRange){
+    	/*if(inRange){
     		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kLeftRumble, 1);
     		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kRightRumble,1);
     	}
     	else{
     		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kLeftRumble, 0);
     		Robot.oi.gamepad2.setRumble(Joystick.RumbleType.kRightRumble, 0);
-    	}
+    	}*/
     	//If input from joystick is greater than deadzone 
     	if (Math.abs(oi.gamepad2.getRawAxis(1)) > .2){
     		//Cancel all commands requiring wheel arms
@@ -164,8 +166,7 @@ public class Teleop extends Command {
 			is more than .7 (min) then decrease speed by increments of .001
     	 */
     	if(oi.gamepad2.getPOV(0) == 180 && speed > .01){
-    		speed -= .01
-    				;
+    		speed -= .01;
     	}
     	
     	// If left decrease spin
@@ -221,10 +222,11 @@ public class Teleop extends Command {
     	} 
     	//If right trigger is pressed
     	if(oi.gamepad2.getRawAxis(3) > .5){
-    	    //x = shooter.getTargetInfo()[3];
-        	//height = shooter.getTargetInfo()[1];
-        	//distance = shooter.getDistance(shooter.getTargetInfo()[1]);
+    	    x = shooter.getTargetInfo()[3];
+        	height = shooter.getTargetInfo()[1];
+        	distance = shooter.getDistance(shooter.getTargetInfo()[1]);
     		//Set power for shooting motors
+    		speed = shooter.getRecPower();
     		//Guide wheels will always be at full power
     		shooter.changeDistance(1);
     		//Main shooter wheels are set to double speed
