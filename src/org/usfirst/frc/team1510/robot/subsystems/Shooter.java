@@ -22,7 +22,6 @@ public class Shooter extends Subsystem {
     public final double GEAR_RATIO = 1.0/1.0;
     public final double CAM_FOV = 28.6;
 
-<<<<<<< HEAD
     // Begin shooter calibration curve constants for range 2
     public final double RANGE_1_A = 3.2188255000367;
     public final double RANGE_1_B = 0.98337515163017;
@@ -36,12 +35,6 @@ public class Shooter extends Subsystem {
     public final double RANGE_3_C =  -3.251681599;
    
     private NetworkTable targetInfo = NetworkTable.getTable("GRIP/Target");
-=======
-    // Begin shooter calibration curve constants
-    public final double CALIB_A = 1.7420287552521;
-    public final double CALIB_B = 0.90375536482201;
-
->>>>>>> parent of b62f82b... Added network table info to Shooter class
     private NetworkTable autoAimTable;
     
     public Shooter () {
@@ -54,7 +47,6 @@ public class Shooter extends Subsystem {
      * @param distance The distance, in meters, 
      */	
     public void fire() {
-<<<<<<< HEAD
     	double[] defaultValue = {};
     	double height = 0;
     	try {
@@ -79,15 +71,6 @@ public class Shooter extends Subsystem {
     	} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			System.out.println("no target");
 		}
-=======
-
-	
-	
-	shooterMotor.set(getMotorPower(getDistance()));
-	guideWheels[0].set(1);
-	guideWheels[1].set(-1);
-	
->>>>>>> parent of b62f82b... Added network table info to Shooter class
     }
     
     public double getRecPower() {
