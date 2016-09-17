@@ -36,10 +36,10 @@ public class AA2 extends Command {
     	else if (offset > 3){
     		drive.resetEncoders();
     		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
-    			drive.leftMotors[0].set(.35);
-    			drive.leftMotors[1].set(.35);
-    			drive.rightMotors[0].set(.35);
-    			drive.rightMotors[1].set(.35);
+    			drive.leftMotors[0].set(.75);
+    			drive.leftMotors[1].set(.75);
+    			drive.rightMotors[0].set(.75);
+    			drive.rightMotors[1].set(.75);
     		}
     		/*else{
     			drive.stop();
@@ -48,10 +48,10 @@ public class AA2 extends Command {
     	else if (offset < -3){
     		drive.resetEncoders();
     		if(Math.abs(drive.rightMotors[0].getEncPosition()) <= 1){
-    		drive.leftMotors[0].set(-.35);
-    		drive.leftMotors[1].set(-.35);
-    		drive.rightMotors[0].set(-.35);
-    		drive.rightMotors[1].set(-.35);
+    		drive.leftMotors[0].set(-.75);
+    		drive.leftMotors[1].set(-.75);
+    		drive.rightMotors[0].set(-.75);
+    		drive.rightMotors[1].set(-.75);
     		}
     		/*
     		else{

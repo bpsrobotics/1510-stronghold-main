@@ -51,6 +51,8 @@ public class Teleop extends Command {
 	double reqX = 175;
 	double x;
 	double height;
+	double area;
+	double distance;
 	boolean inRange;
 	//double distance;
 	
@@ -94,10 +96,12 @@ public class Teleop extends Command {
     	  Speed of shooter (varied by d-pad)
     	  Limit Switch values
     	*/
-    	double x = shooter.getApproxData()[3];
-    	double height = shooter.getApproxData()[1];
-    	double distance = shooter.getDistance(shooter.getApproxData()[1]);
-    	inRange = shooter.getInRange(distance);
+    	double yval = shooter.getApproxData()[4];
+    	//double area = shooter.getApproxData()[0];
+    	//double x = shooter.getApproxData()[3];
+    	//double height = shooter.getApproxData()[1];
+    	//double distance = shooter.getDistance(shooter.getApproxData()[1]);
+    	//inRange = shooter.getInRange(distance);
     	//SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getRange());
     	SmartDashboard.putNumber("Speed of shooter", speed);
     	//SmartDashboard.putNumber("Estimated Distance", distance);
@@ -108,6 +112,8 @@ public class Teleop extends Command {
     	SmartDashboard.putNumber("Offset", (175-x));
     	SmartDashboard.putNumber("distance", distance);
     	SmartDashboard.putNumber("height", height);
+    	SmartDashboard.putNumber("yval", yval);
+    	SmartDashboard.putNumber("area", area);
     	SmartDashboard.putBoolean("In Range", inRange);
 	// Controls for camera switching
     	/*
@@ -224,8 +230,10 @@ public class Teleop extends Command {
     	if(oi.gamepad2.getRawAxis(3) > .5){
     	    x = shooter.getTargetInfo()[3];
         	height = shooter.getTargetInfo()[1];
+        	yval = shooter.getTargetInfo()[4];
         	distance = shooter.getDistance(shooter.getTargetInfo()[1]);
-    		//Set power for shooting motors
+    		area = shooter.getTargetInfo()[0];
+        	//Set power for shooting motors
     		speed = shooter.getRecPower();
     		//Guide wheels will always be at full power
     		shooter.changeDistance(1);
@@ -241,11 +249,11 @@ public class Teleop extends Command {
     	else if(oi.gamepad2.getRawAxis(2) > .5 ){
     		
     		//Guide wheels will always be at full power
-    		shooter.changeDistance(.6);
+    		shooter.changeDistance(1);
     		//Main shooter wheels are set to 25% power
-    		shooter.changeHeight(.25);
+    		shooter.changeHeight(speed);
     		
-    	}else {
+    	}else {		
     		shooter.stop();
     		
         }

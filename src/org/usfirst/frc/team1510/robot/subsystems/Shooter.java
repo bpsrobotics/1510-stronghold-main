@@ -20,15 +20,16 @@ public class Shooter extends Subsystem {
     public final double SHOOTER_HEIGHT = 0.3048; // in meters
     public final double FLYWHEEL_RADIUS = 0.1016; // in meters
     public final double GEAR_RATIO = 1.0/1.0;
-    public final double CAM_FOV = 28.6;
+    public final double CAM_FOV = 28.6;//38.7;
+    //28.6
 
     // Begin shooter calibration curve constants for range 2
     public final double RANGE_1_A = 3.2188255000367;
     public final double RANGE_1_B = 0.98337515163017;
     //Begin shooter calibration curve constants for range 1
-    public final double RANGE_2_A = .0102927382;
-    public final double RANGE_2_B = -2.091007601;
-    public final double RANGE_2_C =  106.730875;
+    public final double RANGE_2_A = .002398456;
+    public final double RANGE_2_B = -.4552580002;
+    public final double RANGE_2_C =  22.10867015;
     //Begin shooter calibration curve constants for range 3
     public final double RANGE_3_A = -.0001930294;
     public final double RANGE_3_B = .0534539807;
@@ -188,7 +189,7 @@ public class Shooter extends Subsystem {
     //returns distance in inches
     public double getDistance(double Tpx){
 		double distance = (240 / (2 * Math.tan(Math.toRadians(CAM_FOV))* Tpx)) * 12;
-		double correction = 12;
+		double correction = 0;
 		/*
 		double kP = DIST_A * Math.pow(distance, 3) + DIST_B * Math.pow(distance, 2) 
 		+ DIST_C * Math.pow(distance, 1) + DIST_D * Math.pow(distance, 0); //+ DIST_E * Math.pow(distance, 0);
@@ -199,18 +200,24 @@ public class Shooter extends Subsystem {
 
 
     private double getMotorPower(double distance) {
-    	if(97 <= distance && distance <= 122){
+    	/*if(97 <= distance && distance <= 122){
     		inRange = true;
     		return RANGE_1_A * Math.pow(RANGE_1_B, distance);	
-    	}
-    	/*else if( 95 < distance && distance < 102){
-    		inRange = true;
-    		return .61;//RANGE_2_A * Math.pow(distance, 2) + RANGE_2_B * distance + RANGE_2_C;
     	}*/
+    	if( 75 < distance && distance < 90){
+    		inRange = true;
+    		return .75;
+    		//return RANGE_2_A * Math.pow(distance, 2) + RANGE_2_B * distance + RANGE_2_C;
+    	}
+    	else if( 90 < distance && distance < 110){
+    		inRange = true;
+    		return RANGE_2_A * Math.pow(distance, 2) + RANGE_2_B * distance + RANGE_2_C - .15;
+    	}
+    	/*
     	else if(122 < distance && distance < 145){
     		inRange = true;
     		return RANGE_3_A * Math.pow(distance, 2) + RANGE_3_B * distance + RANGE_3_C;
-    	}
+    	}*/
     	else {
     		inRange = false;
     		return .75;

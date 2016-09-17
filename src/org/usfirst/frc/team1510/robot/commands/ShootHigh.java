@@ -29,7 +29,7 @@ public class ShootHigh extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Set power of shooter wheels and guide wheels
-    	shooter.changeHeight(0.65);
+    	shooter.changeHeight(0.6);
 		shooter.guideWheels[0].set(1);
 		shooter.guideWheels[1].set(-1);
 		if(timeSinceInitialized() >= 2){
